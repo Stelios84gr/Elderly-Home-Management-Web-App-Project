@@ -1,0 +1,23 @@
+{
+  "name": "elderly_home_backend",
+  "version": "1.0.0",
+  "description": "backend for elderly home management web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --env-file=.env server.js",
+    "dev": "node --env-file=.env --watch server.js"
+  },
+  "author": "Stelios Fridakis",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.0",
+    "mongoose-to-swagger": "^1.5.1",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0",
+    "winston-mongodb": "^7.0.0"
+  }
+}
