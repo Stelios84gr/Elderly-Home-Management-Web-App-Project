@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const app = require('./app')
 const port = 3000;
 
+// connection to database, then connection to the server
 mongoose.connect(process.env.MONGODB_URI).then(
     () => {
         console.log("Successful connection to MongoDB!");
