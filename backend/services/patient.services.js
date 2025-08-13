@@ -1,12 +1,14 @@
 const Patient = require('../models/patient.model')
 
-function findAll() {
-    const result = Patient.find();
+// .findAll() & .findAll() return a promise, so async functions
+
+async function findAll() {
+    const result = await Patient.find();
     return result;
 };
 
-function findOne(lastName) {
-    const result = UserActivation.findOne({lastName:lastName});
+async function findOne(id) {
+    const result = await Patient.findById(id);
     return result;
 }
 
