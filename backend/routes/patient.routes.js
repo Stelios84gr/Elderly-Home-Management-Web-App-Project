@@ -6,5 +6,6 @@ const patientController = require('../controllers/patient.controller');    // as
 router.get('/', patientController.findAll);
 router.get('/:lastName', patientController.findOne);
 router.post('/', patientController.create);
+router.patch('/:lastName', patientController.update);
 
 module.exports = router;
