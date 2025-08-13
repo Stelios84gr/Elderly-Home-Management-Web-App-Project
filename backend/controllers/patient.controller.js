@@ -17,11 +17,11 @@ exports.findAll = async(req, res) => {
 
 exports.findOne = async(req, res) => {
     console.log('Find a specific patient.');
-    const lastName = req.params.lastName;    // find by lastName
+    const id = req.params.id;    // find by id
 
     try {
-        const result = await patientService.findOne(lastName);
-        // const result = await Patient.findOne({lastName: lastName}); => delegated to patient.services
+        const result = await patientService.findById(id);    // cleaner than findOne({_id:id})
+        // const result = await Patient.findByID({id}); => delegated to patient.services
         if (result) {   // not finding the user does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {
@@ -58,10 +58,10 @@ exports.create = async(req, res) => {
             lastName: data.emergencyContactInfo?.lastName,
             phoneNumber: data.emergencyContactInfo?.phoneNumber,
             address: {
-                road: data.emergencyContactInfo?.address.road,
-                number: data.emergencyContactInfo?.address.number
+                road: data.emergencyContactInfo?.address?.road,
+                number: data.emergencyContactInfo?.address?.number
             },
-            kinshipDegree: data.emergencyContactInfo.kinshipDegree
+            kinshipDegree: data.emergencyContactInfo?.kinshipDegree
         }
     });
 
@@ -75,41 +75,19 @@ exports.create = async(req, res) => {
 };
 
 exports.update = async(req, res) => {
-    const lastName = req.body.lastName;
+    const id = req.params.id;    // id will be retrieved from URL (path params)
 
-    console.log("Update patient data by lastName.", lastName);
-
-    const data = req.body;
-
-    const updatePatient = {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        AMKA: data.AMKA,
-        dateOfBirth: data.dateOfBirth,
-        phoneNumber: data.phoneNumber,
-        authorizationToLeave: data.authorizationToLeave,
-        roomData: {
-            roomNumber: data.roomNumber,
-            bedNumber: data.bedNumber
-        },
-        patientAilments: Array.isArray(data.patientAilments) ? data.patientAilments.map(ailment => ({
-            disease: ailment.disease,
-            severity: ailment.severity
-        })) : [],
-        emergencyContactInfo: {
-            firstName: data.emergencyContactInfo?.firstName,
-            lastName: data.emergencyContactInfo?.lastName,
-            phoneNumber: data.emergencyContactInfo?.phoneNumber,
-            address: {
-                road: data.emergencyContactInfo?.address.road,
-                number: data.emergencyContactInfo?.address.number
-            },
-            kinshipDegree: data.emergencyContactInfo?.kinshipDegree
-        }
-    };
+    console.log("Update patient data by id.", id);
 
     try {
-        const result = await Patient.findOneAndUpdate({lastName:lastName}, updatePatient, {new: true});
+        const result = await Patient.findByIdAndUpdate(
+            id,
+            { $set: req.body},    // only update the fields sent (PATCH) - ignore fields not included in schemas
+            {new: true, runValidators: true},    // runValidators applies validations checks also when updating
+        );
+        if (!result) {
+            return res.status(404).json({ status: false, data: "Patient not found." })
+        }
         res.status(200).json({ status: true, data: result });
     }   catch (err) {
         console.log("Error updating patient.", err);
