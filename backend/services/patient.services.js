@@ -1,6 +1,6 @@
 const Patient = require('../models/patient.model')
 
-// .findAll() & .findAll() return a promise, so async functions
+// .findOne() & .findAll() return a promise, so async functions
 
 async function findAll() {
     const result = await Patient.find();
