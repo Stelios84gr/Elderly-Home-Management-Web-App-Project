@@ -8,7 +8,12 @@ let addressSchema = new schema({
 })
 
 let staffSchema = new schema({
-    firstName: { type: String, required: [true, '"firstName" is a required field'], minLength: 2, maxLength: 20, trim: true, lowercase: true },
-    lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true, lowercase: true },
-    TIN: { type: String, required: [true, '"TIN" is a required field'], minLength: 9, maxLength: 9}    // in case it begins with 0
+    _id: { type: String, required: [true, '"id" is a required field'] },
+    password: { type: String, minLength: 4, maxLength: 8 },
+    firstName: { type: String, required: [true, '"firstName" is a required field'], minLength: 2, maxLength: 20, trim: true },
+    lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true },
+    TIN: { type: String, required: [true, '"TIN" is a required field'], minLength: 9, maxLength: 9, unique: true },    // in case it begins with 0
+    occupation: { type: String, required: [true, '"occupation" is a required field'] , minLength: 5, maxLength: 20},
+    startDate: { type: Date, default: Date.now },
+    monthlySalary: { type: Number, required: [true, '"monthlySalary" is a required field'], min: 100, max: 9999  }
 })
