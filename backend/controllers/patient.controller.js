@@ -77,20 +77,41 @@ exports.create = async(req, res) => {
 exports.update = async(req, res) => {
     const id = req.params.id;    // id will be retrieved from URL (path params)
 
-    console.log("Update patient data by id.", id);
+    console.log("Update patient data by id: ", id, ".");
 
     try {
         const result = await Patient.findByIdAndUpdate(
             id,
             { $set: req.body},    // only update the fields sent (PATCH) - ignore fields not included in schemas
-            {new: true, runValidators: true},    // runValidators applies validations checks also when updating
+            {new: true, runValidators: true},    // runValidators applies validation checks also when updating
         );
         if (!result) {
             return res.status(404).json({ status: false, data: "Patient not found." })
         }
         res.status(200).json({ status: true, data: result });
     }   catch (err) {
-        console.log("Error updating patient.", err);
+        console.log("Error updating patient:", err);
         res.status(400).json({ status: false, data: err });
+    }
+};
+
+exports.deleteById = async (req, res) => {
+    const id = req.params.id;
+    console.log("Delete patient with id: ", id, ".");
+
+    try {
+        const result = await Patient.findByIdAndDelete(id);
+
+        // avoid returning status 200 - null if no patient is found
+        if (!result) {
+            return res.status(404).json({
+                status: false, data: "Patient not found"
+            });
+        }
+
+        res.status(200).json({ status: true, data: result })
+    } catch (err) {
+        console.log("Error deleting patient:", err);
+        res.status(400).json({ status: false, data: err});
     }
 };
