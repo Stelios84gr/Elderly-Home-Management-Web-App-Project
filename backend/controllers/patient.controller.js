@@ -22,7 +22,7 @@ exports.findOne = async(req, res) => {
     try {
         const result = await patientService.findById(id);    // cleaner than findOne({_id:id})
         // const result = await Patient.findByID({id}); => delegated to patient.services
-        if (result) {   // not finding the user does not raise an error and go to catch
+        if (result) {   // not finding the patient does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {
             res.status(404).json({ status: false, data: "Patient not found."})
@@ -34,7 +34,7 @@ exports.findOne = async(req, res) => {
 }
 
 exports.create = async(req, res) => {
-    console.log('Create Patient.');
+    console.log('Create patient.');
 
     const data = req.body;
 
@@ -105,13 +105,13 @@ exports.deleteById = async (req, res) => {
         // avoid returning status 200 - null if no patient is found
         if (!result) {
             return res.status(404).json({
-                status: false, data: "Patient not found"
+                status: false, data: "Patient not found."
             });
         }
 
         res.status(200).json({ status: true, data: result })
     } catch (err) {
-        console.log("Error deleting patient:", err);
+        console.log("Error deleting patient.", err);
         res.status(400).json({ status: false, data: err});
     }
 };
