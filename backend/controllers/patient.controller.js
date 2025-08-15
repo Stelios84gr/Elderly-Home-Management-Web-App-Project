@@ -21,7 +21,7 @@ exports.findOne = async(req, res) => {
 
     try {
         const result = await patientService.findById(id);    // cleaner than findOne({_id:id})
-        // const result = await Patient.findByID({id}); => delegated to patient.services
+        // const result = await Patient.findById({id}); => delegated to patient.services
         if (result) {   // not finding the patient does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {
