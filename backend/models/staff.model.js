@@ -9,7 +9,7 @@ let addressSchema = new schema({
 
 let staffSchema = new schema({
     _id: { type: String, required: [true, '"id" is a required field'] },
-    password: { type: String, minLength: 4, maxLength: 8 },
+    password: { type: String, minLength: 8, maxLength: 16 },
     firstName: { type: String, required: [true, '"firstName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     TIN: { type: String, required: [true, '"TIN" is a required field'], minLength: 9, maxLength: 9, unique: true },    // in case it begins with 0
