@@ -37,9 +37,17 @@ exports.create = async(req, res) => {
     console.log('Create staff member.');
 
     const data = req.body;
+    const rounds = 12;
+    let hashedPassword = '';
+    if (data.password) {
+        hashedPassword = await bcrypt.hash(data.password, rounds)
+    } else {
+
+    }
 
     const newStaffMember = new Staff({
         _id: data._id,
+        password: hashedPassword,
         firstName: data.firstName,
         lastName: data.lastName,
         TIN: data.TIN,
