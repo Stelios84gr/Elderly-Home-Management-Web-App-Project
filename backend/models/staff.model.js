@@ -17,3 +17,5 @@ let staffSchema = new schema({
     startDate: { type: Date, default: Date.now },
     monthlySalary: { type: Number, required: [true, '"monthlySalary" is a required field'], min: 100, max: 9999  }
 })
+
+module.exports = mongoose.model('Staff', staffSchema);
