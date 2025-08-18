@@ -14,6 +14,7 @@ let staffSchema = new schema({
     lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     TIN: { type: String, required: [true, '"TIN" is a required field'], minLength: 9, maxLength: 9, unique: true },    // in case it begins with 0
     occupation: { type: String, required: [true, '"occupation" is a required field'] , minLength: 5, maxLength: 20},
+    roles: [{ type: String, uppercase: true}],
     startDate: { type: Date, default: Date.now },
     monthlySalary: { type: Number, required: [true, '"monthlySalary" is a required field'], min: 100, max: 9999  }
 })
