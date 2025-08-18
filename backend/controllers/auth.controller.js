@@ -9,7 +9,7 @@ exports.login = async(req, res) => {
     const password = req.body.password;
 
     try {
-        const result = await Staff.findOne({ username: username });
+        const result = await Staff.findOne({ username: username }, {username: 1, password: 1, roles: 1});
 
         if (!result) {
             return res.status(404).json({ status: false, data: "User not found." });
