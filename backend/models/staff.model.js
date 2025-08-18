@@ -5,7 +5,7 @@ const schema = mongoose.Schema;
 let addressSchema = new schema({
     road: { type: String, required: [true, '"road" is a required field'], minLength: 2, maxLength: 20, trim: true, lowercase: true},
     number: { type: String, minLength:1, maxLength: 5, trim: true, uppercase: true}    // in case of "1150A", for example
-})
+});
 
 let staffSchema = new schema({
     username: { type: String, required: [true, '"username" is a required field'] },
@@ -17,6 +17,6 @@ let staffSchema = new schema({
     roles: [{ type: String, uppercase: true}],
     startDate: { type: Date, default: Date.now },
     monthlySalary: { type: Number, required: [true, '"monthlySalary" is a required field'], min: 100, max: 9999  }
-})
+});
 
 module.exports = mongoose.model('Staff', staffSchema, 'staff');    // to avoid missmatch due to pluralization since 'staff' has no plural
