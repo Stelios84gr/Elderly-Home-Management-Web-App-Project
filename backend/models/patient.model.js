@@ -29,7 +29,7 @@ let visitorsSchema = new schema({   // both nested fields aren't required, as vi
 })
 
 let patientSchema = new schema({
-    _id: { type: String, required: [true, '"id" is a required field'], lowercase: true },
+    username: { type: String, required: [true, '"username" is a required field'], minLength: 4, trim: true, lowercase: true },
     firstName: { type: String, required: [true, '"firstName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     AMKA: { type: String, required: [true, '"AMKA" is a required field'], minLength: 11, maxLength: 11, trim: true, unique: true },   // in case it begins with 0
@@ -39,6 +39,6 @@ let patientSchema = new schema({
     roomData: roomDataSchema,
     patientAilments: [patientAilmentsSchema],    // array because there might be more than one
     emergencyContactInfo: emergencyContactInfoSchema,visitors: { type: [visitorsSchema], default: undefined}    // no visitors array upon creation since they are added later on
-}, { versionKey: false}, {_id: false} )    // remove _v
+}, { versionKey: false} );    // remove _v
 
 module.exports = mongoose.model('Patient', patientSchema);
