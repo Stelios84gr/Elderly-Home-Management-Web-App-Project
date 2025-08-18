@@ -39,6 +39,7 @@ exports.create = async(req, res) => {
     const data = req.body;
 
     const newPatient = new Patient({
+        username: data.username,
         firstName: data.firstName,
         lastName: data.lastName,
         AMKA: data.AMKA,
