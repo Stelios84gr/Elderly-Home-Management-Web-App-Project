@@ -13,6 +13,8 @@ let staffSchema = new schema({
     firstName: { type: String, required: [true, '"firstName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     TIN: { type: String, required: [true, '"TIN" is a required field'], minLength: 9, maxLength: 9, unique: true },    // in case it begins with 0
+    phoneNumber: { type: Number, required: [true, '"phoneNumber" is a required field'], min: 1000000000, max: 9999999999, unique: true},    // min-max: ensures 10-digit format
+    address: addressSchema,
     occupation: { type: String, required: [true, '"occupation" is a required field'] , minLength: 5, maxLength: 20},
     roles: [{ type: String, uppercase: true}],
     startDate: { type: Date, default: Date.now },
