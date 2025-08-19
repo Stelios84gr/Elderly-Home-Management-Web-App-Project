@@ -10,8 +10,8 @@ const auth = require('./routes/auth.routes');
 
 app.use('/api/auth', auth)
 app.use('/api/patients', patient);
-// app.use('/api/staff', staff);
-// app.use('/api/visitors', visitor);
+app.use('/api/staff', staff);
+app.use('/api/visitors', visitor);
 
 
 module.exports = app
