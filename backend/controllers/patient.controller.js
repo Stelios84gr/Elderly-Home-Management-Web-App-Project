@@ -17,11 +17,11 @@ exports.findAll = async(req, res) => {
 
 exports.findOne = async(req, res) => {
     console.log('Find a specific patient.');
-    const id = req.params.id;    // find by id
+    const username = req.params.username;
 
     try {
-        const result = await patientService.findById(id);    // cleaner than findOne({_id:id})
-        // const result = await Patient.findById({id}); => delegated to patient.services
+        const result = await patientService.findOne(username);
+        // const result = await Patient.findOne(username); => delegated to patient.services
         if (result) {   // not finding the patient does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {
@@ -68,7 +68,7 @@ exports.create = async(req, res) => {
 
     try {
         const result = await newPatient.save();
-        res.status(200).json({ status: true, data: result});
+        res.status(201).json({ status: true, data: result});
     } catch (err) {
         console.log('Error creating patient.', err);
         res.status(400).json({ status: false, data: err});
@@ -76,13 +76,13 @@ exports.create = async(req, res) => {
 };
 
 exports.update = async(req, res) => {
-    const id = req.params.id;    // id will be retrieved from URL (path params)
+    const username = req.params.username;    // username will be retrieved from URL (path params)
 
-    console.log("Update patient data by id: ", id, ".");
+    console.log("Update patient data by username: ", username, ".");
 
     try {
-        const result = await Patient.findByIdAndUpdate(
-            id,
+        const result = await Patient.findOneAndUpdate(
+            {username: username},
             { $set: req.body},    // only update the fields sent (PATCH) - ignore fields not included in schemas
             {new: true, runValidators: true},    // runValidators applies validation checks also when updating
         );
@@ -96,12 +96,12 @@ exports.update = async(req, res) => {
     }
 };
 
-exports.deleteById = async (req, res) => {
-    const id = req.params.id;
-    console.log("Delete patient with id: ", id, ".");
+exports.deleteByUsername = async (req, res) => {
+    const username = req.params.username;
+    console.log("Delete patient with username: ", username, ".");
 
     try {
-        const result = await Patient.findByIdAndDelete(id);
+        const result = await Patient.findOneAndDelete({username: username});
 
         // avoid returning status 200 - null if no patient is found
         if (!result) {
