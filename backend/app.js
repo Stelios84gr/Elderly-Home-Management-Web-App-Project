@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-app.use(express.json());    // express parses JSON files in HTTP requests
+app.use(express.json());
 
 const patient = require('./routes/patient.routes');
 const visitor = require( './routes/visitor.routes');
