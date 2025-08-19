@@ -26,7 +26,7 @@ let emergencyContactInfoSchema = new schema({
 let visitorsSchema = new schema({   // both nested fields aren't required, as visitors are assigned after patient creation (app logic)
     _id: {type: schema.Types.ObjectId, ref: 'Visitor' },
     relationship: { type: String, minLength: 4, maxLength: 15, trim: true, lowercase: true }
-})
+});
 
 let patientSchema = new schema({
     username: { type: String, required: [true, '"username" is a required field'], minLength: 4, trim: true, lowercase: true },
@@ -39,6 +39,8 @@ let patientSchema = new schema({
     roomData: roomDataSchema,
     patientAilments: [patientAilmentsSchema],    // array because there might be more than one
     emergencyContactInfo: emergencyContactInfoSchema,visitors: { type: [visitorsSchema], default: undefined}    // no visitors array upon creation since they are added later on
-}, { versionKey: false} );    // remove _v
+}, { versionKey: false});    // remove _v
 
-module.exports = mongoose.model('Patient', patientSchema);
+module.exports = mongoose.model('Patient', patientSchema, 'patient');
+// Swagger will use schemas, not models
+module.exports.patientSchema = patientSchema;

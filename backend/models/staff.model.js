@@ -19,4 +19,7 @@ let staffSchema = new schema({
     monthlySalary: { type: Number, required: [true, '"monthlySalary" is a required field'], min: 100, max: 9999  }
 });
 
-module.exports = mongoose.model('Staff', staffSchema, 'staff');    // to avoid missmatch due to pluralization since 'staff' has no plural
+// to avoid missatch due to pluralization since 'staff' has no plural
+module.exports = mongoose.model('Staff', staffSchema, 'staff');
+// schemas will be used in Swagger, not models
+module.exports.staffSchema = staffSchema;

@@ -17,6 +17,6 @@ let visitorSchema = new schema({
     isFamily: { type: Boolean, required: [true, "isFamily is a required field"] }
 });
 
-
-
-mongoose.exports = mongoose.model('Visitor', visitorSchema);
+module.exports = mongoose.model('Visitor', visitorSchema, 'visitor');
+// Swagger will use schemas, not models
+module.exports.visitorSchema = visitorSchema;
