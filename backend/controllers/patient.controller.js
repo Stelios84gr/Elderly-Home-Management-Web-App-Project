@@ -83,7 +83,7 @@ exports.update = async(req, res) => {
     try {
         const result = await Patient.findOneAndUpdate(
             {username: username},
-            { $set: req.body},    // only update the fields sent (PATCH) - ignore fields not included in schemas
+            {$set: req.body},    // only update the fields sent (PATCH) - ignore fields not included in schemas
             {new: true, runValidators: true},    // runValidators applies validation checks also when updating
         );
         if (!result) {
