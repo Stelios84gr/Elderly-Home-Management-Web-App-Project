@@ -41,6 +41,6 @@ let patientSchema = new schema({
     emergencyContactInfo: emergencyContactInfoSchema,visitors: { type: [visitorsSchema], default: undefined}    // no visitors array upon creation since they are added later on
 }, { versionKey: false});    // remove _v
 
-module.exports = mongoose.model('Patient', patientSchema, 'patient');
+module.exports = mongoose.model('Patient', patientSchema);
 // Swagger will use schemas, not models
 module.exports.patientSchema = patientSchema;
