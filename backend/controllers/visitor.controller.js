@@ -7,11 +7,12 @@ exports.findAll = async(req, res) => {
     try {
         // const result = await Visitor.find(); => delegated to visitor.service
 
-        const result = await visitorService.findAll()
-        res.status(200).json({status: true, data: result})
+        const result = await visitorService.findAll();
+        res.status(200).json({status: true, data: result});
     } catch (err) {
-        console.log("Error reading 'visitors' collection.", err)
-        res.status(400).json({ status: false, data: err})
+        console.log("Error reading 'visitors' collection.", err);
+        res.status(400).json({ status: false, data: err});
+        logger.error("Error reading all patients.", err);
     };
 };
 
@@ -25,11 +26,13 @@ exports.findOne = async(req, res) => {
         if (result) {   // not finding the visitor does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {
-            res.status(404).json({ status: false, data: "Visitor not found."})
+            res.status(404).json({ status: false, data: "Visitor not found."});
+            logger.error("Error finding visitor.");
         }
     } catch (err) {
         console.log('Error finding visitor.', err);
         res.status(400).json({ status: false, data: err });
+        logger.error("Error finding visitor.", err);
     }
 }
 
@@ -55,6 +58,7 @@ exports.create = async(req, res) => {
         res.status(200).json({ status: true, data: result});
     } catch (err) {
         console.log('Error creating visitor.', err);
+        logger.error("Error creating visitor document.", err);
         res.status(400).json({ status: false, data: err});
     }
 };
@@ -71,12 +75,14 @@ exports.update = async(req, res) => {
             {new: true, runValidators: true},    // runValidators applies validation checks also when updating
         );
         if (!result) {
+            logger.error("Error finding visitor.");
             return res.status(404).json({ status: false, data: "Visitor not found." })
         }
         res.status(200).json({ status: true, data: result });
     }   catch (err) {
-        console.log("Error updating visitor:", err);
+        console.log("Error updating visitor.", err);
         res.status(400).json({ status: false, data: err });
+         logger.error("Error updating patient.", err);
     }
 };
 
@@ -89,6 +95,7 @@ exports.deleteById = async (req, res) => {
 
         // avoid returning status 200 - null if no visitor is found
         if (!result) {
+            logger.error("Visitor not found");
             return res.status(404).json({
                 status: false, data: "Visitor not found."
             });
@@ -98,5 +105,6 @@ exports.deleteById = async (req, res) => {
     } catch (err) {
         console.log("Error deleting visitor.", err);
         res.status(400).json({ status: false, data: err});
+        logger.error("Error deleting patient.", err);
     }
 };
