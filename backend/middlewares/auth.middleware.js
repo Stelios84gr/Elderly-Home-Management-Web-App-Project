@@ -31,7 +31,7 @@ function verifyRoles(allowedRoles) {
             return res.status(403).json({ status: false, data: "Forbidden: No roles found." });
         }
 
-        const staffRoles = req.user.roles;
+        const staffRoles = req.staff.roles;
 
         const hasPermission = staffRoles.some(role => allowedRoles.includes(role));
 
