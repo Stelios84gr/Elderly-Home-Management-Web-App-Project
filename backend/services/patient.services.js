@@ -7,8 +7,8 @@ async function findAll() {
     return result;
 };
 
-async function findOne(id) {
-    const result = await Patient.findById(id);
+async function findOne(username) {
+    const result = await Patient.findOne(username);
     return result;
 }
 
