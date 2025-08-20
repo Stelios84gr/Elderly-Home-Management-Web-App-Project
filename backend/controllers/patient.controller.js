@@ -13,7 +13,7 @@ exports.findAll = async(req, res) => {
     } catch (err) {
         console.log("Error reading 'patients' collection.", err);
         res.status(400).json({ status: false, data: err});
-        logger.error("Error reading all patients: ", err);
+        logger.error("Error reading all patients.", err);
     };
 };
 
@@ -27,12 +27,13 @@ exports.findOne = async(req, res) => {
         if (result) {   // not finding the patient does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {
-            res.status(404).json({ status: false, data: "Patient not found."})
+            res.status(404).json({ status: false, data: "Patient not found."});
+            logger.error("Error finding patient.");
         }
     } catch (err) {
         console.log('Error finding patient.', err);
         res.status(400).json({ status: false, data: err });
-        logger.error("Error creating finding patient data: ", err);
+        logger.error("Error finding patient. ", err);
     }
 }
 
@@ -74,7 +75,7 @@ exports.create = async(req, res) => {
         res.status(201).json({ status: true, data: result});
     } catch (err) {
         console.log('Error creating patient.', err);
-        logger.error("Error creating patient document: ", err);
+        logger.error("Error creating patient document.", err);
         res.status(400).json({ status: false, data: err});
     }
 };
@@ -96,9 +97,9 @@ exports.update = async(req, res) => {
         }
         res.status(200).json({ status: true, data: result });
     }   catch (err) {
-        console.log("Error updating patient:", err);
+        console.log("Error updating patient.", err);
         res.status(400).json({ status: false, data: err });
-        logger.error("Error updating patient data: ", err);
+        logger.error("Error updating patient.", err);
     }
 };
 
@@ -111,6 +112,7 @@ exports.deleteByUsername = async (req, res) => {
 
         // avoid returning status 200 - null if no patient is found
         if (!result) {
+            logger.error("Patient not found");
             return res.status(404).json({
                 status: false, data: "Patient not found."
             });
@@ -120,6 +122,6 @@ exports.deleteByUsername = async (req, res) => {
     } catch (err) {
         console.log("Error deleting patient.", err);
         res.status(400).json({ status: false, data: err});
-        logger.error("Error deleting patient: ", err);
+        logger.error("Error deleting patient.", err);
     }
 };
