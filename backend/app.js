@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
 
 app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger');
@@ -15,6 +17,11 @@ app.use('/api/auth', auth)
 app.use('/api/patients', patient);
 app.use('/api/staff', staff);
 app.use('/api/visitors', visitor);
+
+app.use(cors({
+    origin: ['http://localhost:3000']
+}));
+
 
 app.use(
     '/api-docs/',
