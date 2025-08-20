@@ -1,6 +1,5 @@
 const Patient = require('../models/patient.model');
 const patientService = require('../services/patient.services');
-
 const logger = require('../logger/logger');
 
 exports.findAll = async(req, res) => {
@@ -14,7 +13,7 @@ exports.findAll = async(req, res) => {
     } catch (err) {
         console.log("Error reading 'patients' collection.", err);
         res.status(400).json({ status: false, data: err});
-        logger.error("ERROR - Problem reading all patients: ", err);
+        logger.error("Error reading all patients: ", err);
     };
 };
 
@@ -33,6 +32,7 @@ exports.findOne = async(req, res) => {
     } catch (err) {
         console.log('Error finding patient.', err);
         res.status(400).json({ status: false, data: err });
+        logger.error("Error creating finding patient data: ", err);
     }
 }
 
@@ -74,6 +74,7 @@ exports.create = async(req, res) => {
         res.status(201).json({ status: true, data: result});
     } catch (err) {
         console.log('Error creating patient.', err);
+        logger.error("Error creating patient document: ", err);
         res.status(400).json({ status: false, data: err});
     }
 };
@@ -90,12 +91,14 @@ exports.update = async(req, res) => {
             {new: true, runValidators: true},    // runValidators applies validation checks also when updating
         );
         if (!result) {
+            logger.error("Error finding patient.");
             return res.status(404).json({ status: false, data: "Patient not found." })
         }
         res.status(200).json({ status: true, data: result });
     }   catch (err) {
         console.log("Error updating patient:", err);
         res.status(400).json({ status: false, data: err });
+        logger.error("Error updating patient data: ", err);
     }
 };
 
@@ -117,5 +120,6 @@ exports.deleteByUsername = async (req, res) => {
     } catch (err) {
         console.log("Error deleting patient.", err);
         res.status(400).json({ status: false, data: err});
+        logger.error("Error deleting patient: ", err);
     }
 };
