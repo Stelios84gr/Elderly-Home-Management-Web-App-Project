@@ -64,7 +64,7 @@ exports.create = async(req, res) => {
 
     try {
         const result = await newStaffMember.save();
-        res.status(200).json({ status: true, data: result});
+        res.status(201).json({ status: true, data: result});
     } catch (err) {
         console.log('Error creating staff member.', err);
          logger.error("Error creating patient document.", err);
