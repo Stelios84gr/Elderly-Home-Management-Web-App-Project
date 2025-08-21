@@ -77,7 +77,7 @@ exports.create = async(req, res) => {
         console.log('Error creating patient.', err);
         logger.error("Error creating patient document.", err);
         res.status(400).json({ status: false, data: err});
-    }
+    };
 };
 
 exports.update = async(req, res) => {
@@ -87,20 +87,20 @@ exports.update = async(req, res) => {
 
     try {
         const result = await Patient.findOneAndUpdate(
-            {username: username},
-            {$set: req.body},    // only update the fields sent (PATCH) - ignore fields not included in schemas
-            {new: true, runValidators: true},    // runValidators applies validation checks also when updating
+            { username: username },
+            { $set: req.body },    // only update the fields sent (PATCH) - ignore fields not included in schemas
+            { new: true, runValidators: true },    // runValidators applies validation checks also when updating
         );
         if (!result) {
             logger.error("Error finding patient.");
             return res.status(404).json({ status: false, data: "Patient not found." })
-        }
+        };
         res.status(200).json({ status: true, data: result });
     }   catch (err) {
         console.log("Error updating patient.", err);
         res.status(400).json({ status: false, data: err });
         logger.error("Error updating patient.", err);
-    }
+    };
 };
 
 exports.deleteByUsername = async (req, res) => {
@@ -113,15 +113,13 @@ exports.deleteByUsername = async (req, res) => {
         // avoid returning status 200 - null if no patient is found
         if (!result) {
             logger.error("Patient not found");
-            return res.status(404).json({
-                status: false, data: "Patient not found."
-            });
+            return res.status(404).json({ status: false, data: "Patient not found." });
         }
 
-        res.status(200).json({ status: true, data: result })
+        res.status(200).json({ status: true, data: result });
     } catch (err) {
         console.log("Error deleting patient.", err);
         res.status(400).json({ status: false, data: err});
         logger.error("Error deleting patient.", err);
-    }
+    };
 };
