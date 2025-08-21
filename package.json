@@ -18,10 +18,22 @@
     "winston-daily-rotate-file": "^5.0.0",
     "winston-mongodb": "^7.0.0"
   },
+  "devDependencies": {
+    "cross-env": "^10.0.0",
+    "dotenv": "^17.2.1",
+    "jest": "^30.0.5",
+    "supertest": "^7.1.4"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
     "start": "node --env-file=.env backend/server.js",
     "dev": "node --env-file=.env --watch backend/server.js"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "repository": {
     "type": "git",
