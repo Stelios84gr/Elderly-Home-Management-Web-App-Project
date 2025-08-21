@@ -22,12 +22,12 @@ function verifyAccessToken(token){
         console.log("Token verified: ", payload);
         return { verified: true, data: payload }
     } catch (err) {
+        logger.error("Error verifying access token.", err);
         return { verified: false, data: err}
     };
 };
 
 async function googleAuth(code) {
-    console.log("Google Sign-In");
     const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
     const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
     const REDIRECT_URI = process.env.REDIRECT_URI;
@@ -45,7 +45,8 @@ async function googleAuth(code) {
         const userInfo = await ticket.getPayload();
         return { user: userInfo, tokens };
     } catch (err) {
-        console.error("Error during Google authentication:", err);
+        console.log("Error during OAuth 2.0 token verification:", err);
+        logger.error("Error during OAuth 2.0 token verification:", err);
         return { error: "Google authentication failed." };
     };
 };
