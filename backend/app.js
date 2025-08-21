@@ -12,7 +12,6 @@ const swaggerDocument = require('./swagger');
 const patient = require('./routes/patient.routes');
 const visitor = require( './routes/visitor.routes');
 const staff = require('./routes/staff.routes');
-const auth = require('./routes/auth.routes');
 
 app.use('/api/auth', auth)
 app.use('/api/patients', patient);
