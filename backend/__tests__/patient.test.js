@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
-const app = require('../app');
+const app = require("../app");
+const patientService = require("../services/patient.service");
 
 require("dotenv").config();
 
@@ -70,10 +71,10 @@ describe("Requests for /api/patients", () => {
                 "phoneNumber":6912312345,
                 "address": {
                     "road":"testRoad0",
-                    " number":50
+                    "number":50
                 },
-            },
             "kinshipDegree": "testKD0"
+            }, 
         });
 
         expect(res.statusCode).toBe(201);
@@ -108,8 +109,8 @@ describe("Requests for /api/patients", () => {
                     "road":"testRoad1",
                     " number":51
                 },
+                "kinshipDegree": "testKD1"
             },
-            "kinshipDegree": "testKD1"
         });
 
         expect(res.statusCode).toBe(400);
@@ -144,8 +145,8 @@ describe("Requests for /api/patients", () => {
                 "road":"testRoad1",
                 "number":51
             },
+            "kinshipDegree": ""
         },
-        "kinshipDegree": ""
     });
 
     expect(res.statusCode).toBe(400);
