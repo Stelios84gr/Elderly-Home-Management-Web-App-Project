@@ -1,5 +1,5 @@
-const Staff = require('../models/staff.model');
 const staffService = require('../services/staff.service');
+const logger = require('../logger/logger');
 
 exports.findAll = async(req, res) => {
     console.log("Retrieve all staff members from 'staff' collection.");
@@ -18,11 +18,11 @@ exports.findAll = async(req, res) => {
 
 exports.findOne = async(req, res) => {
     console.log('Find a specific staff member.');
-    const id = req.params.id;    // find by id
+
+    const username = req.params.username;    // find by username
 
     try {
-        const result = await staffService.findById(id);    // cleaner than findOne({_id:id})
-        // const result = await Staff.findById({id}); => delegated to staff.service
+        const result = await staffService.findOne(username);
         if (result) {   // not finding the staff member does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {
@@ -52,38 +52,37 @@ exports.create = async(req, res) => {
 };
 
 exports.update = async(req, res) => {
-    const id = req.params.id;    // id will be retrieved from URL (path params)
+    const username = req.params.username;    // username will be retrieved from URL (path params)
 
-    console.log("Update staff member data by id: ", id, ".");
+    console.log("Update staff member data by username: ", username, ".");
+
+    const data = req.body;
 
     try {
-        const result = await Staff.findByIdAndUpdate(
-            id,
-            { $set: req.body },    // only update the fields sent (PATCH) - ignore fields not included in schemas
-            { new: true, runValidators: true },    // runValidators applies validation checks also when updating
-        );
+        const result = await staffService.update(username, data);
+
         if (!result) {
-            logger.error("Error finding patient.");
-            return res.status(404).json({ status: false, data: "Staff member not found." })
+            logger.error("Error finding staff member.");
+            return res.status(404).json({ status: false, data: "Staff member not found." });
         };
         res.status(200).json({ status: true, data: result });
     }   catch (err) {
         console.log("Error updating staff member:", err);
         res.status(400).json({ status: false, data: err });
-        logger.error("Error updating patient.", err);
+        logger.error("Error updating staff member.", err);
     };
 };
 
-exports.deleteById = async (req, res) => {
-    const id = req.params.id;
-    console.log("Delete staff member with id: ", id, ".");
+exports.deleteByUsername = async (req, res) => {
+    const username = req.params.username;
+    console.log("Delete staff member with username: ", username, ".");
 
     try {
-        const result = await Staff.findByIdAndDelete(id);
+        const result = await staffService.deleteByUsername(username);
 
-        // avoid returning status 200 - null if no staff member is found
+        // avoid returning status 200 & null if no staff member is found
         if (!result) {
-            logger.error("Patient not found");
+            logger.error("Staff member not found");
             return res.status(404).json({ status: false, data: "Staff member not found." });
         }
 
@@ -91,6 +90,6 @@ exports.deleteById = async (req, res) => {
     } catch (err) {
         console.log("Error deleting staff member.", err);
         res.status(400).json({ status: false, data: err});
-        logger.error("Error deleting patient.", err);
+        logger.error("Error deleting staff member.", err);
     };
 };
