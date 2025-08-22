@@ -1,4 +1,3 @@
-const Patient = require('../models/patient.model');
 const patientService = require('../services/patient.service');
 const logger = require('../logger/logger');
 
@@ -19,6 +18,7 @@ exports.findAll = async(req, res) => {
 
 exports.findOne = async(req, res) => {
     console.log('Find a specific patient.');
+    
     const username = req.params.username;
 
     try {
