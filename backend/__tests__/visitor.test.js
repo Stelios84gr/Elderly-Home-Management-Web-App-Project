@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
 const app = require("../app");
-const visitorService = require("../services/patient.service");
+const visitorService = require("../services/visitor.service");
 
 require("dotenv").config();
 
@@ -27,17 +27,41 @@ afterAll(async () => {
     await mongoose.connection.close();
 });
 
-// clean up mock POST documents
-afterEach(async () => {
-    await patientService.deleteByUsername("test0");
-    await patientService.deleteByUsername("test2");
+// create mock visitor
+beforeEach(async () => {
+    // check that the visitor doesn't already exist
+    const existingVisitor = await visitorService.findOne("test0");
+
+    if (!existingVisitor) {
+        await visitorService.create({
+            username: "test0",
+            firstName: "testFN0",
+            lastName: "testLN0",
+            phoneNumber: 6987654321,
+            address: {
+                road: "testRoad0",
+                number: 50
+            },
+            relationship: "kinsperson",
+            isFamily: true
+        });
+    };
 });
 
-describe("Requests for /api/patients", () => {
+// clean up mock POST documents
+afterEach(async () => {
+    await visitorService.deleteByUsername("test0");
+    await visitorService.deleteByUsername("test2");
+    await visitorService.deleteByUsername("test3");
+    await visitorService.deleteByUsername("deleteMe");  // in case DELETE test fails
+    
+});
 
-    test('GET - Returns all patients', async () => {
+describe("Requests for /api/visitors", () => {
+
+    test('GET - Returns all visitors', async () => {
         const res = await request(app)
-        .get('/api/patients')
+        .get('/api/visitors')
         .set('Authorization', `Bearer ${token}`);
 
         expect(res.statusCode).toBe(200);
@@ -45,131 +69,86 @@ describe("Requests for /api/patients", () => {
         expect(res.body.data.length).toBeGreaterThan(0);
     }, 5000);
 
-    test('POST - Create a patient', async () => {
+    test('POST - Create a visitor', async () => {
         const res = await request(app)
-        .post('/api/patients')
+        .post('/api/visitors')
         .set('Authorization', `Bearer ${token}`)
         .send({
-            "username":"test0",
-            "firstName":"testFN0",
-            "lastName":"testLN0",
-            "AMKA":"01234567890",
-            "dateOfBirth":"01-01-1970",
-            "phoneNumber":6987654321,
-            "authorizationToLeave": true,
-            "roomData": {
-                "roomNumber":"10",
-                "bedNumber":"1010"
+            "username":"test3",
+            "firstName":"testFN3",
+            "lastName":"testLN3",
+            "phoneNumber":6987654322,
+            "address": {
+                "road":"testRoad3",
+                "number":50
             },
-            "patientAilments": {
-                "disease":"testDisease0",
-                "severity":2
-            },
-            "emergencyContactInfo": {
-                "firstName":"eCFN0",
-                "lastName":"eCLN0",
-                "phoneNumber":6912312345,
-                "address": {
-                    "road":"testRoad0",
-                    " number":50
-                },
-            },
-            "kinshipDegree": "testKD0"
+            "relationship": "kinsperson",
+            "isFamily": true
+            });
         });
 
         expect(res.statusCode).toBe(201);
         expect(res.body.status).toBeTruthy();       
     }, 5000);
 
-    test("POST - Creates a patient with a username that already exists", async() => {
+    test("POST - Creates a visitor with a username that already exists", async() => {
         const res = await request(app)
-        .post('/api/patients')
+        .post('/api/visitors')
         .set('Authorization', `Bearer ${token}`)
         .send({
             "username":"test0",
-            "firstName":"testFN1",
-            "lastName":"testLN1",
-            "AMKA":"01234567891",
-            "dateOfBirth":"01-01-1971",
-            "phoneNumber":6987654322,
-            "authorizationToLeave": true,
-            "roomData": {
-                "roomNumber":"11",
-                "bedNumber":"1111"
+            "firstName":"testFN3",
+            "lastName":"testLN3",
+            "phoneNumber":6987654333,
+            "address": {
+                "road":"testRoad3",
+                "number":50
             },
-            "patientAilments": {
-                "disease":"testDisease1",
-                "severity":3,
-            },
-            "emergencyContactInfo": {
-                "firstName":"eCFN1",
-                "lastName":"eCLN1",
-                "phoneNumber":6912312346,
-                "address": {
-                    "road":"testRoad1",
-                    " number":51
-                },
-            },
-            "kinshipDegree": "testKD1"
-        });
+            "relationship": "kinsperson",
+            "isFamily": true
+            });
 
         expect(res.statusCode).toBe(400);
         expect(res.body.status).not.toBeTruthy();
-    });
+    }, 5000);
 
-    test("POST - Create a patient with empty firstName, patientAilments object and kinshipDegree", async() => {
+    test("POST - Create a visitor with empty lastName, phoneNumber and isFamily", async() => {
     const res = await request(app)
-    .post('/api/patients')
+    .post('/api/visitors')
     .set('Authorization', `Bearer ${token}`)
     .send({
-        "username":"test2",
-        "firstName":"",
-        "lastName":"testLN1",
-        "AMKA":"01234567891",
-        "dateOfBirth":"01-01-1972",
-        "phoneNumber":6987654323,
-        "authorizationToLeave": false,
-        "roomData": {
-            "roomNumber":"12",
-            "bedNumber":"1212"
-        },
-        "patientAilments": {
-            "disease":"",
-            "severity":null,
-        },
-        "emergencyContactInfo": {
-            "firstName":"eCFN1",
-            "lastName":"eCLN1",
-            "phoneNumber":6912312346,
+            "username":"test2",
+            "firstName":"testFN2",
+            "lastName":"",
+            "phoneNumber":null,
             "address": {
-                "road":"testRoad1",
-                "number":51
+                "road":"testRoad2",
+                "number":50
             },
-        },
-        "kinshipDegree": ""
-    });
+            "relationship": "kinsperson",
+            "isFamily": null
+            });
 
     expect(res.statusCode).toBe(400);
     expect(res.body.status).not.toBeTruthy();
-    });
-});
+    }, 5000);
 
-describe("Requests for /api/patients/:username", () => {
+describe("Requests for /api/visitors/:username", () => {
 
-    test("GET - Returns patient by username", async () => {
-        const result = await patientService.findOne();
+    test("GET - Returns visitor by username", async () => {
+        const result = await visitorService.findOne("test0");
 
         const res = await request(app)
-        .get('/api/patients/' + result.username)
+        .get('/api/visitors/' + result.username)
         .set('Authorization', `Bearer ${token}`);
 
         expect(res.statusCode).toBe(200);
         expect(res.body.status).toBeTruthy();
         expect(res.body.data.username).toBe(result.username);
-    });
+    }, 5000);
 
-    test("PATCH - Updates patient data", async () => {
-        const result = await patientService.findOne();
+    test("PATCH - Updates visitor data", async () => {
+        const result = await visitorService.findOne("test0");
 
         // original values backup before updating
         const originalData = {
@@ -179,7 +158,7 @@ describe("Requests for /api/patients/:username", () => {
 
         try {
             const res = await request(app)
-            .patch('/api/patients/' + result.username)
+            .patch('/api/visitors/' + result.username)
             .set('Authorization', `Bearer ${token}`)
             .send({
                 "username": result.username,
@@ -192,71 +171,65 @@ describe("Requests for /api/patients/:username", () => {
         } finally {
             // revert test changes
             await request(app)
-            .patch('/api/patients/' + result.username)
+            .patch('/api/visitors/' + result.username)
             .set('Authorization', `Bearer ${token}`)
             .send(originalData);
         };
-    });
+    }, 5000);
 
-    test("PATCH - Updates patient with empty fields", async() => {
+    test("PATCH - Updates visitor with empty fields", async() => {
         
-        const result = await patientService.findOne();
+        const result = await visitorService.findOne("test0");
 
         const res = await request(app)
-        .patch('/api/patients/' + result.username)
+        .patch('/api/visitors/' + result.username)
         .set('Authorization', `Bearer ${token}`)
         .send({
             "username": result.username,
-            "dateOfBirth": "",
-            "authorizationToLeave": null
+            "phoneNumber": "",
+            "relationship": ""
         });
 
         expect(res.statusCode).toBe(400);
         expect(res.body.status).not.toBeTruthy();
-    });
+    }, 5000);
 
-    test("DELETE - Deletes a patient", async() => {
+    test("DELETE - Deletes a visitor", async() => {
 
-        // create test patient document to be deleted
-        const testPatient = {
-            username: "delete_me",
-            firstName: "Del",
-            lastName: "Ete",
-            AMKA: "99999999999",
-            dateOfBirth: "01-01-1980",
-            phoneNumber: 6911112222,
-            authorizationToLeave: true,
-            roomData: { roomNumber: "99", bedNumber: "9999" },
-            patientAilments: { disease: "Cardiovascular", severity: 1 },
-            emergencyContactInfo: {
-                firstName: "Contact",
-                lastName: "Person",
-                phoneNumber: 6911111112,
-                address: { road: "testRoad", number: 1 }
+        // create test visitor document to be deleted
+        const testVisitor = {
+            "username":"deleteMe",
+            "firstName":"delete",
+            "lastName":"me",
+            "phoneNumber":6968676664,
+            "address": {
+                "road":"deleteRoad",
+                "number":42
             },
-            kinshipDegree: "Friend"
+            "relationship": "kinsperson",
+            "isFamily": false
         };
 
         await request(app)
-        .post('/api/patients')
+        .post('/api/visitors')
         .set('Authorization', `Bearer ${token}`)
-        .send(testPatient);
+        .send(testVisitor);
 
         const res = await request(app)
-        .delete('/api/patients/' + testPatient.username)
+        .delete('/api/visitors/' + testVisitor.username)
         .set('Authorization', `Bearer ${token}`);
 
         expect(res.statusCode).toBe(200);
         expect(res.body.status).toBeTruthy();
-    });
+    }, 5000);
 
-    test("DELETE - Try to delete a non-existent patient", async() => {
+    test("DELETE - Try to delete a non-existent visitor", async() => {
 
         const res = await request(app)
-        .delete('/api/patients/nonExistentPatientUsername')
+        .delete('/api/visitors/nonExistentVisitorUsername')
         .set('Authorization', `Bearer ${token}`);
 
         expect(res.statusCode).toBe(404);
         expect(res.body.status).not.toBeTruthy();
-    });
+    }, 5000);
 });
