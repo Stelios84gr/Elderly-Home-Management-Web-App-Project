@@ -27,10 +27,47 @@ afterAll(async () => {
     await mongoose.connection.close();
 });
 
+beforeEach(async () => {
+    // check that the patient doesn't already exist
+    const existingPatient = await patientService.findOne("test0");
+
+    if (!existingPatient) {
+        await patientService.create({
+            username: "test0",
+            firstName: "testFN0",
+            lastName: "testLN0",
+            AMKA: "00112233445",
+            dateOfBirth: "05-01-1940",
+            phoneNumber: 6987654321,
+            authorizationToLeave: false,
+            roomData: {
+                roomNumber: "10",
+                bedNumber: "1010"
+            },
+            patientAilments: {
+                disease: "testDisease0",
+                severity: 2
+            },
+            emergencyContactInfo: {
+                firstName: "testECIFN0",
+                lastName: "testECILN0",
+                phoneNumber: 6960696069,
+                address: {
+                road: "testRoad0",
+                number: 50
+                },
+                kinshipDegree: "friend"
+            }
+        });
+    };
+});
+
 // clean up mock POST documents
 afterEach(async () => {
     await patientService.deleteByUsername("test0");
     await patientService.deleteByUsername("test2");
+    await patientService.deleteByUsername("test3");
+    await visitorService.deleteByUsername("deleteMe");  // in case DELETE test fails
 });
 
 describe("Requests for /api/patients", () => {
@@ -50,30 +87,30 @@ describe("Requests for /api/patients", () => {
         .post('/api/patients')
         .set('Authorization', `Bearer ${token}`)
         .send({
-            "username":"test0",
-            "firstName":"testFN0",
-            "lastName":"testLN0",
-            "AMKA":"01234567890",
-            "dateOfBirth":"01-01-1970",
-            "phoneNumber":6987654321,
+            "username":"test3",
+            "firstName":"testFN3",
+            "lastName":"testLN3",
+            "AMKA":"01234567898",
+            "dateOfBirth":"01-01-1950",
+            "phoneNumber":6987654345,
             "authorizationToLeave": true,
             "roomData": {
-                "roomNumber":"10",
-                "bedNumber":"1010"
+                "roomNumber":"13",
+                "bedNumber":"1313"
             },
             "patientAilments": {
-                "disease":"testDisease0",
+                "disease":"testDisease3",
                 "severity":2
             },
             "emergencyContactInfo": {
-                "firstName":"eCFN0",
-                "lastName":"eCLN0",
-                "phoneNumber":6912312345,
+                "firstName":"eCIFN3",
+                "lastName":"eCILN3",
+                "phoneNumber":6912312321,
                 "address": {
-                    "road":"testRoad0",
+                    "road":"testRoad3",
                     "number":50
                 },
-            "kinshipDegree": "testKD0"
+            "kinshipDegree": "brother"
             }, 
         });
 
@@ -89,9 +126,9 @@ describe("Requests for /api/patients", () => {
             "username":"test0",
             "firstName":"testFN1",
             "lastName":"testLN1",
-            "AMKA":"01234567891",
-            "dateOfBirth":"01-01-1971",
-            "phoneNumber":6987654322,
+            "AMKA":"01234567899",
+            "dateOfBirth":"01-01-1942",
+            "phoneNumber":6988664322,
             "authorizationToLeave": true,
             "roomData": {
                 "roomNumber":"11",
@@ -102,12 +139,12 @@ describe("Requests for /api/patients", () => {
                 "severity":3,
             },
             "emergencyContactInfo": {
-                "firstName":"eCFN1",
-                "lastName":"eCLN1",
+                "firstName":"eCIFN1",
+                "lastName":"eCILN1",
                 "phoneNumber":6912312346,
                 "address": {
                     "road":"testRoad1",
-                    " number":51
+                    "number":51
                 },
                 "kinshipDegree": "testKD1"
             },
@@ -115,9 +152,9 @@ describe("Requests for /api/patients", () => {
 
         expect(res.statusCode).toBe(400);
         expect(res.body.status).not.toBeTruthy();
-    });
+    }, 5000);
 
-    test("POST - Create a patient with empty firstName, patientAilments object and kinshipDegree", async() => {
+    test("POST - Create a patient with empty firstName, authorizationToLeave and kinshipDegree", async() => {
     const res = await request(app)
     .post('/api/patients')
     .set('Authorization', `Bearer ${token}`)
@@ -128,13 +165,13 @@ describe("Requests for /api/patients", () => {
         "AMKA":"01234567891",
         "dateOfBirth":"01-01-1972",
         "phoneNumber":6987654323,
-        "authorizationToLeave": false,
+        "authorizationToLeave": null,
         "roomData": {
             "roomNumber":"12",
             "bedNumber":"1212"
         },
         "patientAilments": {
-            "disease":"",
+            "disease":"Dementia",
             "severity":null,
         },
         "emergencyContactInfo": {
@@ -152,12 +189,12 @@ describe("Requests for /api/patients", () => {
     expect(res.statusCode).toBe(400);
     expect(res.body.status).not.toBeTruthy();
     });
-});
+}, 5000);
 
 describe("Requests for /api/patients/:username", () => {
 
     test("GET - Returns patient by username", async () => {
-        const result = await patientService.findOne();
+        const result = await patientService.findOne("test0");
 
         const res = await request(app)
         .get('/api/patients/' + result.username)
@@ -166,10 +203,10 @@ describe("Requests for /api/patients/:username", () => {
         expect(res.statusCode).toBe(200);
         expect(res.body.status).toBeTruthy();
         expect(res.body.data.username).toBe(result.username);
-    });
+    }, 5000);
 
     test("PATCH - Updates patient data", async () => {
-        const result = await patientService.findOne();
+        const result = await patientService.findOne("test0");
 
         // original values backup before updating
         const originalData = {
@@ -196,11 +233,11 @@ describe("Requests for /api/patients/:username", () => {
             .set('Authorization', `Bearer ${token}`)
             .send(originalData);
         };
-    });
+    }, 5000);
 
     test("PATCH - Updates patient with empty fields", async() => {
         
-        const result = await patientService.findOne();
+        const result = await patientService.findOne("test0");
 
         const res = await request(app)
         .patch('/api/patients/' + result.username)
@@ -213,13 +250,13 @@ describe("Requests for /api/patients/:username", () => {
 
         expect(res.statusCode).toBe(400);
         expect(res.body.status).not.toBeTruthy();
-    });
+    }, 5000);
 
     test("DELETE - Deletes a patient", async() => {
 
         // create test patient document to be deleted
         const testPatient = {
-            username: "delete_me",
+            username: "deleteMe",
             firstName: "Del",
             lastName: "Ete",
             AMKA: "99999999999",
@@ -232,9 +269,9 @@ describe("Requests for /api/patients/:username", () => {
                 firstName: "Contact",
                 lastName: "Person",
                 phoneNumber: 6911111112,
-                address: { road: "testRoad", number: 1 }
-            },
-            kinshipDegree: "Friend"
+                address: { road: "testRoad", number: 1 },
+                kinshipDegree: "Friend"
+            }
         };
 
         await request(app)
@@ -248,7 +285,7 @@ describe("Requests for /api/patients/:username", () => {
 
         expect(res.statusCode).toBe(200);
         expect(res.body.status).toBeTruthy();
-    });
+    }, 5000);
 
     test("DELETE - Try to delete a non-existent patient", async() => {
 
@@ -259,4 +296,4 @@ describe("Requests for /api/patients/:username", () => {
         expect(res.statusCode).toBe(404);
         expect(res.body.status).not.toBeTruthy();
     });
-});
+}, 5000);
