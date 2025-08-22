@@ -45,4 +45,15 @@ async function create(data) {
     return await newPatient.save();
 };
 
-module.exports = { findAll, findOne, create }
+async function update(username, data) {
+
+        const result = await Patient.findOneAndUpdate(
+            { username: username },
+            { $set: data },    // only update the fields sent from the controller (PATCH) & ignore fields not included in schemas
+            { new: true, runValidators: true },    // runValidators applies validation checks also when updating
+        );
+
+        return result;
+    };
+
+module.exports = { findAll, findOne, create, update };

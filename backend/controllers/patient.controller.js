@@ -57,15 +57,14 @@ exports.update = async(req, res) => {
 
     console.log("Update patient data by username: ", username, ".");
 
+    const data = req.body;
+
     try {
-        const result = await Patient.findOneAndUpdate(
-            { username: username },
-            { $set: req.body },    // only update the fields sent (PATCH) - ignore fields not included in schemas
-            { new: true, runValidators: true },    // runValidators applies validation checks also when updating
-        );
+        const result = await patientService.update(username, data);
+
         if (!result) {
             logger.error("Error finding patient.");
-            return res.status(404).json({ status: false, data: "Patient not found." })
+            return res.status(404).json({ status: false, data: "Patient not found." });
         };
         res.status(200).json({ status: true, data: result });
     }   catch (err) {
