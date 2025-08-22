@@ -40,34 +40,13 @@ exports.create = async(req, res) => {
     console.log('Create staff member.');
 
     const data = req.body;
-    const rounds = 12;
-    let hashedPassword = '';
-    if (data.password) {
-        hashedPassword = await bcrypt.hash(data.password, rounds)
-    } else {
-
-    }
-
-    const newStaffMember = new Staff({
-        _id: data._id,
-        password: hashedPassword,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        TIN: data.TIN,
-        phoneNumber: data.phoneNumber,
-        address: {
-            road: data.address?.road,
-            number: data.address?.number
-        },
-        monthlySalary: data.monthlySalary,
-        });
 
     try {
-        const result = await newStaffMember.save();
+        const result = await staffService.create(data);
         res.status(201).json({ status: true, data: result});
     } catch (err) {
         console.log('Error creating staff member.', err);
-         logger.error("Error creating patient document.", err);
+        logger.error("Error creating staff document.", err);
         res.status(400).json({ status: false, data: err});
     };
 };

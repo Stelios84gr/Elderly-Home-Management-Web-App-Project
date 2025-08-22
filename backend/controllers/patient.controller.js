@@ -39,39 +39,11 @@ exports.findOne = async(req, res) => {
 
 exports.create = async(req, res) => {
     console.log('Create patient.');
-
+    
     const data = req.body;
 
-    const newPatient = new Patient({
-        username: data.username,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        AMKA: data.AMKA,
-        dateOfBirth: data.dateOfBirth,
-        phoneNumber: data.phoneNumber,
-        authorizationToLeave: data.authorizationToLeave,
-        roomData: {
-            roomNumber: data.roomData?.roomNumber,
-            bedNumber: data.roomData?.bedNumber
-        },
-        patientAilments: Array.isArray(data.patientAilments) ? data.patientAilments.map(ailment => ({
-            disease: ailment.disease,
-            severity: ailment.severity
-        })) : [],    // optional chaining in nested fields to avoid runtime errors in case parent fields are accidentally missing in POST request
-        emergencyContactInfo: {
-            firstName: data.emergencyContactInfo?.firstName,
-            lastName: data.emergencyContactInfo?.lastName,
-            phoneNumber: data.emergencyContactInfo?.phoneNumber,
-            address: {
-                road: data.emergencyContactInfo?.address?.road,
-                number: data.emergencyContactInfo?.address?.number
-            },
-            kinshipDegree: data.emergencyContactInfo?.kinshipDegree
-        }
-    });
-
     try {
-        const result = await newPatient.save();
+        const result = await patientService.create(data);
         res.status(201).json({ status: true, data: result});
     } catch (err) {
         console.log('Error creating patient.', err);
