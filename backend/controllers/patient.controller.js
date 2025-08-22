@@ -79,13 +79,13 @@ exports.deleteByUsername = async (req, res) => {
     console.log("Delete patient with username: ", username, ".");
 
     try {
-        const result = await Patient.findOneAndDelete({username: username});
+        const result = await patientService.deleteByUsername(username);
 
-        // avoid returning status 200 - null if no patient is found
+        // avoid returning status 200 & null if no patient is found
         if (!result) {
             logger.error("Patient not found");
             return res.status(404).json({ status: false, data: "Patient not found." });
-        }
+        };
 
         res.status(200).json({ status: true, data: result });
     } catch (err) {

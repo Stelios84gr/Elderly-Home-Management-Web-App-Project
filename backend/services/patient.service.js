@@ -56,4 +56,10 @@ async function update(username, data) {
         return result;
     };
 
-module.exports = { findAll, findOne, create, update };
+async function deleteByUsername(username) {
+    const result = await Patient.findOneAndDelete({username: username});
+
+    return result;
+};
+
+module.exports = { findAll, findOne, create, update, deleteByUsername };
