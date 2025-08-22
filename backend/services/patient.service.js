@@ -1,14 +1,16 @@
 const Patient = require('../models/patient.model')
 
-// .findOne() & .findAll() return a promise, so async functions
+// return a promise, so async functions
 
 async function findAll() {
     const result = await Patient.find();
+
     return result;
 };
 
 async function findOne(username) {
     const result = await Patient.findOne(username);
+    
     return result;
 };
 
@@ -47,13 +49,13 @@ async function create(data) {
 
 async function update(username, data) {
 
-        const result = await Patient.findOneAndUpdate(
-            { username: username },
-            { $set: data },    // only update the fields sent from the controller (PATCH) & ignore fields not included in schemas
-            { new: true, runValidators: true },    // runValidators applies validation checks also when updating
-        );
+    const result = await Patient.findOneAndUpdate(
+        { username },
+        { $set: data },    // only update the fields sent from the controller (PATCH) & ignore fields not included in schemas
+        { new: true, runValidators: true },    // runValidators applies validation checks also when updating
+    );
 
-        return result;
+    return result;
     };
 
 async function deleteByUsername(username) {

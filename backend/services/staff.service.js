@@ -1,14 +1,17 @@
-const Staff = require('../models/staff.model')
+const Staff = require('../models/staff.model');
+const bcrypt = require('bcrypt');
 
-// .findOne() & .findAll() return a promise, so async functions
+// return a promise, so async functions
 
 async function findAll() {
     const result = await Staff.find();
+
     return result;
 };
 
-async function findOne(id) {
-    const result = await Staff.findById(id);
+async function findOne(username) {
+    const result = await Staff.findOne({ username: username });
+    
     return result;
 };
 
@@ -38,4 +41,22 @@ async function create(data) {
         return await newStaffMember.save();
 };
 
-module.exports = { findAll, findOne, create }
+async function update(username, data) {
+
+        const result = await Staff.findOneAndUpdate(
+            { username },
+            { $set: data },    // only update the fields sent from the controller (PATCH) & ignore fields not included in schemas
+            { new: true, runValidators: true }    // runValidators applies validation checks also when updating
+        );
+
+        return result;
+    };
+
+async function deleteByUsername(username) {
+
+    const result = await Staff.findOneAndDelete({ username });
+
+    return result;
+};
+
+module.exports = { findAll, findOne, create, update, deleteByUsername };

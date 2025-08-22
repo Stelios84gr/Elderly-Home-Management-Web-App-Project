@@ -8,7 +8,7 @@ let addressSchema = new schema({
 });
 
 let visitorSchema = new schema({
-    _id: { type: String, required: [true, '"id" is a required field'] },
+    username: { type: String, required: [true, '"username" is a required field'] },
     firstName: { type: String, required: [true, '"firstName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     phoneNumber: { type: Number, required: [true, '"phoneNumber" is a required field'], min: 1000000000, max: 9999999999 },        // min-max: ensures 10-digit format
