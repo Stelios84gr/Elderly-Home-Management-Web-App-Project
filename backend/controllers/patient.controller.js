@@ -1,5 +1,5 @@
 const Patient = require('../models/patient.model');
-const patientService = require('../services/patient.services');
+const patientService = require('../services/patient.service');
 const logger = require('../logger/logger');
 
 exports.findAll = async(req, res) => {
@@ -23,7 +23,7 @@ exports.findOne = async(req, res) => {
 
     try {
         const result = await patientService.findOne(username);
-        // const result = await Patient.findOne(username); => delegated to patient.services
+        // const result = await Patient.findOne(username); => delegated to patient.service
         if (result) {   // not finding the patient does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {

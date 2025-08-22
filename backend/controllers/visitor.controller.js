@@ -1,5 +1,5 @@
 const Visitor = require('../models/visitor.model');
-const visitorService = require('../services/visitor.services');
+const visitorService = require('../services/visitor.service');
 
 exports.findAll = async(req, res) => {
     console.log("Retrieve all visitors from 'visitors' collection.");
@@ -22,7 +22,7 @@ exports.findOne = async(req, res) => {
 
     try {
         const result = await visitorService.findById(id);    // cleaner than findOne({_id:id})
-        // const result = await Visitor.findById({id}); => delegated to visitor.services
+        // const result = await Visitor.findById({id}); => delegated to visitor.service
         if (result) {   // not finding the visitor does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {

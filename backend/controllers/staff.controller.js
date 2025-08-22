@@ -1,5 +1,5 @@
 const Staff = require('../models/staff.model');
-const staffService = require('../services/staff.services');
+const staffService = require('../services/staff.service');
 
 exports.findAll = async(req, res) => {
     console.log("Retrieve all staff members from 'staff' collection.");
@@ -22,7 +22,7 @@ exports.findOne = async(req, res) => {
 
     try {
         const result = await staffService.findById(id);    // cleaner than findOne({_id:id})
-        // const result = await Staff.findById({id}); => delegated to staff.services
+        // const result = await Staff.findById({id}); => delegated to staff.service
         if (result) {   // not finding the staff member does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {
