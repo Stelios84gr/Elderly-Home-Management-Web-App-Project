@@ -8,8 +8,8 @@ let addressSchema = new schema({
 });
 
 let staffSchema = new schema({
-    username: { type: String, required: [true, '"username" is a required field'] },
-    password: { type: String, required: [true, '"password" is a required field'], minLength: 8, maxLength: 16 },
+    username: { type: String, required: [true, '"username" is a required field'], unique: true },
+    password: { type: String, required: [true, '"password" is a required field'], minLength: 8, maxLength: 75 },
     firstName: { type: String, required: [true, '"firstName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     TIN: { type: String, required: [true, '"TIN" is a required field'], minLength: 9, maxLength: 9, unique: true },    // in case it begins with 0
