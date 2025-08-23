@@ -35,6 +35,9 @@ async function create(data) {
             road: data.address?.road,
             number: data.address?.number
         },
+        occupation: data.occupation,
+        roles: [data.roles],
+        startDate: data.startDate,
         monthlySalary: data.monthlySalary,
         });
 
@@ -43,13 +46,19 @@ async function create(data) {
 
 async function update(username, data) {
 
-        const result = await Staff.findOneAndUpdate(
-            { username },
-            { $set: data },    // only update the fields sent from the controller (PATCH) & ignore fields not included in schemas
-            { new: true, runValidators: true }    // runValidators applies validation checks also when updating
-        );
+    // if password is to be updated, hash it first
+    if (data.password) {
+        const rounds = 12;
+        data.password = await bcrypt.hash(datap.assword, rounds);
+    };
 
-        return result;
+    const result = await Staff.findOneAndUpdate(
+        { username },
+        { $set: data },    // only update the fields sent from the controller (PATCH) & ignore fields not included in schemas
+        { new: true, runValidators: true }    // runValidators applies validation checks also when updating
+    );
+
+    return result;
     };
 
 async function deleteByUsername(username) {
