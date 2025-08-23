@@ -15,6 +15,7 @@ async function findOne(username) {
 async function create(data) {
 
     const newVisitor = new Visitor({
+        username: data.username,
         firstName: data.firstName,
         lastName: data.lastName,
         phoneNumber: data.phoneNumber,
