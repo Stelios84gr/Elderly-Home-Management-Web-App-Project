@@ -11,6 +11,28 @@ let token;
 beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_URI);
 
+    // check that the staff member doesn't already exist
+    const existingStaffMember = await staffService.findOne("test0");
+
+    if (!existingStaffMember) {
+        await staffService.create({
+            username: "test0",
+            password: "p4Sw0rd!0",
+            firstName: "testFN0",
+            lastName: "testLN0",
+            TIN: "00112233456",
+            phoneNumber: 6987654321,
+            address: {
+            road: "testRoad0",
+            number: 50
+            },
+            occupation: "Nurse",
+            roles: ["READER"],
+            startDate: "2018-09-10 08:00:00",
+            monthlySalary: 1020
+        });
+    };
+
     // login
     const res = await request(app)
         .post("/api/auth/login")
@@ -24,36 +46,16 @@ beforeAll(async () => {
 
 // avoid disconnecting before each test
 afterAll(async () => {
+    await staffService.deleteByUsername("test0");
     await mongoose.connection.close();
 });
 
 beforeEach(async () => {
-    // check that the staff member doesn't already exist
-    const existingStaffMember = await staffService.findOne("test0");
 
-    if (!existingStaffMember) {
-        await staffService.create({
-            username: "test0",
-            password: "p4Sw0rd!0",
-            firstName: "testFN0",
-            lastName: "testLN0",
-            AMKA: "00112233456",
-            phoneNumber: 6987654321,
-            address: {
-            road: "testRoad0",
-            number: 50
-            },
-            occupation: "Nurse",
-            roles: ["READER"],
-            startDate: "2018-09-10 08:00:00",
-            monthlySalary: 1020
-        });
-    };
 });
 
 // clean up mock POST documents
 afterEach(async () => {
-    await staffService.deleteByUsername("test0");
     await staffService.deleteByUsername("test2");
     await staffService.deleteByUsername("test3");
     await staffService.deleteByUsername("deleteMe");  // in case DELETE test fails
@@ -69,7 +71,7 @@ describe("Requests for /api/staff", () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBeTruthy();
     expect(res.body.data.length).toBeGreaterThan(0);
-    }, 5000);    
+    }, 5000);
 
     test("POST - Creates a staff member", async () => {
     const res = await request(app)
@@ -92,7 +94,7 @@ describe("Requests for /api/staff", () => {
 
     expect(res.statusCode).toBe(201);
     expect(res.body.status).toBeTruthy();
-    });
+    }, 5000);
 
     test("POST - Creates staff member with a username that already exists", async () => {
     const res = await request(app)
@@ -175,7 +177,9 @@ describe("/api/staff/:username", () => {
                 "firstName": "uSFN",
                 "lastName": "uSLN"
             });
-
+        
+        expect(res.body.data.firstName).toBe("uSFN");
+        expect(res.body.data.lastName).toBe("uSLN")
         expect(res.statusCode).toBe(200);
         expect(res.body.status).toBeTruthy();
         } finally {
@@ -241,5 +245,5 @@ describe("/api/staff/:username", () => {
 
     expect(res.statusCode).toBe(404);
     expect(res.body.status).not.toBeTruthy();
-    });
-}, 5000);
+    }, 5000);
+});
