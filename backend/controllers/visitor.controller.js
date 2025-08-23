@@ -24,7 +24,7 @@ exports.findOne = async(req, res) => {
         const result = await visitorService.findOne(username);
         // const result = await Visitor.findOne(username); => delegated to visitor.service
         if (result) {   // not finding the visitor does not raise an error and go to catch
-            res.status(201).json({ status: true, data: result});
+            res.status(200).json({ status: true, data: result});
         }   else {
             res.status(404).json({ status: false, data: "Visitor not found."});
             logger.error("Error finding visitor.");
@@ -43,7 +43,7 @@ exports.create = async(req, res) => {
 
     try {
         const result = await visitorService.create(data);
-        res.status(200).json({ status: true, data: result});
+        res.status(201).json({ status: true, data: result});
     } catch (err) {
         console.log('Error creating visitor.', err);
         logger.error("Error creating visitor document.", err);
