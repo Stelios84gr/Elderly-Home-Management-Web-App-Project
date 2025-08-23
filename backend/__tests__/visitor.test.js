@@ -85,7 +85,6 @@ describe("Requests for /api/visitors", () => {
             "relationship": "kinsperson",
             "isFamily": true
             });
-        });
 
         expect(res.statusCode).toBe(201);
         expect(res.body.status).toBeTruthy();       
@@ -132,6 +131,7 @@ describe("Requests for /api/visitors", () => {
     expect(res.statusCode).toBe(400);
     expect(res.body.status).not.toBeTruthy();
     }, 5000);
+});
 
 describe("Requests for /api/visitors/:username", () => {
 
@@ -166,6 +166,8 @@ describe("Requests for /api/visitors/:username", () => {
                 "lastName": "uLN",
             });
 
+            expect(res.body.data.firstName).toBe("uFN");
+            expect(res.body.data.lastName).toBe("uLN");
             expect(res.statusCode).toBe(200);
             expect(res.body.status).toBeTruthy();
         } finally {
