@@ -1,4 +1,4 @@
-const Patient = require('../models/patient.model')
+const Patient = require('../models/patient.model');
 
 // return a promise, so async functions
 
@@ -8,7 +8,7 @@ async function findAll() {
     return result;
 };
 
-async function findOne(username) {
+async function findOne({ username }) {
     const result = await Patient.findOne(username);
     
     return result;
