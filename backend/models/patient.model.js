@@ -29,7 +29,7 @@ let visitorsSchema = new schema({   // both nested fields aren't required, as vi
 });
 
 let patientSchema = new schema({
-    username: { type: String, required: [true, '"username" is a required field'], minLength: 4, trim: true, lowercase: true },
+    username: { type: String, required: [true, '"username" is a required field'], minLength: 4, trim: true, lowercase: true, unique: true },
     firstName: { type: String, required: [true, '"firstName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     AMKA: { type: String, required: [true, '"AMKA" is a required field'], minLength: 11, maxLength: 11, trim: true, unique: true },   // in case it begins with 0
