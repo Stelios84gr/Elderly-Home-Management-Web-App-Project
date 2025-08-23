@@ -32,7 +32,7 @@ exports.findOne = async(req, res) => {
     } catch (err) {
         console.log('Error finding staff member.', err);
         res.status(400).json({ status: false, data: err });
-        logger.error("Error finding patient. ", err);
+        logger.error("Error finding staff member. ", err);
     }
 }
 
