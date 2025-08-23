@@ -11,23 +11,6 @@ let token;
 beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_URI);
 
-    // login
-    const res = await request(app)
-        .post("/api/auth/login")
-        .send({
-        username: "3fcharles6",
-        password: "mqvVNkT*8"
-        });
-
-    token = res.body.token;
-});
-
-// avoid disconnecting before each test
-afterAll(async () => {
-    await mongoose.connection.close();
-});
-
-beforeEach(async () => {
     // check that the patient doesn't already exist
     const existingPatient = await patientService.findOne("test0");
 
@@ -44,10 +27,12 @@ beforeEach(async () => {
                 roomNumber: "10",
                 bedNumber: "1010"
             },
-            patientAilments: {
+            patientAilments: [
+                {
                 disease: "testDisease0",
                 severity: 2
-            },
+            }
+        ],
             emergencyContactInfo: {
                 firstName: "testECIFN0",
                 lastName: "testECILN0",
@@ -60,14 +45,34 @@ beforeEach(async () => {
             }
         });
     };
+
+    // login
+    const res = await request(app)
+        .post("/api/auth/login")
+        .send({
+        username: "3fcharles6",
+        password: "mqvVNkT*8"
+        });
+
+    token = res.body.token;
+});
+
+// avoid disconnecting before each test
+afterAll(async () => {
+    await patientService.deleteByUsername("test0");
+    await mongoose.connection.close();
+    
+});
+
+beforeEach(async () => {
+    
 });
 
 // clean up mock POST documents
 afterEach(async () => {
-    await patientService.deleteByUsername("test0");
     await patientService.deleteByUsername("test2");
     await patientService.deleteByUsername("test3");
-    await visitorService.deleteByUsername("deleteMe");  // in case DELETE test fails
+    await patientService.deleteByUsername("deleteMe");  // in case DELETE test fails
 });
 
 describe("Requests for /api/patients", () => {
@@ -98,10 +103,12 @@ describe("Requests for /api/patients", () => {
                 "roomNumber":"13",
                 "bedNumber":"1313"
             },
-            "patientAilments": {
+            "patientAilments": [
+                {
                 "disease":"testDisease3",
                 "severity":2
-            },
+            }
+        ],
             "emergencyContactInfo": {
                 "firstName":"eCIFN3",
                 "lastName":"eCILN3",
@@ -134,10 +141,12 @@ describe("Requests for /api/patients", () => {
                 "roomNumber":"11",
                 "bedNumber":"1111"
             },
-            "patientAilments": {
+            "patientAilments": [
+                {
                 "disease":"testDisease1",
                 "severity":3,
-            },
+            }
+        ],
             "emergencyContactInfo": {
                 "firstName":"eCIFN1",
                 "lastName":"eCILN1",
@@ -170,10 +179,12 @@ describe("Requests for /api/patients", () => {
             "roomNumber":"12",
             "bedNumber":"1212"
         },
-        "patientAilments": {
+        "patientAilments": [
+            {
             "disease":"Dementia",
             "severity":null,
-        },
+        }
+    ],
         "emergencyContactInfo": {
             "firstName":"eCFN1",
             "lastName":"eCLN1",
@@ -224,6 +235,8 @@ describe("Requests for /api/patients/:username", () => {
                 "lastName": "uLN",
             });
 
+            expect(res.body.data.firstName).toBe("uFN");
+            expect(res.body.data.lastName).toBe("uLN");
             expect(res.statusCode).toBe(200);
             expect(res.body.status).toBeTruthy();
         } finally {
@@ -264,7 +277,9 @@ describe("Requests for /api/patients/:username", () => {
             phoneNumber: 6911112222,
             authorizationToLeave: true,
             roomData: { roomNumber: "99", bedNumber: "9999" },
-            patientAilments: { disease: "Cardiovascular", severity: 1 },
+            patientAilments: [
+                { disease: "Cardiovascular", severity: 1 }
+            ],
             emergencyContactInfo: {
                 firstName: "Contact",
                 lastName: "Person",
