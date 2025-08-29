@@ -10,8 +10,8 @@ async function findAll() {
 };
 
 // generic, instead of ({ username }), because it's used in both username and e-mai checkDuplicate front-end custom validators
-async function findOne(parameter) {
-    const result = await Staff.findOne(parameter);
+async function findOne(filter) {
+    const result = await Staff.findOne(filter);
     
     return result;
 };
