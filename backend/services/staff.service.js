@@ -9,7 +9,7 @@ async function findAll() {
     return result;
 };
 
-async function findOne(username) {
+async function findOne({ username }) {
     const result = await Staff.findOne({ username: username });
     
     return result;
@@ -49,7 +49,7 @@ async function update(username, data) {
     // if password is to be updated, hash it first
     if (data.password) {
         const rounds = 12;
-        data.password = await bcrypt.hash(datap.assword, rounds);
+        data.password = await bcrypt.hash(data.password, rounds);
     };
 
     const result = await Staff.findOneAndUpdate(
