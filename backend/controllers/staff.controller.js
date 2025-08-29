@@ -42,7 +42,7 @@ exports.checkDuplicateEmail = async(req, res) => {
     const email = req.params.email;
 
     try {
-        const result = await UserActivation.findOne(email);
+        const result = await staffService.findOne(email);
         if (result) {
             res.status(400).json({ status: false, data: result });
         } else {
