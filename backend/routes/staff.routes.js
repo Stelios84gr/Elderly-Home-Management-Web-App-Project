@@ -11,6 +11,6 @@ router.get('/checkDuplicateUsername/:username', verifyToken, staffController.che
 router.get('/checkDuplicateEmail/:email', verifyToken, staffController.checkDuplicateEmail);
 router.post('/', verifyToken, verifyRoles("ADMIN"), staffController.create);
 router.patch('/:username', verifyToken, verifyRoles("ADMIN"),  staffController.update);
-router.delete('/:username', verifyToken, verifyRoles("ADMIN"), staffController.deleteById);
+router.delete('/:username', verifyToken, verifyRoles("ADMIN"), staffController.deleteByUsername);
 
 module.exports = router;
