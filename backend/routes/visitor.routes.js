@@ -6,6 +6,7 @@ const verifyToken = require('../middlewares/auth.middleware').verifyToken;
 const verifyRoles = require('../middlewares/auth.middleware').verifyRoles;
 
 router.get('/', verifyToken, visitorController.findAll);
+// checkDuplicate GET route first to avoid "route shadowing" (specific ones first, more generic ones after)
 router.get('/checkDuplicateUsername/:username', verifyToken, visitorController.checkDuplicateUsername);
 router.get('/:username', verifyToken, verifyRoles(["EDITOR", "ADMIN"]), visitorController.findOne);
 router.post('/', verifyToken, verifyRoles(["ADMIN"]), visitorController.create);
