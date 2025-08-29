@@ -32,9 +32,28 @@ exports.findOne = async(req, res) => {
     } catch (err) {
         console.log('Error finding staff member.', err);
         res.status(400).json({ status: false, data: err });
-        logger.error("Error finding staff member. ", err);
-    }
-}
+        logger.error("Error finding staff member.", err);
+    };
+};
+
+exports.checkDuplicateEmail = async(req, res) => {
+    console.log("Check for duplicate e-mail address", email);
+
+    const email = req.params.email;
+
+    try {
+        const result = await UserActivation.findOne(email);
+        if (result) {
+            res.status(400).json({ status: false, data: result });
+        } else {
+            res.status(200).json({ status: true, data: result });
+        };
+    }   catch (err) {
+        console.log(`Error finding e-mail address: ${email}`, err);
+        res.status(400).json({ status: false, data: err});
+        logger.error("Error finding e-mail addresss.")
+    };
+};
 
 exports.create = async(req, res) => {
     console.log('Create staff member.');
@@ -46,15 +65,15 @@ exports.create = async(req, res) => {
         res.status(201).json({ status: true, data: result});
     } catch (err) {
         console.log('Error creating staff member.', err);
-        logger.error("Error creating staff document.", err);
         res.status(400).json({ status: false, data: err});
+        logger.error("Error creating staff document.", err);
     };
 };
 
 exports.update = async(req, res) => {
-    const username = req.params.username;    // username will be retrieved from URL (path params)
-
     console.log("Update staff member data by username: ", username, ".");
+
+    const username = req.params.username;    // username will be retrieved from URL (path params)
 
     const data = req.body;
 
@@ -74,9 +93,10 @@ exports.update = async(req, res) => {
 };
 
 exports.deleteByUsername = async (req, res) => {
-    const username = req.params.username;
     console.log("Delete staff member with username: ", username, ".");
 
+    const username = req.params.username;
+    
     try {
         const result = await staffService.deleteByUsername(username);
 
