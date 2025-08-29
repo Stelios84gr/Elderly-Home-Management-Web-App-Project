@@ -43,11 +43,10 @@ exports.checkDuplicateUsername = async(req, res) => {
     
     try {
         const result = await staffService.findOne({ username });
-        if (result) {
-            res.status(400).json({ status: false, data: result });
-        } else {
-            res.status(200).json({ status: true, data: result });
-        };
+        // !!: inverted negation (true => false & false & true)
+        // 400 causes Angular to skip next and go to error
+        // always return 200 so that Angular can properly indicate if username already exists or not
+        res.status(200).json({ exists: !!result });
     }   catch (err) {
         console.log(`Error finding username: ${username}`, err);
         res.status(400).json({ status: false, data: err});
@@ -62,11 +61,8 @@ exports.checkDuplicateEmail = async(req, res) => {
 
     try {
         const result = await staffService.findOne({ email });
-        if (result) {
-            res.status(400).json({ status: false, data: result });
-        } else {
-            res.status(200).json({ status: true, data: result });
-        };
+
+        res.status(200).json({ exists: !!result });
     }   catch (err) {
         console.log(`Error finding e-mail address: ${email}`, err);
         res.status(400).json({ status: false, data: err});

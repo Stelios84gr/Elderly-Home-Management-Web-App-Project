@@ -23,13 +23,10 @@ exports.findOne = async(req, res) => {
 
     try {
         const result = await visitorService.findOne({ username });
-        // const result = await Visitor.findOne(username); => delegated to visitor.service
-        if (result) {   // not finding the visitor does not raise an error and go to catch
-            res.status(200).json({ status: true, data: result});
-        }   else {
-            res.status(404).json({ status: false, data: "Visitor not found."});
-            logger.error("Error finding visitor.");
-        }
+        // !!: inverted negation (true => false & false & true)
+        // 400 causes Angular to skip next and go to error
+        // always return 200 so that Angular can properly indicate if username already exists or not
+         res.status(200).json({ exists: !!result });
     } catch (err) {
         console.log('Error finding visitor.', err);
         res.status(400).json({ status: false, data: err });
