@@ -36,10 +36,29 @@ exports.findOne = async(req, res) => {
     };
 };
 
-exports.checkDuplicateEmail = async(req, res) => {
-    console.log("Check for duplicate e-mail address", email);
+exports.checkDuplicateUsername = async(req, res) => {
+    const username = req.params.username;
 
+    console.log("Check for duplicate username", username);
+    
+    try {
+        const result = await staffService.findOne(username);
+        if (result) {
+            res.status(400).json({ status: false, data: result });
+        } else {
+            res.status(200).json({ status: true, data: result });
+        };
+    }   catch (err) {
+        console.log(`Error finding username: ${username}`, err);
+        res.status(400).json({ status: false, data: err});
+        logger.error("Error finding username.")
+    };
+};
+
+exports.checkDuplicateEmail = async(req, res) => {
     const email = req.params.email;
+
+    console.log("Check for duplicate e-mail address", email);
 
     try {
         const result = await staffService.findOne(email);
