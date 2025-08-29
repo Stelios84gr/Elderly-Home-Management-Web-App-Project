@@ -7,7 +7,7 @@ async function findAll() {
     return result;
 };
 
-async function findOne(username) {
+async function findOne({ username }) {
     const result = await Visitor.findOne({ username: username });
     return result;
 }

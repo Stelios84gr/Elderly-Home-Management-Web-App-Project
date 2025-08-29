@@ -9,7 +9,7 @@ async function findAll() {
 };
 
 async function findOne({ username }) {
-    const result = await Patient.findOne(username);
+    const result = await Patient.findOne({ username });
     
     return result;
 };
@@ -59,7 +59,7 @@ async function update(username, data) {
     };
 
 async function deleteByUsername(username) {
-    const result = await Patient.findOneAndDelete({username: username});
+    const result = await Patient.findOneAndDelete({ username });
 
     return result;
 };
