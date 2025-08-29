@@ -18,10 +18,11 @@ exports.findAll = async(req, res) => {
 
 exports.findOne = async(req, res) => {
     console.log('Find a specific visitor.');
+    
     const username = req.params.username;    // find by username
 
     try {
-        const result = await visitorService.findOne(username);
+        const result = await visitorService.findOne({ username });
         // const result = await Visitor.findOne(username); => delegated to visitor.service
         if (result) {   // not finding the visitor does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
@@ -42,7 +43,7 @@ exports.checkDuplicateUsername = async(req, res) => {
     console.log("Check for duplicate username", username);
     
     try {
-        const result = await visitorService.findOne(username);
+        const result = await visitorService.findOne({ username });
         if (result) {
             res.status(400).json({ status: false, data: result });
         } else {

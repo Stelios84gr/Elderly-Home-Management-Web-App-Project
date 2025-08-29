@@ -22,7 +22,7 @@ exports.findOne = async(req, res) => {
     const username = req.params.username;
 
     try {
-        const result = await patientService.findOne(username);
+        const result = await patientService.findOne({ username });
         // const result = await Patient.findOne(username); => delegated to patient.service
         if (result) {   // not finding the patient does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
@@ -43,7 +43,7 @@ exports.checkDuplicateUsername = async(req, res) => {
     console.log("Check for duplicate username", username);
     
     try {
-        const result = await patientService.findOne(username);
+        const result = await patientService.findOne({ username });
         if (result) {
             res.status(400).json({ status: false, data: result });
         } else {
@@ -95,6 +95,7 @@ exports.update = async(req, res) => {
 
 exports.deleteByUsername = async (req, res) => {
     const username = req.params.username;
+    
     console.log("Delete patient with username: ", username, ".");
 
     try {

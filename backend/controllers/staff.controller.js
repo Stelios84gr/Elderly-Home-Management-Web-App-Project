@@ -22,7 +22,7 @@ exports.findOne = async(req, res) => {
     const username = req.params.username;    // find by username
 
     try {
-        const result = await staffService.findOne(username);
+        const result = await staffService.findOne({ username });
         if (result) {   // not finding the staff member does not raise an error and go to catch
             res.status(200).json({ status: true, data: result});
         }   else {
@@ -42,7 +42,7 @@ exports.checkDuplicateUsername = async(req, res) => {
     console.log("Check for duplicate username", username);
     
     try {
-        const result = await staffService.findOne(username);
+        const result = await staffService.findOne({ username });
         if (result) {
             res.status(400).json({ status: false, data: result });
         } else {
@@ -61,7 +61,7 @@ exports.checkDuplicateEmail = async(req, res) => {
     console.log("Check for duplicate e-mail address", email);
 
     try {
-        const result = await staffService.findOne(email);
+        const result = await staffService.findOne({ email });
         if (result) {
             res.status(400).json({ status: false, data: result });
         } else {
@@ -75,9 +75,9 @@ exports.checkDuplicateEmail = async(req, res) => {
 };
 
 exports.create = async(req, res) => {
-    console.log('Create staff member.');
-
     const data = req.body;
+
+    console.log('Create staff member.');
 
     try {
         const result = await staffService.create(data);
@@ -90,9 +90,9 @@ exports.create = async(req, res) => {
 };
 
 exports.update = async(req, res) => {
-    console.log("Update staff member data by username: ", username, ".");
-
     const username = req.params.username;    // username will be retrieved from URL (path params)
+
+    console.log("Update staff member data by username: ", username, ".");
 
     const data = req.body;
 
@@ -112,9 +112,9 @@ exports.update = async(req, res) => {
 };
 
 exports.deleteByUsername = async (req, res) => {
-    console.log("Delete staff member with username: ", username, ".");
-
     const username = req.params.username;
+
+    console.log("Delete staff member with username: ", username, ".");
     
     try {
         const result = await staffService.deleteByUsername(username);
