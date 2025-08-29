@@ -13,15 +13,14 @@ const patient = require('./routes/patient.routes');
 const visitor = require( './routes/visitor.routes');
 const staff = require('./routes/staff.routes');
 
+app.use(cors({
+    origin: ['http://localhost:4200']
+}));
+
 app.use('/api/auth', auth)
 app.use('/api/patients', patient);
 app.use('/api/staff', staff);
 app.use('/api/visitors', visitor);
-
-app.use(cors({
-    origin: ['http://localhost:3000']
-}));
-
 
 app.use(
     '/api-docs/',
