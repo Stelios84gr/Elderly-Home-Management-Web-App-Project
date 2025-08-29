@@ -7,6 +7,7 @@ const verifyRoles = require('../middlewares/auth.middleware').verifyRoles;
 
 router.get('/', verifyToken, staffController.findAll);
 router.get('/:username', verifyToken, verifyRoles(["EDITOR", "ADMIN"]), staffController.findOne);
+router.get('/checkDuplicateEmail/:email', staffController.checkDuplicateEmail);
 router.post('/', verifyToken, verifyRoles("ADMIN"), staffController.create);
 router.patch('/:username', verifyToken, verifyRoles("ADMIN"),  staffController.update);
 router.delete('/:username', verifyToken, verifyRoles("ADMIN"), staffController.deleteById);
