@@ -33,8 +33,27 @@ exports.findOne = async(req, res) => {
         console.log('Error finding visitor.', err);
         res.status(400).json({ status: false, data: err });
         logger.error("Error finding visitor.", err);
-    }
-}
+    };
+};
+
+exports.checkDuplicateUsername = async(req, res) => {
+    const username = req.params.username;
+
+    console.log("Check for duplicate username", username);
+    
+    try {
+        const result = await visitorService.findOne(username);
+        if (result) {
+            res.status(400).json({ status: false, data: result });
+        } else {
+            res.status(200).json({ status: true, data: result });
+        };
+    }   catch (err) {
+        console.log(`Error finding username: ${username}`, err);
+        res.status(400).json({ status: false, data: err});
+        logger.error("Error finding username.")
+    };
+};
 
 exports.create = async(req, res) => {
     console.log('Create visitor.');
@@ -48,7 +67,7 @@ exports.create = async(req, res) => {
         console.log('Error creating visitor.', err);
         logger.error("Error creating visitor document.", err);
         res.status(400).json({ status: false, data: err});
-    }
+    };
 };
 
 exports.update = async(req, res) => {
@@ -69,7 +88,7 @@ exports.update = async(req, res) => {
         console.log("Error updating visitor.", err);
         res.status(400).json({ status: false, data: err });
         logger.error("Error updating visitor.", err);
-    }
+    };
 };
 
 exports.deleteByUsername = async (req, res) => {

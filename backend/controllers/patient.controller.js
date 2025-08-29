@@ -34,8 +34,27 @@ exports.findOne = async(req, res) => {
         console.log('Error finding patient.', err);
         res.status(400).json({ status: false, data: err });
         logger.error("Error finding patient. ", err);
-    }
-}
+    };
+};
+
+exports.checkDuplicateUsername = async(req, res) => {
+    const username = req.params.username;
+
+    console.log("Check for duplicate username", username);
+    
+    try {
+        const result = await patientService.findOne(username);
+        if (result) {
+            res.status(400).json({ status: false, data: result });
+        } else {
+            res.status(200).json({ status: true, data: result });
+        };
+    }   catch (err) {
+        console.log(`Error finding username: ${username}`, err);
+        res.status(400).json({ status: false, data: err});
+        logger.error("Error finding username.")
+    };
+};
 
 exports.create = async(req, res) => {
     console.log('Create patient.');
