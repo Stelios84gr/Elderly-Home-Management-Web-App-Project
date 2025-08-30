@@ -6,6 +6,7 @@ function generateAccessToken(staff){
 
     const payload = {
         username: staff.username,
+        email: staff.email,
         roles: staff.roles
     };
 
