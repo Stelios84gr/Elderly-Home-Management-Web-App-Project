@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
+const logger = require('../logger/logger');
 
 function generateAccessToken(staff){
     console.log('Auth Service: ', staff);
@@ -44,7 +45,16 @@ async function googleAuth(code) {
         });
 
         const userInfo = await ticket.getPayload();
-        return { user: userInfo, tokens };
+        // return { user: userInfo, tokens };
+        const user = {
+            username: userInfo.given_name,
+            email: userInfo.email,
+            roles: ["READER", "EDITOR"]
+        };
+
+        const token = this.generateAccessToken(user);
+        return token;
+
     } catch (err) {
         console.log("Error during OAuth 2.0 token verification:", err);
         logger.error("Error during OAuth 2.0 token verification:", err);
