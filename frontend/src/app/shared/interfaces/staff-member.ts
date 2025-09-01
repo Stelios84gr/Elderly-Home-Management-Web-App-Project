@@ -13,6 +13,6 @@ export interface StaffMember {
 };
 
 export interface Address {
-    road: string,
+    street: string,
     number: string
 };
