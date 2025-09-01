@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
+import { StaffForm } from '../staff-form/staff-form';
+import { StaffMember } from 'src/app/shared/interfaces/staff-member';
 
 @Component({
   selector: 'app-staff-table',
-  imports: [],
+  standalone: true,
+  imports: [StaffForm],
   templateUrl: './staff-table.html',
-  styleUrl: './staff-table.css'
+  styleUrls: ['./staff-table.css']
 })
 export class StaffTable {
 
