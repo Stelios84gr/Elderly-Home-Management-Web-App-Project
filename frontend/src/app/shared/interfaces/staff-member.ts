@@ -3,6 +3,7 @@ export interface StaffMember {
     password: string,
     firstName: string,
     lastName: string,
+    email: string,
     TIN: string,
     phoneNumber: number,
     address: Address,
