@@ -1,136 +1,143 @@
-<div class="flex flex-col">
-    <h1 class="text-4xl font-bold tracking-tight">New Staff Member Registration Form</h1>
-    <form [formGroup]="staffForm">
+<div class="flex justify-center mt-8">
+    <div class="flex flex-col gap-4">
+        <h1 class="text-4xl font-bold">New Staff Member Registration Form</h1>
+        <form [formGroup]="staffForm" class="flex flex-col gap-4">
 
-        <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input
-            type="text"
-            matInput
-            formControlName="username"
-            >
-            <mat-error>"username" is a required field.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input
-            type="password"
-            matInput
-            formControlName="password"
-            >
-            <mat-error>"password" is a required field.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>First Name</mat-label>
-            <input
-            type="text"
-            matInput
-            formControlName="firstName"
-            >
-            <mat-error>"First Name" is a required field.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Last Name</mat-label>
-            <input
-            type="text"
-            matInput
-            formControlName="lastName"
-            >
-            <mat-error>"Last Name" is a required field.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>E-mail Address</mat-label>
-            <input
-            type="text"
-            matInput
-            formControlName="email"
-            >
-            <mat-error>"E-mail Address" is a required field.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>TIN</mat-label>
-            <input
-            type="text"
-            matInput
-            formControlName="TIN"
-            >
-            <mat-error>"TIN" is a required field.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Phone Number</mat-label>
-            <input
-            type="text"
-            matInput
-            formControlName="phoneNumber"
-            >
-            <mat-error>"Phone Number" is a required field.</mat-error>
-        </mat-form-field>
-
-        <div class="flex gap-2" formGroupName="address">
-            <mat-form-field>
-                <mat-label>Street</mat-label>
-                <input matInput type="text" formControlName="street">
-                <mat-error>"Street" is a required field.</mat-error>
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Username</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="username"
+                >
+                <mat-error>"username" is a required field.</mat-error>
             </mat-form-field>
-            <mat-form-field>
-                <mat-label>Number</mat-label>
-                <input matInput type="text" formControlName="number">
-                <mat-error>"Number" is a required field.</mat-error>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Password</mat-label>
+                <input
+                type="password"
+                matInput
+                formControlName="password"
+                >
+                <mat-error>"password" is a required field.</mat-error>
             </mat-form-field>
-        </div>
 
-        <mat-form-field>
-            <mat-label>Occupation</mat-label>
-            <input
-            type="text"
-            matInput
-            formControlName="occupation"
-            >
-            <mat-error>"Occupation" is a required field.</mat-error>
-        </mat-form-field>
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>First Name</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="firstName"
+                >
+                <mat-error>"First Name" is a required field.</mat-error>
+            </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Roles</mat-label>
-            <mat-select formControlName="roles" multiple>
-                <mat-option value="reader">Reader</mat-option>
-                <mat-option value="editor">Editor</mat-option>
-                <mat-option value="Admin">Admin</mat-option>
-            </mat-select>
-            <mat-error>"Occupation" is a required field.</mat-error>
-        </mat-form-field>
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Last Name</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="lastName"
+                >
+                <mat-error>"Last Name" is a required field.</mat-error>
+            </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Start Date</mat-label>
-            <input
-            type="date"
-            matInput
-            formControlName="startDate"
-            [matDatepicker]="picker"
-            >
-            <mat-datepicker-toggle
-            matSuffix [for]="picker"
-            >
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error>"Start Date" is a required field.</mat-error>
-        </mat-form-field>
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>E-mail Address</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="email"
+                >
+                <mat-error>"E-mail Address" is a required field.</mat-error>
+            </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Monthly Salary</mat-label>
-            <input
-            type="text"
-            matInput
-            formControlName="monthlySalary"
-            >
-            <mat-error>"Monthly Salary" is a required field.</mat-error>
-        </mat-form-field>
-    </form>
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>TIN</mat-label>
+                <input
+                type="number"
+                matInput
+                formControlName="TIN"
+                >
+                <mat-error>"TIN" is a required field.</mat-error>
+            </mat-form-field>
 
-    <button>Submit</button>
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Phone Number</mat-label>
+                <input
+                type="number"
+                matInput
+                formControlName="phoneNumber"
+                >
+                <mat-error>"Phone Number" is a required field.</mat-error>
+            </mat-form-field>
+
+            <div class="flex gap-2 w-full max-w-md" formGroupName="address">
+                <div class="flex items-center whitespace-nowrap font-medium text-gray-700 w-12">
+                    Address
+                </div>
+                <div class="flex gap-2 flex-1">
+                    <mat-form-field class="flex-1">
+                        <mat-label>Street</mat-label>
+                        <input matInput type="text" formControlName="street">
+                        <mat-error>"Street" is a required field.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-25">
+                        <mat-label>Number</mat-label>
+                        <input matInput type="text" formControlName="number">
+                        <mat-error>"Number" is a required field.</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Occupation</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="occupation"
+                >
+                <mat-error>"Occupation" is a required field.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Roles</mat-label>
+                <mat-select formControlName="roles" multiple>
+                    <mat-option value="reader">Reader</mat-option>
+                    <mat-option value="editor">Editor</mat-option>
+                    <mat-option value="Admin">Admin</mat-option>
+                </mat-select>
+                <mat-error>"Roles" is a required field.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Start Date</mat-label>
+                <input
+                type="date"
+                matInput
+                formControlName="startDate"
+                [matDatepicker]="picker"
+                >
+                <mat-datepicker-toggle
+                matSuffix [for]="picker"
+                >
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>"Start Date" is a required field.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Monthly Salary</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="monthlySalary"
+                >
+                <mat-error>"Monthly Salary" is a required field.</mat-error>
+            </mat-form-field>
+        </form>
+
+        <button mat-flat-button [disabled]="staffForm.invalid" color="primary" (click)="onSubmit()">Submit</button>
+    </div>
 </div>
