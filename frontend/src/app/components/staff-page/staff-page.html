@@ -1,0 +1,16 @@
+<h1 class="text-4xl font-bold mb-4">Staff Management</h1>
+
+<button
+mat-flat-button
+color="primary"
+(click)="showForm = !showForm"
+class="mb-4"
+>
+{{ showForm ? 'Hide Form' : 'Add New Staff Member' }}
+</button>
+
+@if (showForm) {
+<app-staff-form (staff)="addStaff($event)"></app-staff-form>
+}
+
+<app-staff-table [data]="staffList"></app-staff-table>
