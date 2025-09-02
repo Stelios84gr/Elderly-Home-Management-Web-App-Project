@@ -1,6 +1,11 @@
 const Staff = require('../models/staff.model');
 const bcrypt = require('bcrypt');
 
+// auto-generate username based on pattern
+function generateStaffUsername(firstName, lastName) {
+  return `3${lastName.charAt(0).toLowerCase()}${firstName.toLowerCase()}${lastName.length}`;
+};
+
 // return a promise, so async functions
 
 async function findAll() {
@@ -17,16 +22,21 @@ async function findOne(filter) {
 };
 
 async function create(data) {
+    
     const rounds = 12;
     let hashedPassword = '';
     if (data.password) {
         hashedPassword = await bcrypt.hash(data.password, rounds);
     } else {
         hashedPassword = "";
-    }
+    };
+
+    // auto-generate username
+    const username = generateStaffUsername(data.firstName, data.lastName);
 
     const newStaffMember = new Staff({
-        username: data.username,
+        // not to be provided by the user
+        username,
         password: hashedPassword,
         firstName: data.firstName,
         lastName: data.lastName,
@@ -46,6 +56,17 @@ async function create(data) {
 };
 
 async function update(username, data) {
+
+    const existing = await Staff.findOne({ username });
+    if (!existing) return null;
+
+    // username depends on firstName & lastName
+    if(data.firstName || data.lastName) {
+        data.username = generateStaffUsername(
+            data.firstName ?? existing.firstName,
+            data.lastName ?? existing.lastName
+        );
+    };
 
     // if password is to be updated, hash it first
     if (data.password) {
