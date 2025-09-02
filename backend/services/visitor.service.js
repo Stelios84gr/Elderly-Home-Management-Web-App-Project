@@ -1,4 +1,9 @@
-const Visitor = require('../models/visitor.model')
+const Visitor = require('../models/visitor.model');
+
+// auto-generate username based on pattern
+function generateVisitorUsername(firstName, lastName) {
+  return `2${lastName.charAt(0).toLowerCase()}${firstName.toLowerCase()}${lastName.length}`;
+};
 
 // return a promise, so async functions
 
@@ -10,12 +15,16 @@ async function findAll() {
 async function findOne({ username }) {
     const result = await Visitor.findOne({ username: username });
     return result;
-}
+};
 
 async function create(data) {
 
+    // auto-generate username
+    const username = generateVisitorUsername(data.firstName, data.lastName);
+
     const newVisitor = new Visitor({
-        username: data.username,
+        // not to be provided by the user
+        username,
         firstName: data.firstName,
         lastName: data.lastName,
         phoneNumber: data.phoneNumber,
@@ -31,6 +40,17 @@ async function create(data) {
 };
 
 async function update(username, data) {
+    
+    const existing = await Visitor.findOne({ username });
+    if (!existing) return null;
+
+    // username depends on firstName & lastName
+        if(data.firstName || data.lastName) {
+            data.username = generateVisitorUsername(
+                data.firstName ?? existing.firstName,
+                data.lastName ?? existing.lastName
+            );
+        };
 
     const result = await Visitor.findOneAndUpdate(
         { username },
