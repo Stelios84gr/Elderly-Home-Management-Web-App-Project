@@ -1,1 +1,25 @@
-<p>staff-table works!</p>
+<h1 class="text-4xl font-bold tracking-tight">Staff List</h1>
+<table class="min-w-full border-collapse border border-gray-300">
+    <thead class="bg-gray-100">
+        <tr>
+            <th (click)="sortData('firstName')">First Name{{sortSign('firstName')}}</th>
+            <th (click)="sortData('lastName')">Last Name{{sortSign('lastName')}}</th>
+            <th (click)="sortData('email')">E-mail{{sortSign('email')}}</th>
+            <th (click)="sortData('phoneNumber')">Phone Number{{sortSign('phoneNumber')}}</th>
+            <th (click)="sortData('occupation')">Occupation{{sortSign('occupation')}}</th>
+            <th (click)="sortData('monthlySalary')">Monthly Salary{{sortSign('monthlySalary')}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (staff of staffData; track staff) {
+            <tr class="hover:bg-blue-50 cursor-pointer" (click)="onStaffClicked(staff)">
+                <td class="px-4 py-2 border border-gray-300">{{ staff.firstName }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ staff.lastName }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ staff.email }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ staff.phoneNumber }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ staff.occupation }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ staff.monthlySalary }}</td>
+            </tr>
+        }
+    </tbody>
+</table>
