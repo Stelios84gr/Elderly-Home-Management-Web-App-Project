@@ -9,6 +9,6 @@ export interface Visitor {
 };
 
 export interface Address {
-    road: string,
+    street: string,
     number: string
 };
