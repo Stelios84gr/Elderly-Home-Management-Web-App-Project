@@ -1,0 +1,20 @@
+<h1 class="text-4xl font-bold tracking-tight">Patients List</h1>
+<table class="min-w-full border-collapse border border-gray-300">
+    <thead class="bg-gray-100">
+        <tr>
+            <th (click)="sortData('firstName')">First Name{{sortSign('firstName')}}</th>
+            <th (click)="sortData('lastName')">Last Name{{sortSign('lastName')}}</th>
+            <th (click)="sortData('AMKA')">AMKA{{sortSign('AMKA')}}</th>
+            <th (click)="sortData('dateOfBirth')">Date of Birth{{sortSign('dateOfBirth')}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (patient of patientData; track patient) {
+            <tr class="hover:bg-blue-50 cursor-pointer" (click)="onPatientClicked(patient)">
+                <td class="px-4 py-2 border border-gray-300">{{ patient.firstName }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ patient.lastName }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ patient.dateOfBirth }}</td>
+            </tr>
+        }
+    </tbody>
+</table>
