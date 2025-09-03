@@ -32,7 +32,7 @@ import { Visitor } from 'src/app/shared/interfaces/visitor';
   templateUrl: './visitor-form.html',
   styleUrls: ['./visitor-form.css']
 })
-export class VisitorsForm {
+export class VisitorForm {
 @Output() visitor = new EventEmitter<Visitor>()
 
 visitorForm = new FormGroup({
