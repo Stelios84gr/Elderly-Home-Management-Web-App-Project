@@ -55,6 +55,21 @@ exports.checkDuplicateUsername = async(req, res) => {
     };
 };
 
+exports.addVisitor = async(req, res) => {
+    const { patientId, visitorId } = req.body;
+
+    console.log(`Adding visitor ${visitorId} to patient ${patientId}.`);
+
+    try {
+        const result = await patientService.addVisitorToPatient(patientId, visitorId);
+        res.status(200).json({ status: true, data: result });
+    } catch (err) {
+        console.log("Error adding visitor to patient.", err);
+        res.status(400).json({ status: false, data: err });
+        logger.error("Error adding visitor to patient.", err);
+    }
+}
+
 exports.create = async(req, res) => {
     console.log('Create patient.');
     
