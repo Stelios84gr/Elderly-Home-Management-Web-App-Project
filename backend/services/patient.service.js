@@ -1,4 +1,5 @@
 const Patient = require('../models/patient.model');
+const Visitor = require('../models/visitor.model');
 
 // auto-generate username based on pattern
 function generatePatientUsername(firstName, lastName) {
@@ -17,6 +18,24 @@ async function findOne({ username }) {
     const result = await Patient.findOne({ username });
     
     return result;
+};
+
+async function addVisitorToPatient(patientId, visitorId) {
+    // patient to accept visitor
+    const patient = await Patient.findById(patientId);
+    if (!patient) throw new Error("Patient not found.");
+
+    // visitor to add to patient
+    const visitor = await Visitor.findById(visitorId);
+    if (!visitor) throw new Error("Visitor not found.");
+
+    // push visitor info into patient's visitors array
+    patient.visitors.push({
+        _id: visitor._id,
+        relationship: visitor.relationship
+    });
+
+    return await patient.save();
 };
 
 async function create(data) {
@@ -83,4 +102,4 @@ async function deleteByUsername(username) {
     return result;
 };
 
-module.exports = { findAll, findOne, create, update, deleteByUsername };
+module.exports = { findAll, findOne, addVisitorToPatient, create, update, deleteByUsername };
