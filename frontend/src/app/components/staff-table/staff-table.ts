@@ -30,7 +30,7 @@ export class StaffTable {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data'] && this.data) {
-      this.staffData = this.data;
+      this.staffData = [...this.data];
     };
   };
 
