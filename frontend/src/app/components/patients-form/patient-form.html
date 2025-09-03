@@ -1,0 +1,124 @@
+<div class="flex justify-center mt-8">
+    <div class="flex flex-col gap-4">
+        <h1 class="text-4xl font-bold">Patient Registration Form</h1>
+        <form [formGroup]="patientForm" class="flex flex-col gap-4">
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Username</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="username"
+                >
+                <mat-error>"Username" is a required field.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>First Name</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="firstName"
+                >
+                <mat-error>"First Name" is a required field.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Last Name</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="lastName"
+                >
+                <mat-error>"Last Name" is a required field.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>AMKA</mat-label>
+                <input
+                type="text"
+                matInput
+                formControlName="AMKA"
+                >
+                <mat-error>"AMKA" is a required field.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Date of Birth</mat-label>
+                <input
+                type="date"
+                matInput
+                formControlName="dateOfBirth"
+                [matDatepicker]="picker"
+                >
+                <mat-datepicker-toggle
+                matSuffix [for]="picker"
+                >
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>"Date of Birth" is a required field.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Phone Number</mat-label>
+                <input
+                type="number"
+                matInput
+                formControlName="phoneNumber"
+                >
+                <mat-error>"Phone Number" is a required field.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Authorization to Leave</mat-label>
+                <mat-checkbox formControlName="authorizationToLeave">
+                    Authorization to Leave
+                </mat-checkbox>
+                <mat-error *ngIf="patientForm.get('authorizationToLeave')?.invalid">"Authorization to Leave" is a required field.</mat-error>
+            </mat-form-field>
+
+            <div class="flex gap-2 w-full max-w-md" formGroupName="roomData">
+                <div class="flex items-center whitespace-nowrap font-medium text-gray-700 w-12">
+                    Room Data
+                </div>
+                <div class="flex gap-2 flex-1">
+                    <mat-form-field class="flex-1">
+                        <mat-label>Room Number</mat-label>
+                        <input matInput type="text" formControlName="roomNumber">
+                        <mat-error>"Room Number" is a required field.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="flex-1">
+                        <mat-label>Bed Number</mat-label>
+                        <input matInput type="text" formControlName="bedNumber">
+                        <mat-error>"Bed Number" is a required field.</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div formArrayName="patientAilments" class="flex flex-col gap-2">
+                <div *ngFor="let ailment of patientAilmentsArray.controls; let i = index" formGroupName="i" class="flex gap-2">
+                    <mat-form-field class="flex-1">
+                        <mat-label>Disease</mat-label>
+                        <input
+                        type="text"
+                        matInput
+                        formControlName="disease"
+                        >
+                        <mat-error>"Disease" is a required field.</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-1">
+                        <mat-label>Severity</mat-label>
+                        <input
+                        type="number"
+                        matInput
+                        formControlName="severity"
+                        >
+                        <mat-error>"Severity is a required field.</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+
+        <button mat-flat-button [disabled]="patientForm.invalid" color="primary" (click)="onSubmit()">Submit</button>
+    </div>
+</div>
