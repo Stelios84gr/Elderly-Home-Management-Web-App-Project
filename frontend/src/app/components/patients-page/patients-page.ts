@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PatientForm } from '../patients-form/patient-form';
+import { PatientForm } from '../patient-form/patient-form';
 import { PatientsTable } from '../patients-table/patients-table';
 import { MatButton } from '@angular/material/button';
 import { Patient } from 'src/app/shared/interfaces/patient';
@@ -12,7 +12,7 @@ import { Patient } from 'src/app/shared/interfaces/patient';
   templateUrl: './patients-page.html',
   styleUrls: ['./patients-page.css']
 })
-export class StaffPage {
+export class PatientsPage {
   showForm = false;
   patientsList: Patient[] = [];
 
