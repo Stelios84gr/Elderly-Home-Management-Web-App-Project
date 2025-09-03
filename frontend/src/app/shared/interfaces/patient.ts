@@ -7,9 +7,9 @@ export interface Patient {
     phoneNumber: number,
     authorizationToLeave: boolean,
     roomData: RoomData,
-    patientAilments: [PatientAilment],
+    patientAilments: PatientAilment[],
     emergencyContactInfo: EmergencyContactInfo,
-    visitors: [Visitor]
+    visitors: Visitor[]
 };
 
 export interface RoomData {
@@ -31,7 +31,7 @@ export interface EmergencyContactInfo {
 };
 
 export interface Address {
-    road: string,
+    street: string,
     number: number
 };
 
