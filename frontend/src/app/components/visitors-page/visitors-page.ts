@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { VisitorsForm } from '../visitors-form/visitor-form';
+import { VisitorForm } from '../visitor-form/visitor-form';
 import { VisitorsTable } from '../visitors-table/visitors-table';
 import { Visitor } from 'src/app/shared/interfaces/visitor';
 import { MatButton } from '@angular/material/button';
@@ -7,7 +7,7 @@ import { MatButton } from '@angular/material/button';
 @Component({
   selector: 'app-visitors-page',
   standalone: true,
-  imports: [VisitorsForm, VisitorsTable, MatButton],
+  imports: [VisitorForm, VisitorsTable, MatButton],
   templateUrl: './visitors-page.html',
   styleUrls: ['./visitors-page.css']
 })
