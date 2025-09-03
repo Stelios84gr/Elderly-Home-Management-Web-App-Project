@@ -13,10 +13,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { StaffMember } from 'src/app/shared/interfaces/staff-member';
-import { last } from 'rxjs';
 
 @Component({
   selector: 'app-staff-form',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -27,7 +27,6 @@ import { last } from 'rxjs';
     MatNativeDateModule,
     MatButtonModule
   ],
-  standalone: true,
   templateUrl: './staff-form.html',
   styleUrls: ['./staff-form.css']
 })
@@ -52,7 +51,7 @@ export class StaffForm {
     roles: new FormControl([], Validators.required),
     // makes sure startDate default value is never null or undefined
     startDate: new FormControl(null, Validators.required),
-    monthlySalary: new FormControl('', Validators.required)
+    monthlySalary: new FormControl(null, Validators.required)
   });
 
   // get value changes for firstName & lastName to be used in username auto-generation
