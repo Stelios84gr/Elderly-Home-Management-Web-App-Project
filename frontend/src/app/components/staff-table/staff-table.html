@@ -11,8 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        @for (staff of staffData; track staff) {
-            <tr class="hover:bg-blue-50 cursor-pointer" (click)="onStaffClicked(staff)">
+            <tr *ngFor="let staff of staffData; let i = index; trackBy: trackByStaffMember;" class="hover:bg-blue-50 cursor-pointer" (click)="onStaffClicked(staff)">
                 <td class="px-4 py-2 border border-gray-300">{{ staff.firstName }}</td>
                 <td class="px-4 py-2 border border-gray-300">{{ staff.lastName }}</td>
                 <td class="px-4 py-2 border border-gray-300">{{ staff.email }}</td>
@@ -20,6 +19,5 @@
                 <td class="px-4 py-2 border border-gray-300">{{ staff.occupation }}</td>
                 <td class="px-4 py-2 border border-gray-300">{{ staff.monthlySalary }}</td>
             </tr>
-        }
     </tbody>
 </table>
