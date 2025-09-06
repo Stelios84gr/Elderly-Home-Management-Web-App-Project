@@ -4,13 +4,15 @@
 mat-flat-button
 color="primary"
 (click)="showForm = !showForm"
+[disabled] = "!isAdmin()"
+[class.opacity-50]="!isAdmin()"
 class="mb-4"
 >
 {{ showForm ? 'Hide Form' : 'Add New Staff Member' }}
 </button>
 
-@if (showForm) {
-<app-staff-form (staff)="addStaff($event)"></app-staff-form>
-}
+<app-staff-form (staff)="addStaff($event)" *ngIf="showForm">
+</app-staff-form>
 
-<app-staff-table [data]="staffList"></app-staff-table>
+<app-staff-table [data]="staffService.staffList$()" (staffClicked)="onStaffClicked($event)">">
+</app-staff-table>

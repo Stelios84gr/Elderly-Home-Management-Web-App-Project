@@ -1,22 +1,21 @@
-<p>visitors-table works!</p>
-<h1 class="text-4xl font-bold tracking-tight">Staff List</h1>
+<h1 class="text-4xl font-bold tracking-tight">Visitors List</h1>
 <table class="min-w-full border-collapse border border-gray-300">
     <thead class="bg-gray-100">
         <tr>
             <th (click)="sortData('firstName')">First Name{{sortSign('firstName')}}</th>
             <th (click)="sortData('lastName')">Last Name{{sortSign('lastName')}}</th>
             <th (click)="sortData('phoneNumber')">Phone Number{{sortSign('phoneNumber')}}</th>
+            <th (click)="sortData('patientToVisit')">Patient to Visit{{sortSign('patientToVisit')}}</th>
             <th (click)="sortData('isFamily')">Relative to the Patient{{sortSign('isFamily')}}</th>
         </tr>
     </thead>
     <tbody>
-        @for (visitor of visitorData; track visitor) {
-            <tr class="hover:bg-blue-50 cursor-pointer" (click)="onVisitorClicked(visitor)">
+            <tr *ngFor="let visitor of visitorData; let i = index; trackBy: trackByVisitor;" class="hover:bg-blue-50 cursor-pointer" (click)="onVisitorClicked(visitor)">
                 <td class="px-4 py-2 border border-gray-300">{{ visitor.firstName }}</td>
                 <td class="px-4 py-2 border border-gray-300">{{ visitor.lastName }}</td>
                 <td class="px-4 py-2 border border-gray-300">{{ visitor.phoneNumber }}</td>
-                <td class="px-4 py-2 border border-gray-300">{{ visitor.isFamily }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ visitor.patientToVisit }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ visitor.isFamily ? 'Yes' : 'No' }}</td>
             </tr>
-        }
     </tbody>
 </table>
