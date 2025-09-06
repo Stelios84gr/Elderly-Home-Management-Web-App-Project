@@ -12,4 +12,4 @@ mongoose.connect(process.env.MONGODB_URI).then(
         });
     },
     err => { console.log("Connection to MongoDB failed.", err); }
-)
+);
