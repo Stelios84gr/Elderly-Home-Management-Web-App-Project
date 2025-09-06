@@ -55,10 +55,10 @@ exports.checkDuplicateUsername = async(req, res) => {
     };
 };
 
-exports.addVisitor = async(req, res) => {
+exports.addVisitorToPatient = async(req, res) => {
     const { patientId, visitorId } = req.body;
 
-    console.log(`Adding visitor ${visitorId} to patient ${patientId}.`);
+    console.log(`Adding visitor ${visitorId} to patient ${patientId}...`);
 
     try {
         const result = await patientService.addVisitorToPatient(patientId, visitorId);
@@ -67,11 +67,26 @@ exports.addVisitor = async(req, res) => {
         console.log("Error adding visitor to patient.", err);
         res.status(400).json({ status: false, data: err });
         logger.error("Error adding visitor to patient.", err);
-    }
-}
+    };
+};
+
+exports.removeVisitorFromPatient = async (req, res) => {
+    const { patientId, visitorId } = req.body;
+
+    console.log(`Removing visitor ${visitorId} from patient ${patientId}...`);
+
+    try {
+        const result = await patientService.removeVisitorFromPatient(patientId, visitorId);
+        res.status(200).json({ status: true, data: result });
+    } catch (err) {
+        console.log("", err);
+        res.status(400).json({ status: false, data: err });
+        logger.error("Error removing visitor from patient.", err);
+    };
+};
 
 exports.create = async(req, res) => {
-    console.log('Create patient.');
+    console.log('Creating patient...', req.body);
     
     const data = req.body;
 
@@ -88,9 +103,7 @@ exports.create = async(req, res) => {
 exports.update = async(req, res) => {
     const username = req.params.username;    // username will be retrieved from URL (path params)
 
-    console.log("Update patient data by username: ", username, ".");
-
-    const data = req.body;
+    console.log("Updating patient data with username: ", username, "...");
 
     try {
         const result = await patientService.update(username, data);
