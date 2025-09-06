@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.css']
 })
 export class Footer {
-
+  currentYear = signal(new Date().getFullYear());
+  footerText = computed(() => `© ${this.currentYear()} Hyacinth Elderly Care. All Rights Reserved.`);
 }
