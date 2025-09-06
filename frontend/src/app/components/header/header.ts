@@ -10,4 +10,4 @@ import { Navbar } from '../navbar/navbar';
 })
 export class Header {
 
-}
+};
