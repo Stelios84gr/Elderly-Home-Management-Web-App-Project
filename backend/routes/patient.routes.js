@@ -11,6 +11,8 @@ router.get('/checkDuplicateUsername/:username', verifyToken, verifyRoles(["ADMIN
 router.get('/:username', verifyToken, verifyRoles(["EDITOR", "ADMIN"]), patientController.findOne);
 router.post('/', verifyToken, verifyRoles(["ADMIN"]), patientController.create);
 router.patch('/:username', verifyToken, verifyRoles(["ADMIN"]),  patientController.update);
+router.patch('/addVisitor', verifyToken, verifyRoles(["EDITOR, ADMIN"]), patientController.addVisitorToPatient)
+router.patch('/removeVisitor', verifyToken, verifyRoles(["EDITOR", "ADMIN"]), patientController.removeVisitorFromPatient)
 router.delete('/:username', verifyToken, verifyRoles(["ADMIN"]), patientController.deleteByUsername);
 
 module.exports = router;
