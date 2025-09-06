@@ -1,6 +1,10 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, inject } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Patient } from 'src/app/shared/interfaces/patient';
 import {sortBy} from 'lodash-es';
+import { PatientCard } from '../patient-card/patient-card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 
 type SortDirection = 'asc' | 'desc' | 'none';
@@ -8,7 +12,7 @@ type SortDirection = 'asc' | 'desc' | 'none';
 @Component({
   selector: 'app-patients-table',
   standalone: true,
-  imports: [],
+  imports: [DatePipe, CommonModule, MatDialogModule],
   templateUrl: './patients-table.html',
   styleUrls: ['./patients-table.css']
 })
@@ -16,6 +20,7 @@ export class PatientsTable {
 @Input() data: Patient[] | undefined;
 @Output() patientClicked = new EventEmitter<Patient>();
 
+  // local copy to use for sorting without mutating @Input()
   patientData: Patient[] = [];
 
   //show only a selective document fields in list
@@ -26,56 +31,76 @@ export class PatientsTable {
     dateOfBirth: 'none',
   };
 
+  // declare as class property
+  private dialog = inject(MatDialog);
+
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['data'] && this.data) {
-      this.patientData = [...this.data];
+    if (changes['data']) {
+      // empty array if undefined
+      if (Array.isArray(this.data)) {
+        this.patientData = [...this.data]; // safe copy
+      } else {
+        this.patientData = []; // fallback to empty array
+      };
     };
   };
 
   onPatientClicked(patient: Patient): void {
     console.log("Patient clicked:", patient);
     this.patientClicked.emit(patient);
+    console.log("PatientTable received data:", this.patientData);
+
+    this.dialog.open(PatientCard, {
+      data: patient,
+      width: '400px'
+    });
   };
 
   sortData(sortKey: keyof Patient): void {
-    // safety check
-    if (!this.data) return;
+  // safety check
+  if (!this.data) return;
 
-    // use this sorting method if the sortKey is a date (sortBy alone is not ideal for dates)
-    if (sortKey === 'dateOfBirth') {
-      // create a shallow copy to avoid mutating the original array
-      this.patientData = [...this.data].sort((a, b) => {
-        const timeA = new Date(a.dateOfBirth).getTime();
-        const timeB = new Date(b.dateOfBirth).getTime();
-        
-        // toggle asc/desc
-      if (this.sortOrder[sortKey] === 'asc') return timeB - timeA;
-      else return timeA - timeB;
-      });
-    } else {
-      // use standard sorting method (sortBy)
-      // desc
-      if (this.sortOrder[sortKey] === 'asc') {
-        this.sortOrder[sortKey] = 'desc';
-        this.patientData = sortBy(this.data, sortKey).reverse();
-        // asc
-      } else {
-        this.sortOrder[sortKey] = 'asc';
-        this.patientData = sortBy(this.data, sortKey);
-      };
-    };
+  // shallow copy
+  let sortedData = [...(this.data ?? [])];
 
-    // reset all other columns
-    for (let key in this.sortOrder) {
-      if (key !== sortKey) {
-        this.sortOrder[key as keyof Patient] = 'none';
-      };
-    };
+  // use this sorting method if the sortKey is a date (sortBy alone is not ideal for dates)
+  if (sortKey === 'dateOfBirth') {
+    // sort dates numerically
+    sortedData.sort((a, b) => {
+      const timeA = new Date(a.dateOfBirth).getTime();
+      const timeB = new Date(b.dateOfBirth).getTime();
+      // toggle asc/desc
+      return this.sortOrder[sortKey] === 'asc' ? timeB - timeA : timeA - timeB;
+    });
+    
+    // toggle sort direction for the column
+    this.sortOrder[sortKey] = this.sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
+  } else {
+    // use standard sorting method (sortBy)
+    sortedData = this.sortOrder[sortKey] === 'asc'
+      ? sortBy(sortedData, sortKey).reverse()  // desc
+      : sortBy(sortedData, sortKey);           // asc
+
+    // toggle sort direction for the column
+    this.sortOrder[sortKey] = this.sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
+  }
+
+  // reset all other columns
+  for (const key in this.sortOrder) {
+    if (key !== sortKey) this.sortOrder[key as keyof Patient] = 'none';
   };
+
+  // update the table with the sorted data
+  this.patientData = sortedData;
+}
 
   sortSign(sortKey: keyof Patient) {
     if (this.sortOrder[sortKey] === 'asc') return '\u2191';
     else if (this.sortOrder[sortKey] === 'desc') return '\u2193';
     else return '';
+    };
+
+    trackByPatient(index: number, patient: Patient) {
+      return patient.username;
     };
 };
