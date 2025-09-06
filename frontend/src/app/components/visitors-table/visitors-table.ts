@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Visitor } from 'src/app/shared/interfaces/visitor';
 import {sortBy} from 'lodash-es';
 
@@ -8,7 +9,7 @@ type SortDirection = 'asc' | 'desc' | 'none';
 @Component({
   selector: 'app-visitors-table',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './visitors-table.html',
   styleUrls: ['./visitors-table.css']
 })
@@ -23,14 +24,19 @@ export class VisitorsTable {
     firstName: 'none',
     lastName: 'none',
     phoneNumber: 'none',
+    patientToVisit: 'none',
     isFamily: 'none'
   };
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data'] && this.data) {
-      this.visitorData = [...this.data];
+      if (Array.isArray(this.data)) {
+      this.visitorData = [...this.data];  // safe copy
+    } else {
+      this.visitorData = [];  // fallback to empty array
     };
   };
+};
 
   onVisitorClicked(visitor: Visitor): void {
     console.log("Visitor clicked:", visitor);
@@ -38,9 +44,6 @@ export class VisitorsTable {
   };
 
   sortData(sortKey: keyof Visitor): void {
-    // safety check
-    if (!this.data) return;
-
     // desc
     if (this.sortOrder[sortKey] === 'asc') {
       this.sortOrder[sortKey] = 'desc';
@@ -63,5 +66,9 @@ export class VisitorsTable {
     if (this.sortOrder[sortKey] === 'asc') return '\u2191';
     else if (this.sortOrder[sortKey] === 'desc') return '\u2193';
     else return '';
+    };
+
+    trackByVisitor(index: number, visitor: Visitor) {
+      return visitor.username;
     };
 };
