@@ -1,35 +1,55 @@
-<mat-toolbar color="primary" class="px2 py-1">
-
-    <div class="w-3xl flex justify-evenly">
+<mat-toolbar color="primary" class="w-full px-6 py-2 flex items-center justify-between">
+    <div class="flex justify-evenly flex-1 max-w-3/4">
         <a
         mat-button
         routerLink="/"
         [routerLinkActive]="['active']"
         >
-        Home
+            Home
         </a>
-        <a
-        mat-button
-        routerLink="/patients-page"
-        [routerLinkActive]="['active']"
-        >
-        Patients
-        </a>
-        <a
-        mat-button
-        routerLink="/staff-page"
-        [routerLinkActive]="['active']"
-        >
-        Staff
-        </a>
-        <a
-        mat-button
-        routerLink="/visitors-page"
-        [routerLinkActive]="['active']"
-        >
-        Visits
-        </a>
+        <ng-container *ngIf="staffService.staff$()">
+            <a
+            mat-button
+            routerLink="/patients-page"
+            [routerLinkActive]="['active']"
+            >
+                Patients
+            </a>
+            <a
+            mat-button
+            routerLink="/staff-page"
+            [routerLinkActive]="['active']"
+            >
+                Staff
+            </a>
+            <a
+            mat-button
+            routerLink="/visitors-page"
+            [routerLinkActive]="['active']"
+            >
+                Visits
+            </a>
+        </ng-container>
     </div>
-    
-</mat-toolbar>
 
+    <div class="flex items-center gap-2">
+        <!-- Show login button if no staff logged in -->
+        <ng-container *ngIf="!staffService.staff$()">
+            <button mat-icon-button (click)="goToLogin()" aria-label="Login">
+                <mat-icon>login</mat-icon>
+            </button>
+        </ng-container>
+
+        <!-- Show welcome text if staff is logged in -->
+        <ng-container *ngIf="staffService.staff$() as staff">
+            <div class="flex items-center gap-2">
+                <span class="text-black text-xl opacity-90 drop-shadow-sm">
+                    Welcome, {{ staff.username }}!
+                </span>
+                <button mat-stroked-button color="accent" (click)="logout()">
+                    Log Out
+                </button>
+            </div>
+    </ng-container>
+    </div>
+</mat-toolbar>
