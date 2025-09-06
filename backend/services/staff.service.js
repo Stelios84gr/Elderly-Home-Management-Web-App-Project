@@ -40,14 +40,15 @@ async function create(data) {
         password: hashedPassword,
         firstName: data.firstName,
         lastName: data.lastName,
+        email: data.email,
         TIN: data.TIN,
         phoneNumber: data.phoneNumber,
         address: {
-            road: data.address?.road,
+            street: data.address?.street,
             number: data.address?.number
         },
         occupation: data.occupation,
-        roles: [data.roles],
+        roles: data.roles,
         startDate: data.startDate,
         monthlySalary: data.monthlySalary,
         });
@@ -59,6 +60,9 @@ async function update(username, data) {
 
     const existing = await Staff.findOne({ username });
     if (!existing) return null;
+
+    //prevent overwritting id
+    delete data._id
 
     // username depends on firstName & lastName
     if(data.firstName || data.lastName) {
