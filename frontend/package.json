@@ -16,7 +16,7 @@
       {
         "files": "*.html",
         "options": {
-          "parser": "angular"o
+          "parser": "angular"
         }
       }
     ]
