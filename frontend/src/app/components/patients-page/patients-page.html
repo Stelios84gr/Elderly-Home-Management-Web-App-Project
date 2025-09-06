@@ -4,13 +4,13 @@
 mat-flat-button
 color="primary"
 (click)="showForm = !showForm"
+[disabled] = "!isAdmin()"
+[class.opacity-50]="!isAdmin()"
 class="mb-4"
 >
-{{ showForm ? 'Hide Form' : 'Add New Staff Member' }}
+{{ showForm ? 'Hide Form' : 'Add New Patient' }}
 </button>
 
-@if (showForm) {
-<app-patient-form (patient)="addPatient($event)"></app-patient-form>
-}
+<app-patient-form [patientToEdit]="selectedPatient" (patient)="selectedPatient ? editPatient($event): addPatient($event)" *ngIf="showForm"></app-patient-form>
 
-<app-patients-table [data]="patientsList"></app-patients-table>
+<app-patients-table [data]="patientsService.patients$()" (patientClicked)="onPatientClicked($event)"></app-patients-table>
