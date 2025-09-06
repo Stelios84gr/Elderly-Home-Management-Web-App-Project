@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -19,6 +20,7 @@ import { Visitor } from 'src/app/shared/interfaces/visitor';
   selector: 'app-visitors-form',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -37,15 +39,44 @@ export class VisitorForm {
 
 visitorForm = new FormGroup({
     username: new FormControl({value: '', disabled: true}, Validators.required),
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-    phoneNumber: new FormControl('', Validators.required),
+    firstName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(20)
+    ]),
+    lastName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(20)
+    ]),
+    phoneNumber: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^\d{10}$/),
+      Validators.min(1000000000),
+      Validators.max(9999999999)
+    ]),
     address: new FormGroup({
-      street: new FormControl('', Validators.required),
-      number: new FormControl('', Validators.required)
+      street: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(20)
+      ]),
+      number: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(5)
+      ])
     }),
-    relationship: new FormControl('', Validators.required),
-    isFamily: new FormControl(false, Validators.required)
+    patientToVisit: new FormControl('', Validators.required),
+    relationship: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(15)
+    ]
+      
+    ),
+    // can be left un-ticked if visitor is not a relative
+    isFamily: new FormControl(false, Validators.required),
   });
 
   // get value changes for firstName & lastName to be used in username auto-generation
@@ -56,8 +87,8 @@ visitorForm = new FormGroup({
 
   // only to be used in the form
   private generateUsername() {
-    const firstName = this.visitorForm.get('firstName')?.value;
-    const lastName = this.visitorForm.get('lastName')?.value;
+    const firstName = this.visitorForm.get('firstName')?.value ?? '';
+    const lastName = this.visitorForm.get('lastName')?.value ?? '';
     let username = '';
 
     if (firstName && lastName) {
@@ -81,10 +112,19 @@ visitorForm = new FormGroup({
             number: this.visitorForm.value.address?.number ?? ''
           },
           relationship: this.visitorForm.value.relationship ?? '',
-          isFamily: this.visitorForm.value.isFamily ?? false
+          isFamily: this.visitorForm.value.isFamily ?? false,
+          patientToVisit: this.visitorForm.value.patientToVisit ?? ''
         };
+
         this.visitor.emit(visitor);
+        // reset the form
         this.visitorForm.reset();
-      };
+
+        // restore isFamily default value after form reset
+        this.visitorForm.get('isFamily')?.setValue(false);
+      } else {
+        // show error messages if form is invalid
+        this.visitorForm.markAllAsTouched();
+      }
     };
 };
