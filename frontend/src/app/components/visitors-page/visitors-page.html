@@ -4,13 +4,12 @@
 mat-flat-button
 color="primary"
 (click)="showForm = !showForm"
+[disabled] = "!isAdmin()"
 class="mb-4"
 >
 {{ showForm ? 'Hide Form' : 'Add New Visitor' }}
 </button>
 
-@if (showForm) {
-<app-visitors-form (visitor)="addVisitor($event)"></app-visitors-form>
-}
+<app-visitors-form (visitor)="addVisitor($event)" *ngIf="showForm"></app-visitors-form>
 
-<app-visitors-table [data]="visitorsList"></app-visitors-table>
+<app-visitors-table [data]="visitorService.visitors$()" (visitorClicked)="onVisitorClicked($event)"></app-visitors-table>
