@@ -1,1 +1,29 @@
-<p>footer works!</p>
+<footer class="bg-blue-100 py-2 px-6 shadow-inner text-center font-roboto">
+  <div class="flex flex-col items-center gap-1 text-slate-700 text-sm">
+    <p class="font-medium text-slate-900 max-w-lg">
+      At Hyacinth Elderly Care Facility, we provide compassionate, high-quality care for each resident.
+    </p>
+    <p class="text-slate-500 italic">
+      Where every resident blooms like a hyacinth.
+    </p>
+
+    <div class="flex flex-col items-center gap-0.5 mt-1">
+      <p class="flex items-center gap-1">
+        <span class="material-icons text-slate-600 text-base">location_on</span>
+        Ethinikis Antistaseos 27, Papagou, Athens
+      </p>
+      <p class="flex items-center gap-1">
+        <span class="material-icons text-slate-600 text-base">mail</span>
+        P.O. Box: 15669 | info@hyacinthcare.gr
+      </p>
+      <p class="flex items-center gap-1">
+        <span class="material-icons text-slate-600 text-base">phone</span>
+        tel: 2106500000
+      </p>
+    </div>
+
+    <p class="text-slate-500 text-xs mt-1">
+      {{ footerText() }}
+    </p>
+  </div>
+</footer>
