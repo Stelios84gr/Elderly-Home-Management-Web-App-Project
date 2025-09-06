@@ -1,4 +1,5 @@
 export interface Patient {
+    _id?: string,
     username: string,
     firstName: string,
     lastName: string,
@@ -36,6 +37,7 @@ export interface Address {
 };
 
 export interface Visitor {
-    _id: string,
+    firstName: string,
+    lastName: string,
     relationship: string
 };
