@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { StaffMember } from 'src/app/shared/interfaces/staff-member';
 import {sortBy} from 'lodash-es';
 
@@ -8,7 +9,7 @@ type SortDirection = 'asc' | 'desc' | 'none';
 @Component({
   selector: 'app-staff-table',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './staff-table.html',
   styleUrls: ['./staff-table.css']
 })
@@ -29,32 +30,36 @@ export class StaffTable {
   };
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['data'] && this.data) {
-      this.staffData = [...this.data];
+    if (changes['data']) {
+      if (Array.isArray(this.data)) {
+        this.staffData = [...this.data];  // safe copy
+      } else {
+        this.staffData = [];  // fallback to empty array
+      };
     };
   };
 
   onStaffClicked(staff: StaffMember): void {
     console.log("Staff member clicked:", staff);
     this.staffClicked.emit(staff);
+    console.log("PatientTable received data:", this.staffData);
   };
 
   sortData(sortKey: keyof StaffMember): void {
     // safety check
     if (!this.data) return;
 
-    // desc
-    if (this.sortOrder[sortKey] === 'asc') {
-      this.sortOrder[sortKey] = 'desc';
-      this.staffData = sortBy(this.data, sortKey).reverse();
-    // asc
-    } else {
-      this.sortOrder[sortKey] = 'asc';
-      this.staffData = sortBy(this.data, sortKey);
-    };
+     // toggle sort direction for the column
+    this.sortOrder[sortKey] = this.sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
+
+    this.staffData = this.sortOrder[sortKey] === 'asc'
+      // asc
+      ? sortBy(this.data, sortKey)
+      // desc
+      : sortBy(this.data, sortKey).reverse();
 
     // reset all other columns
-    for (let key in this.sortOrder) {
+    for (const key in this.sortOrder) {
       if (key !== sortKey) {
         this.sortOrder[key as keyof StaffMember] = 'none';
       };
@@ -65,5 +70,9 @@ export class StaffTable {
     if (this.sortOrder[sortKey] === 'asc') return '\u2191';
     else if (this.sortOrder[sortKey] === 'desc') return '\u2193';
     else return '';
+    };
+
+    trackByStaffMember(index: number, staffMember: StaffMember) {
+      return staffMember.username;
     };
 };
