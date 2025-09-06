@@ -29,9 +29,10 @@ async function create(data) {
         lastName: data.lastName,
         phoneNumber: data.phoneNumber,
         address: {
-            road: data.address?.road,
+            street: data.address?.street,
             number: data.address?.number
         },
+        patientToVisit: data.patientToVisit,
         relationship: data.relationship,
         isFamily: data.isFamily
     });
