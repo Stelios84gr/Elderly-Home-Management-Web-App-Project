@@ -72,8 +72,9 @@ exports.checkDuplicateEmail = async(req, res) => {
 
 exports.create = async(req, res) => {
     const data = req.body;
+    console.log("Data Received:", JSON.stringify(data, null, 2));
 
-    console.log('Create staff member.');
+    console.log('Creating staff member...');
 
     try {
         const result = await staffService.create(data);
@@ -88,7 +89,7 @@ exports.create = async(req, res) => {
 exports.update = async(req, res) => {
     const username = req.params.username;    // username will be retrieved from URL (path params)
 
-    console.log("Update staff member data by username: ", username, ".");
+    console.log("Updating staff member data with username: ", username, "...");
 
     const data = req.body;
 
