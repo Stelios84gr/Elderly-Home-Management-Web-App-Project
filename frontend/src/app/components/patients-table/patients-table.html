@@ -9,12 +9,11 @@
         </tr>
     </thead>
     <tbody>
-        @for (patient of patientData; track patient) {
-            <tr class="hover:bg-blue-50 cursor-pointer" (click)="onPatientClicked(patient)">
+            <tr *ngFor="let patient of patientData; let i = index; trackBy: trackByPatient;" class="hover:bg-blue-50 cursor-pointer" (click)="onPatientClicked(patient)">
                 <td class="px-4 py-2 border border-gray-300">{{ patient.firstName }}</td>
                 <td class="px-4 py-2 border border-gray-300">{{ patient.lastName }}</td>
-                <td class="px-4 py-2 border border-gray-300">{{ patient.dateOfBirth }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ patient.AMKA }}</td>
+                <td class="px-4 py-2 border border-gray-300">{{ patient.dateOfBirth | date:'yyyy-MM-dd' }}</td>
             </tr>
-        }
     </tbody>
 </table>
