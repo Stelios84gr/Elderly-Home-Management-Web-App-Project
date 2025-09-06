@@ -1,4 +1,5 @@
 export interface StaffMember {
+    _id?: string,
     username: string,
     password: string,
     firstName: string,
@@ -16,4 +17,9 @@ export interface StaffMember {
 export interface Address {
     street: string,
     number: string
+};
+
+export interface LoggedInStaffMember {
+    username: string,
+    roles: string[];
 };
