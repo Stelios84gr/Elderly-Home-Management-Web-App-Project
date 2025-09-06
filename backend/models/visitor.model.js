@@ -13,8 +13,9 @@ let visitorSchema = new schema({
     lastName: { type: String, required: [true, '"lastName" is a required field'], minLength: 2, maxLength: 20, trim: true },
     phoneNumber: { type: Number, required: [true, '"phoneNumber" is a required field'], min: 1000000000, max: 9999999999 },        // min-max: ensures 10-digit format
     address: addressSchema,
+    patientToVisit: {type: String, required: [true, "Patient to visit needs to be defined."]},
     relationship: { type: String, required: [true, "relationship is a required field"], minLength: 4, maxLength: 15, trim: true, lowercase: true },
-    isFamily: { type: Boolean, required: [true, "isFamily is a required field"] }
+    isFamily: { type: Boolean, required: [true, "isFamily is a required field"] },
 });
 
 module.exports = mongoose.model('Visitor', visitorSchema);
