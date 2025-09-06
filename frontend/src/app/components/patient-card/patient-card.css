@@ -1,0 +1,16 @@
+mat-card-content p,
+mat-card-content ul {
+  margin-bottom: 0.5rem;
+}
+
+/* Section headers like Room Information, Ailments */
+.section-header {
+  font-weight: 700; /* bold */
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Field labels like Room, Bed, Dementia */
+.field-label {
+  font-weight: 500; /* medium bold */
+}

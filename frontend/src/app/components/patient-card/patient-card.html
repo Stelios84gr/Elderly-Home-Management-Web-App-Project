@@ -1,0 +1,67 @@
+<div class="relative bg-white rounded-xl w-96 p-6">
+  <!-- Top-right Close Button -->
+  <button
+    mat-dialog-close
+    aria-label="Close"
+    class="absolute top-2 right-2 w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white font-bold hover:bg-red-700 z-10"
+  >
+    ✕
+  </button>
+
+  <!-- Header -->
+  <div class="mb-4">
+    <h2 class="text-xl font-semibold">{{ data.firstName }} {{ data.lastName }}</h2>
+    <p class="text-gray-500">Username: {{ data.username }}</p>
+  </div>
+
+  <!-- Card Content -->
+  <div class="space-y-3 text-gray-700">
+    <p><span class="font-medium">AMKA:</span> {{ data.AMKA }}</p>
+    <p><span class="font-medium">Date of Birth:</span> {{ data.dateOfBirth | date:'mediumDate' }}</p>
+    <p><span class="font-medium">Phone:</span> {{ data.phoneNumber }}</p>
+    <p><span class="font-medium">Authorization to leave:</span> {{ data.authorizationToLeave ? 'Yes' : 'No' }}</p>
+
+    <h3 class="mt-4 text-lg font-semibold border-b border-gray-200 pb-1">Room Information</h3>
+    <p><span class="font-medium">Room:</span> {{ data.roomData.roomNumber }}</p>
+    <p><span class="font-medium">Bed:</span> {{ data.roomData.bedNumber }}</p>
+
+    <h3 class="mt-4 text-lg font-semibold border-b border-gray-200 pb-1">Ailments</h3>
+    <ul class="list-disc list-inside">
+      <li *ngFor="let ailment of data.patientAilments">{{ ailment.disease }}</li>
+    </ul>
+
+    <h3 class="mt-4 text-lg font-semibold border-b border-gray-200 pb-1">Emergency Contact</h3>
+    <p>{{ data.emergencyContactInfo.firstName }} {{ data.emergencyContactInfo.lastName }}</p>
+    <p><span class="font-medium">Phone:</span> {{ data.emergencyContactInfo.phoneNumber }}</p>
+    <p><span class="font-medium">Address:</span> {{ data.emergencyContactInfo.address.street }} {{ data.emergencyContactInfo.address.number }}</p>
+    <p><span class="font-medium">Relationship:</span> {{ data.emergencyContactInfo.kinshipDegree }}</p>
+
+    <h3 class="mt-4 text-lg font-semibold border-b border-gray-200 pb-1">Visitors</h3>
+<ul class="list-disc list-inside">
+  <li *ngFor="let visitor of data.visitors" class="mb-2">
+    <span class="font-medium">Name:</span> {{ visitor.firstName }} {{ visitor.lastName }}<br>
+    <span class="font-medium ml-5">Relationship:</span> {{ visitor.relationship }}
+  </li>
+</ul>
+  </div>
+
+  <!-- Bottom buttons (Admin-only) -->
+  <div class="flex justify-between mt-6">
+    <button
+    class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-2.5 rounded-lg"
+    (click)="onEdit()"
+    [disabled]="!canEdit()"
+    [class.opacity-50]="!canEdit() && canView()"
+    >
+      Edit
+    </button>
+    <button
+    class="bg-red-600 hover:bg-red-700 text-white font-medium px-8 py-2.5 rounded-lg"
+    (click)="onDelete()"
+    [disabled]="!canDelete()"
+    [class.opacity-50]="!canDelete()"
+    >
+      Delete
+    </button>
+  </div>
+</div>
