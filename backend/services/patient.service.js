@@ -31,9 +31,30 @@ async function addVisitorToPatient(patientId, visitorId) {
 
     // push visitor info into patient's visitors array
     patient.visitors.push({
-        _id: visitor._id,
+        firstName: visitor.firstName,
+        lastName: visitor.lastName,
         relationship: visitor.relationship
     });
+
+    return await patient.save();
+};
+
+async function removeVisitorFromPatient(patientId, visitorId) {
+    // patient from whom to remove visitor
+    const patient = await Patient.findById(patientId);
+    if (!patient) throw new Error("Patient not found.");
+
+    // visitor to be removed from patient
+    const visitor = await Visitor.findById(visitorId);
+    if (!visitor) throw new Error("Visitor not found.");
+
+    // filter out visitor from patient's visitors array
+    patient.visitors = patient.visitors.filter(v =>
+        !(
+            v.firstName === visitor.firstName
+            && v.lastName === visitor.lastName
+            && v.relationship === visitor.relationship
+        ));
 
     return await patient.save();
 };
@@ -65,7 +86,7 @@ async function create(data) {
             lastName: data.emergencyContactInfo?.lastName,
             phoneNumber: data.emergencyContactInfo?.phoneNumber,
             address: {
-                road: data.emergencyContactInfo?.address?.road,
+                street: data.emergencyContactInfo?.address?.street,
                 number: data.emergencyContactInfo?.address?.number
             },
             kinshipDegree: data.emergencyContactInfo?.kinshipDegree
@@ -79,6 +100,10 @@ async function update(username, data) {
 
         const existing = await Patient.findOne({ username });
         if (!existing) return null;
+
+        //prevent overwritting id
+        delete data._id
+
     // username depends on firstName & lastName
         if(data.firstName || data.lastName) {
             data.username = generatePatientUsername(
@@ -88,7 +113,7 @@ async function update(username, data) {
         };
 
     const result = await Patient.findOneAndUpdate(
-        { username },
+        username,
         { $set: data },    // only update the fields sent from the controller (PATCH) & ignore fields not included in schemas
         { new: true, runValidators: true },    // runValidators applies validation checks also when updating
     );
@@ -102,4 +127,4 @@ async function deleteByUsername(username) {
     return result;
 };
 
-module.exports = { findAll, findOne, addVisitorToPatient, create, update, deleteByUsername };
+module.exports = { create, findAll, findOne, update, addVisitorToPatient, removeVisitorFromPatient, deleteByUsername };
