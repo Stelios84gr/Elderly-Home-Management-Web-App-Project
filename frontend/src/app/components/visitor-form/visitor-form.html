@@ -1,47 +1,63 @@
 <div class="flex justify-center mt-8">
     <div class="flex flex-col gap-4">
-        <h1 class="text-4xl font-bold">New Staff Member Registration Form</h1>
+        <h1 class="text-4xl font-bold">Visitor Registration Form</h1>
         <form [formGroup]="visitorForm" class="flex flex-col gap-4">
+
+            <!-- Username -->
             <mat-form-field class="w-full max-w-md">
                 <mat-label>Username</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="username"
-                >
-                <mat-error>"username" is a required field.</mat-error>
+                <input type="text" matInput formControlName="username">
+                <mat-error *ngIf="visitorForm.get('username')?.hasError('required')">
+                    "username" is a required field.
+                </mat-error>
             </mat-form-field>
 
+            <!-- First Name -->
             <mat-form-field class="w-full max-w-md">
                 <mat-label>First Name</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="firstName"
-                >
-                <mat-error>"First Name" is a required field.</mat-error>
+                <input type="text" matInput formControlName="firstName">
+                <mat-error *ngIf="visitorForm.get('firstName')?.hasError('required')">
+                    "First Name" is a required field.
+                </mat-error>
+                <mat-error *ngIf="visitorForm.get('firstName')?.hasError('minlength')">
+                    "First Name" must be at least 2 characters.
+                </mat-error>
+                <mat-error *ngIf="visitorForm.get('firstName')?.hasError('maxlength')">
+                    "First Name" cannot exceed 20 characters.
+                </mat-error>
             </mat-form-field>
 
+            <!-- Last Name -->
             <mat-form-field class="w-full max-w-md">
                 <mat-label>Last Name</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="lastName"
-                >
-                <mat-error>"Last Name" is a required field.</mat-error>
+                <input type="text" matInput formControlName="lastName">
+                <mat-error *ngIf="visitorForm.get('lastName')?.hasError('required')">
+                    "Last Name" is a required field.
+                </mat-error>
+                <mat-error *ngIf="visitorForm.get('lastName')?.hasError('minlength')">
+                    "Last Name" must be at least 2 characters.
+                </mat-error>
+                <mat-error *ngIf="visitorForm.get('lastName')?.hasError('maxlength')">
+                    "Last Name" cannot exceed 20 characters.
+                </mat-error>
             </mat-form-field>
 
+            <!-- Phone Number -->
             <mat-form-field class="w-full max-w-md">
                 <mat-label>Phone Number</mat-label>
-                <input
-                type="number"
-                matInput
-                formControlName="phoneNumber"
-                >
-                <mat-error>"Phone Number" is a required field.</mat-error>
+                <input type="number" matInput formControlName="phoneNumber">
+                <mat-error *ngIf="visitorForm.get('phoneNumber')?.hasError('required')">
+                    "Phone Number" is a required field.
+                </mat-error>
+                <mat-error
+                    *ngIf="visitorForm.get('phoneNumber')?.hasError('min') 
+                  || visitorForm.get('phoneNumber')?.hasError('max')
+                  || visitorForm.get('phoneNumber')?.hasError('pattern')">
+                    "Phone Number" must be a 10-digit number.
+                </mat-error>
             </mat-form-field>
 
+            <!-- Address -->
             <div class="flex gap-2 w-full max-w-md" formGroupName="address">
                 <div class="flex items-center whitespace-nowrap font-medium text-gray-700 w-12">
                     Address
@@ -50,35 +66,70 @@
                     <mat-form-field class="flex-1">
                         <mat-label>Street</mat-label>
                         <input matInput type="text" formControlName="street">
-                        <mat-error>"Street" is a required field.</mat-error>
+                        <mat-error *ngIf="visitorForm.get('address.street')?.hasError('required')">
+                            "Street" is a required field.
+                        </mat-error>
+                        <mat-error *ngIf="visitorForm.get('address.street')?.hasError('minlength')">
+                            "Street" must be at least 2 characters.
+                        </mat-error>
+                        <mat-error *ngIf="visitorForm.get('address.street')?.hasError('maxlength')">
+                            "Street" cannot exceed 20 characters.
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-25">
                         <mat-label>Number</mat-label>
                         <input matInput type="text" formControlName="number">
-                        <mat-error>"Number" is a required field.</mat-error>
+                        <mat-error *ngIf="visitorForm.get('address.number')?.hasError('required')">
+                            "Number" is a required field.
+                        </mat-error>
+                        <mat-error *ngIf="visitorForm.get('address.number')?.hasError('minlength')">
+                            "Number" must be at least 1 character.
+                        </mat-error>
+                        <mat-error *ngIf="visitorForm.get('address.number')?.hasError('maxlength')">
+                            "Number" cannot exceed 5 characters.
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
 
+            <!-- Relationship -->
             <mat-form-field class="w-full max-w-md">
                 <mat-label>Relationship</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="relationship"
-                >
-                <mat-error>"Relationship" is a required field.</mat-error>
+                <input type="text" matInput formControlName="relationship">
+                <mat-error *ngIf="visitorForm.get('relationship')?.hasError('required')">
+                    "Relationship" is a required field.
+                </mat-error>
+                <mat-error *ngIf="visitorForm.get('relationship')?.hasError('minlength')">
+                    "Relationship" must be at least 4 characters.
+                </mat-error>
+                <mat-error *ngIf="visitorForm.get('relationship')?.hasError('maxlength')">
+                    "Relationship" cannot exceed 15 characters.
+                </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Relative to the Patient</mat-label>
+            <!-- Is Family -->
+            <div class="w-full max-w-md flex flex-col">
                 <mat-checkbox formControlName="isFamily">
                     Relative to the Patient
                 </mat-checkbox>
-                <mat-error *ngIf="visitorForm.get('isFamily')?.invalid">"Relative to the Patient" is a required field.</mat-error>
+                <mat-error *ngIf="visitorForm.get('isFamily')?.hasError('required')">
+                    "Relative to the Patient" is a required field.
+                </mat-error>
+            </div>
+
+            <!-- Patient to Visit -->
+            <mat-form-field class="w-full max-w-md">
+                <mat-label>Patient to Visit</mat-label>
+                <input type="text" matInput formControlName="patientToVisit">
+                <mat-error *ngIf="visitorForm.get('patientToVisit')?.hasError('required')">
+                    Patient to visit needs to be defined.
+                </mat-error>
             </mat-form-field>
+
         </form>
 
-        <button mat-flat-button [disabled]="visitorForm.invalid" color="primary" (click)="onSubmit()">Submit</button>
+        <button mat-flat-button [disabled]="visitorForm.invalid" color="primary" (click)="onSubmit()">
+            Submit
+        </button>
     </div>
 </div>

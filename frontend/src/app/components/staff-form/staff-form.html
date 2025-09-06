@@ -1,142 +1,169 @@
 <div class="flex justify-center mt-8">
-    <div class="flex flex-col gap-4">
-        <h1 class="text-4xl font-bold">New Staff Member Registration Form</h1>
-        <form [formGroup]="staffForm" class="flex flex-col gap-4">
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Username</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="username"
-                >
-                <mat-error>"Username" is a required field.</mat-error>
-            </mat-form-field>
+  <div class="flex flex-col gap-4">
+    <h1 class="text-4xl font-bold">New Staff Member Registration Form</h1>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Password</mat-label>
-                <input
-                type="password"
-                matInput
-                formControlName="password"
-                >
-                <mat-error>"password" is a required field.</mat-error>
-            </mat-form-field>
+    <form [formGroup]="staffForm" class="flex flex-col gap-4">
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>First Name</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="firstName"
-                >
-                <mat-error>"First Name" is a required field.</mat-error>
-            </mat-form-field>
+      <!-- Username -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Username</mat-label>
+        <input type="text" matInput formControlName="username">
+        <mat-error *ngIf="staffForm.get('username')?.hasError('required')">
+          "Username" is a required field.
+        </mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Last Name</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="lastName"
-                >
-                <mat-error>"Last Name" is a required field.</mat-error>
-            </mat-form-field>
+      <!-- Password -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-error *ngIf="staffForm.get('password')?.hasError('required')">
+          "Password" is a required field.
+        </mat-error>
+        <mat-error *ngIf="staffForm.get('password')?.hasError('minlength') || staffForm.get('password')?.hasError('maxlength')">
+          "Password" must be 8–75 characters.
+        </mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>E-mail Address</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="email"
-                >
-                <mat-error>"E-mail Address" is a required field.</mat-error>
-            </mat-form-field>
+      <!-- First Name -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput formControlName="firstName">
+        <mat-error *ngIf="staffForm.get('firstName')?.hasError('required')">
+          "First Name" is a required field.
+        </mat-error>
+        <mat-error *ngIf="staffForm.get('firstName')?.hasError('minlength') || staffForm.get('firstName')?.hasError('maxlength')">
+          "First Name" must be 2–20 characters.
+        </mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>TIN</mat-label>
-                <input
-                type="number"
-                matInput
-                formControlName="TIN"
-                >
-                <mat-error>"TIN" is a required field.</mat-error>
-            </mat-form-field>
+      <!-- Last Name -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput formControlName="lastName">
+        <mat-error *ngIf="staffForm.get('lastName')?.hasError('required')">
+          "Last Name" is a required field.
+        </mat-error>
+        <mat-error *ngIf="staffForm.get('lastName')?.hasError('minlength') || staffForm.get('lastName')?.hasError('maxlength')">
+          "Last Name" must be 2–20 characters.
+        </mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Phone Number</mat-label>
-                <input
-                type="number"
-                matInput
-                formControlName="phoneNumber"
-                >
-                <mat-error>"Phone Number" is a required field.</mat-error>
-            </mat-form-field>
+      <!-- E-mail -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>E-mail Address</mat-label>
+        <input type="email" matInput formControlName="email">
+        <mat-error *ngIf="staffForm.get('email')?.hasError('required')">
+          "E-mail Address" is a required field.
+        </mat-error>
+        <mat-error *ngIf="staffForm.get('email')?.hasError('email')">
+          "E-mail" is not valid.
+        </mat-error>
+      </mat-form-field>
 
-            <div class="flex gap-2 w-full max-w-md" formGroupName="address">
-                <div class="flex items-center whitespace-nowrap font-medium text-gray-700 w-12">
-                    Address
-                </div>
-                <div class="flex gap-2 flex-1">
-                    <mat-form-field class="flex-1">
-                        <mat-label>Street</mat-label>
-                        <input matInput type="text" formControlName="street">
-                        <mat-error>"Street" is a required field.</mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="w-25">
-                        <mat-label>Number</mat-label>
-                        <input matInput type="text" formControlName="number">
-                        <mat-error>"Number" is a required field.</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
+      <!-- TIN -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>TIN</mat-label>
+        <input type="text" matInput formControlName="TIN">
+        <mat-error *ngIf="staffForm.get('TIN')?.hasError('required')">
+          "TIN" is a required field.
+        </mat-error>
+        <mat-error *ngIf="staffForm.get('TIN')?.hasError('minlength') || staffForm.get('TIN')?.hasError('maxlength')">
+          "TIN" must be exactly 9 characters.
+        </mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Occupation</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="occupation"
-                >
-                <mat-error>"Occupation" is a required field.</mat-error>
-            </mat-form-field>
+      <!-- Phone Number -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Phone Number</mat-label>
+        <input type="text" matInput formControlName="phoneNumber">
+        <mat-error *ngIf="staffForm.get('phoneNumber')?.hasError('required')">
+          "Phone Number" is a required field.
+        </mat-error>
+        <mat-error *ngIf="staffForm.get('phoneNumber')?.hasError('pattern')">
+          "Phone Number" must be 10 digits.
+        </mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Roles</mat-label>
-                <mat-select formControlName="roles" multiple>
-                    <mat-option value="reader">Reader</mat-option>
-                    <mat-option value="editor">Editor</mat-option>
-                    <mat-option value="Admin">Admin</mat-option>
-                </mat-select>
-                <mat-error>"Roles" is a required field.</mat-error>
-            </mat-form-field>
+      <!-- Address -->
+      <div class="flex gap-2 w-full max-w-md" formGroupName="address">
+        <div class="flex items-center whitespace-nowrap font-medium text-gray-700 w-12">
+          Address
+        </div>
+        <div class="flex gap-2 flex-1">
+          <mat-form-field class="flex-4">
+            <mat-label>Street</mat-label>
+            <input matInput type="text" formControlName="street">
+            <mat-error *ngIf="staffForm.get('address')?.get('street')?.hasError('required')">
+              "Street" is a required field.
+            </mat-error>
+            <mat-error *ngIf="staffForm.get('address')?.get('street')?.hasError('minlength') || staffForm.get('address')?.get('street')?.hasError('maxlength')">
+              "Street" must be 2–20 characters.
+            </mat-error>
+          </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Start Date</mat-label>
-                <input
-                type="date"
-                matInput
-                formControlName="startDate"
-                [matDatepicker]="picker"
-                >
-                <mat-datepicker-toggle
-                matSuffix [for]="picker"
-                >
-                </mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error>"Start Date" is a required field.</mat-error>
-            </mat-form-field>
+          <mat-form-field class="w-25">
+            <mat-label>Number</mat-label>
+            <input matInput type="text" formControlName="number">
+            <mat-error *ngIf="staffForm.get('address')?.get('number')?.hasError('required')">
+              "Number" is a required field.
+            </mat-error>
+            <mat-error *ngIf="staffForm.get('address')?.get('number')?.hasError('minlength') || staffForm.get('address')?.get('number')?.hasError('maxlength')">
+              "Number" must be 1–5 characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Monthly Salary</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="monthlySalary"
-                >
-                <mat-error>"Monthly Salary" is a required field.</mat-error>
-            </mat-form-field>
-        </form>
+      <!-- Occupation -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Occupation</mat-label>
+        <input type="text" matInput formControlName="occupation">
+        <mat-error *ngIf="staffForm.get('occupation')?.hasError('required')">
+          "Occupation" is a required field.
+        </mat-error>
+        <mat-error *ngIf="staffForm.get('occupation')?.hasError('minlength') || staffForm.get('occupation')?.hasError('maxlength')">
+          "Occupation" must be 5–20 characters.
+        </mat-error>
+      </mat-form-field>
 
-        <button mat-flat-button [disabled]="staffForm.invalid" color="primary" (click)="onSubmit()">Submit</button>
-    </div>
+      <!-- Roles -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Roles</mat-label>
+        <mat-select formControlName="roles" multiple>
+          <mat-option value="READER">Reader</mat-option>
+          <mat-option value="EDITOR">Editor</mat-option>
+          <mat-option value="ADMIN">Admin</mat-option>
+        </mat-select>
+        <mat-error *ngIf="staffForm.get('roles')?.hasError('required')">
+          "Roles" is a required field.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Start Date -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Start Date</mat-label>
+        <input matInput formControlName="startDate" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="staffForm.get('startDate')?.hasError('required')">
+          "Start Date" is a required field.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Monthly Salary -->
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Monthly Salary</mat-label>
+        <input type="text" matInput formControlName="monthlySalary">
+        <mat-error *ngIf="staffForm.get('monthlySalary')?.hasError('required')">
+          "Monthly Salary" is a required field.
+        </mat-error>
+        <mat-error *ngIf="staffForm.get('monthlySalary')?.hasError('min') || staffForm.get('monthlySalary')?.hasError('max')">
+          "Monthly Salary" must be between 100 and 9999.
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-flat-button type="submit" [disabled]="staffForm.invalid" color="primary" (click)="onSubmit()">Submit</button>
+    </form>
+  </div>
 </div>

@@ -1,124 +1,229 @@
 <div class="flex justify-center mt-8">
-    <div class="flex flex-col gap-4">
-        <h1 class="text-4xl font-bold">Patient Registration Form</h1>
-        <form [formGroup]="patientForm" class="flex flex-col gap-4">
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Username</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="username"
-                >
-                <mat-error>"Username" is a required field.</mat-error>
-            </mat-form-field>
+  <div class="flex flex-col gap-4">
+    <h1 class="text-4xl font-bold">Patient Registration Form</h1>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>First Name</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="firstName"
-                >
-                <mat-error>"First Name" is a required field.</mat-error>
-            </mat-form-field>
+    <form [formGroup]="patientForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Last Name</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="lastName"
-                >
-                <mat-error>"Last Name" is a required field.</mat-error>
-            </mat-form-field>
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Username</mat-label>
+        <input type="text" matInput formControlName="username">
+        <mat-error>"Username" is a required field.</mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>AMKA</mat-label>
-                <input
-                type="text"
-                matInput
-                formControlName="AMKA"
-                >
-                <mat-error>"AMKA" is a required field.</mat-error>
-            </mat-form-field>
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput formControlName="firstName">
+        <mat-error *ngIf="patientForm.get('firstName')?.hasError('required')">
+          "First Name" is a required field.
+        </mat-error>
+        <mat-error *ngIf="patientForm.get('firstName')?.hasError('minlength') || patientForm.get('firstName')?.hasError('maxlength')">
+          "First Name" must be between 2 and 20 characters.
+        </mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Date of Birth</mat-label>
-                <input
-                type="date"
-                matInput
-                formControlName="dateOfBirth"
-                [matDatepicker]="picker"
-                >
-                <mat-datepicker-toggle
-                matSuffix [for]="picker"
-                >
-                </mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error>"Date of Birth" is a required field.</mat-error>
-            </mat-form-field>
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput formControlName="lastName">
+        <mat-error *ngIf="patientForm.get('lastName')?.hasError('required')">
+          "Last Name" is a required field.
+        </mat-error>
+        <mat-error *ngIf="patientForm.get('lastName')?.hasError('minlength') || patientForm.get('lastName')?.hasError('maxlength')">
+          "Last Name" must be between 2 and 20 characters.
+        </mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Phone Number</mat-label>
-                <input
-                type="number"
-                matInput
-                formControlName="phoneNumber"
-                >
-                <mat-error>"Phone Number" is a required field.</mat-error>
-            </mat-form-field>
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>AMKA</mat-label>
+        <input type="text" matInput formControlName="AMKA">
+        <mat-error *ngIf="patientForm.get('AMKA')?.hasError('required')">
+          "AMKA" is a required field.
+        </mat-error>
+        <mat-error *ngIf="patientForm.get('AMKA')?.hasError('minlength') || patientForm.get('AMKA')?.hasError('maxlength')">
+          "AMKA" must be 11 numbers.
+        </mat-error>
+        <mat-error *ngIf="patientForm.get('AMKA')?.hasError('pattern')">
+          "AMKA" must contain only numbers.
+        </mat-error>
+      </mat-form-field>
 
-            <mat-form-field class="w-full max-w-md">
-                <mat-label>Authorization to Leave</mat-label>
-                <mat-checkbox formControlName="authorizationToLeave">
-                    Authorization to Leave
-                </mat-checkbox>
-                <mat-error *ngIf="patientForm.get('authorizationToLeave')?.invalid">"Authorization to Leave" is a required field.</mat-error>
-            </mat-form-field>
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput formControlName="dateOfBirth" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>"Date of Birth" is a required field.</mat-error>
+      </mat-form-field>
 
-            <div class="flex gap-2 w-full max-w-md" formGroupName="roomData">
-                <div class="flex items-center whitespace-nowrap font-medium text-gray-700 w-12">
-                    Room Data
-                </div>
-                <div class="flex gap-2 flex-1">
-                    <mat-form-field class="flex-1">
-                        <mat-label>Room Number</mat-label>
-                        <input matInput type="text" formControlName="roomNumber">
-                        <mat-error>"Room Number" is a required field.</mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="flex-1">
-                        <mat-label>Bed Number</mat-label>
-                        <input matInput type="text" formControlName="bedNumber">
-                        <mat-error>"Bed Number" is a required field.</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
+      <mat-form-field class="w-full max-w-md">
+        <mat-label>Phone Number</mat-label>
+        <input type="tel" matInput formControlName="phoneNumber">
+        <mat-error *ngIf="patientForm.get('phoneNumber')?.hasError('required')">
+          "Phone Number" is a required field.
+        </mat-error>
+        <mat-error *ngIf="patientForm.get('phoneNumber')?.hasError('pattern')">
+          "Phone Number" must be 10 numbers.
+        </mat-error>
+      </mat-form-field>
 
-            <div formArrayName="patientAilments" class="flex flex-col gap-2">
-                <div *ngFor="let ailment of patientAilmentsArray.controls; let i = index" formGroupName="i" class="flex gap-2">
-                    <mat-form-field class="flex-1">
-                        <mat-label>Disease</mat-label>
-                        <input
-                        type="text"
-                        matInput
-                        formControlName="disease"
-                        >
-                        <mat-error>"Disease" is a required field.</mat-error>
-                    </mat-form-field>
+      <div class="w-full max-w-md flex flex-col">
+        <mat-checkbox formControlName="authorizationToLeave">
+          Authorization to Leave
+        </mat-checkbox>
+      </div>
 
-                    <mat-form-field class="flex-1">
-                        <mat-label>Severity</mat-label>
-                        <input
-                        type="number"
-                        matInput
-                        formControlName="severity"
-                        >
-                        <mat-error>"Severity is a required field.</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-        </form>
+      <div class="flex gap-2 w-full max-w-md" formGroupName="roomData">
+        <div class="flex items-center whitespace-normal font-medium text-gray-700 w-32">
+          Room Data
+        </div>
+        <!-- Room Number -->
+        <div class="flex gap-2 flex-1">
+          <mat-form-field class="flex-1">
+            <mat-label>Room #</mat-label>
+            <input matInput type="text" formControlName="roomNumber">
+            <mat-error>
+              "Room #" is a required field.
+            </mat-error>
+            <mat-error *ngIf="patientForm.get('roomData.roomNumber')?.hasError('minlength') || patientForm.get('roomData.roomNumber')?.hasError('maxlength')">
+              "Room #" must have 2 digits.
+            </mat-error>
+          </mat-form-field>
+          <!-- Bed Number -->
+          <mat-form-field class="flex-1">
+            <mat-label>"Bed #"</mat-label>
+            <input matInput type="text" formControlName="bedNumber">
+            <mat-error *ngIf="patientForm.get('roomData')?.hasError('bedRoomMismatch')">
+              "Bed #" must start with the room number.
+            </mat-error>
+            <mat-error *ngIf="patientForm.get('roomData.bedNumber')?.hasError('minlength') || patientForm.get('roomData.bedNumber')?.hasError('maxlength')">
+              "Bed #" must have 4 digits.
+            </mat-error>
+            <mat-error *ngIf="patientForm.get('roomData.bedNumber')?.hasError('required')">
+              "Bed #" is a required field.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
 
-        <button mat-flat-button [disabled]="patientForm.invalid" color="primary" (click)="onSubmit()">Submit</button>
-    </div>
+      <!-- Patient Ailment(s) -->
+      <div formArrayName="patientAilments" class="flex flex-col gap-2">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="font-medium text-gray-700">Patient Ailments</div>
+          <button mat-flat-button color="primary" type="button" (click)="addAilment()">Add</button>
+        </div>
+        <div *ngFor="let ailment of patientAilmentsArray.controls; let i = index" [formGroupName]="i" class="flex gap-2">
+          <mat-form-field class="flex-1">
+            <mat-label>Disease</mat-label>
+            <input type="text" matInput formControlName="disease">
+            <mat-error *ngIf="ailment.get('disease')?.hasError('required')">
+              "Disease" is a required field.
+            </mat-error>
+            <mat-error *ngIf="ailment.get('disease')?.hasError('minlength') || ailment.get('disease')?.hasError('maxlength')">
+              "Disease" must be 3–25 characters.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="flex-1">
+            <mat-label>Severity</mat-label>
+            <input type="number" matInput formControlName="severity">
+            <mat-error *ngIf="ailment.get('severity')?.hasError('required')">
+              "Severity" is a required field.
+            </mat-error>
+            <mat-error *ngIf="ailment.get('severity')?.hasError('min') || ailment.get('severity')?.hasError('max')">
+              "Severity" must be between 1 and 5.
+            </mat-error>
+          </mat-form-field>
+          <button mat-icon-button color="warn" type="button" (click)="removeAilment(i)" *ngIf="patientAilmentsArray.length > 1">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Emergency Contact Info -->
+      <div formGroupName="emergencyContactInfo" class="flex flex-col gap-2 w-full max-w-md">
+        <div class="font-medium text-gray-700 text-lg mb-2">Emergency Contact Info</div>
+      
+        <!-- Names -->
+        <div class="flex gap-2">
+          <mat-form-field class="flex-1">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" formControlName="firstName">
+            <mat-error *ngIf="emergencyContactInfo.get('firstName')?.hasError('required')">
+              "First Name" is a required field.
+            </mat-error>
+            <mat-error
+              *ngIf="emergencyContactInfo.get('firstName')?.hasError('minlength') || emergencyContactInfo.get('firstName')?.hasError('maxlength')">
+              "First Name" must be between 2 and 20 characters.
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field class="flex-1">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" formControlName="lastName">
+            <mat-error *ngIf="emergencyContactInfo.get('lastName')?.hasError('required')">
+              "Last Name" is a required field.
+            </mat-error>
+            <mat-error
+              *ngIf="emergencyContactInfo.get('lastName')?.hasError('minlength') || emergencyContactInfo.get('lastName')?.hasError('maxlength')">
+              "Last Name" must be between 2 and 20 characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      
+        <!-- Address -->
+        <div formGroupName="address" class="flex gap-2 mt-2">
+          <mat-form-field class="flex-1">
+            <mat-label>Street</mat-label>
+            <input matInput type="text" formControlName="street">
+            <mat-error *ngIf="emergencyContactInfo.get('address.street')?.hasError('required')">
+              "Street" is a required field.
+            </mat-error>
+            <mat-error
+              *ngIf="emergencyContactInfo.get('address.street')?.hasError('minlength') || emergencyContactInfo.get('address.street')?.hasError('maxlength')">
+              "Street" must be between 2 and 20 characters.
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field class="flex-1">
+            <mat-label>Number</mat-label>
+            <input matInput type="text" formControlName="number">
+            <mat-error *ngIf="emergencyContactInfo.get('address.number')?.hasError('required')">
+              "Number" is a required field.
+            </mat-error>
+            <mat-error
+              *ngIf="emergencyContactInfo.get('address.number')?.hasError('minlength') || emergencyContactInfo.get('address.number')?.hasError('maxlength')">
+              "Number" must be between 1 and 5 characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      
+        <!-- Phone & Kinship -->
+        <div class="flex gap-2 w-full mt-2">
+          <mat-form-field class="flex-1">
+            <mat-label>Phone Number</mat-label>
+            <input matInput type="tel" formControlName="phoneNumber">
+            <mat-error *ngIf="emergencyContactInfo.get('phoneNumber')?.hasError('required')">
+              "Phone Number" is a required field.
+            </mat-error>
+            <mat-error *ngIf="emergencyContactInfo.get('phoneNumber')?.hasError('pattern')">
+              "Phone Number" must be 10 numbers.
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field class="flex-1">
+            <mat-label>Form of Kinship</mat-label>
+            <input matInput type="text" formControlName="kinshipDegree">
+            <mat-error *ngIf="emergencyContactInfo.get('kinshipDegree')?.hasError('required')">
+              "Form of Kinship" is a required field.
+            </mat-error>
+            <mat-error
+              *ngIf="emergencyContactInfo.get('kinshipDegree')?.hasError('minlength') || emergencyContactInfo.get('kinshipDegree')?.hasError('maxlength')">
+              "Form of Kinship" must be 3–15 characters.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <button mat-flat-button type="submit" [disabled]="patientForm.invalid" color="primary">Submit</button>
+
+    </form>
+  </div>
 </div>
