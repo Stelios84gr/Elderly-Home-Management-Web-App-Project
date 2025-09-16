@@ -1,17 +1,16 @@
-<div class="bg-amber-700 flex flex-col min-h-screen">
-<app-header></app-header>
+<div class="flex flex-col min-h-screen">
+    <app-header></app-header>
 
-<div class="flex-1 p-4 overflow-auto bg-gradient-to-b from-amber-100 to-amber-400">
-    <router-outlet></router-outlet>
-</div>
+    <div>
+        <div class="flex-1 p-4 overflow-auto bg-gradient-to-b">
+            <router-outlet></router-outlet>
+        </div>
 
-<div class="flex justify-center items-start p-4 bg-gradient-to-t from-amber-700 to-amber-400 mt-[-3rem]">
-    <img
-    src="../assets/images/filler.png"
-    alt="Elderly Care filler"
-    class="max-w-full h-auto rounded-lg shadow-md mt-4"
-    >
-</div>
+        <div class="flex justify-center items-start p-4 bg-gradient-to-b from-amber-100 to-amber-700 mt-[-3rem]">
+            <img src="../assets/images/filler.png" alt="Elderly Care filler"
+                class="max-w-full h-auto rounded-lg shadow-md mt-4">
+        </div>
+    </div>
 
-<app-footer class="fixed bottom-0 left-0 w-full z-50"></app-footer>
+    <app-footer class="fixed bottom-0 left-0 w-full z-50"></app-footer>
 </div>
