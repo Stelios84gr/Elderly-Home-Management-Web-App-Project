@@ -43,7 +43,7 @@
         <!-- Show welcome text if staff is logged in -->
         <ng-container *ngIf="staffService.staff$() as staff">
             <div class="flex items-center gap-2">
-                <span class="text-black text-xl opacity-90 drop-shadow-sm">
+                <span class="text-black text-lg opacity-90 drop-shadow-sm">
                     Welcome, {{ staff.username }}!
                 </span>
                 <button mat-stroked-button color="accent" (click)="logout()">
