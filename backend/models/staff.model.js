@@ -5,7 +5,7 @@ const schema = mongoose.Schema;
 let addressSchema = new schema({
     street: { type: String, required: [true, '"street" is a required field'], minLength: 2, maxLength: 20, trim: true, lowercase: true},
     // in case of "1150A", for example
-    number: { type: String, required: [true, '"number is a required"'], minLength:1, maxLength: 5, trim: true, uppercase: true},
+    number: { type: String, required: [true, '"number" is a required field'], minLength:1, maxLength: 5, trim: true, uppercase: true},
 }, {_id: false});
 
 let staffSchema = new schema({
