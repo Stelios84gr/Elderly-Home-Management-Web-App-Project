@@ -36,7 +36,7 @@ let patientSchema = new schema({
     AMKA: { type: String, required: [true, '"AMKA" is a required field'], minLength: 11, maxLength: 11, trim: true, unique: true },   // in case it begins with 0
     dateOfBirth: { type: Date, required: [true, '"dateOfBirth" is a required field'] },
     phoneNumber: { type: Number, required: [true, '"phoneNumber" is a required field'], min: 1000000000, max: 9999999999, unique: true },
-    authorizationToLeave: { type: Boolean, defalut: false },
+    authorizationToLeave: { type: Boolean, default: false },
     roomData: roomDataSchema,
     patientAilments: {
         type: [patientAilmentsSchema],    // array because there might be more than one
