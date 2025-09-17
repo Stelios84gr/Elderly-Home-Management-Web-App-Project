@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-            <tr *ngFor="let patient of patientData; let i = index; trackBy: trackByPatient;" class="hover:bg-blue-50 cursor-pointer" (click)="onPatientClicked(patient)">
+            <tr *ngFor="let patient of patientData; let i = index; trackBy: trackByPatient;" class="hover:bg-blue-50 cursor-pointer" (click)="patientClicked.emit(patient)">
                 <td class="px-4 py-2 border border-gray-300">{{ patient.firstName }}</td>
                 <td class="px-4 py-2 border border-gray-300">{{ patient.lastName }}</td>
                 <td class="px-4 py-2 border border-gray-300">{{ patient.AMKA }}</td>

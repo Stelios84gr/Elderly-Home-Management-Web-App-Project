@@ -24,6 +24,9 @@ export class PatientsPage {
 
   showForm = false;
 
+  // local copy to use for sorting without mutating @Input()
+  patientData: Patient[] = [];
+
   selectedPatient?: Patient;
 
   addPatient(patient: Patient) {
@@ -43,7 +46,8 @@ export class PatientsPage {
   };
   
 
-  onPatientClicked(patient: Patient) {
+  onPatientClicked(patient: Patient): void {
+    console.log("Patient clicked:", patient);
     this.selectedPatient = patient;
 
     const dialogRef = this.dialog.open(PatientCard, {
@@ -52,18 +56,30 @@ export class PatientsPage {
     });
 
     // subscribe to the updatePatient event emitted from patient-card and use updatePatient() from patient-service
-    dialogRef.componentInstance.editPatient.subscribe((edited: Partial<Patient>) => {
-      this.editPatient(edited);
-    });
-
+    const subEdited = dialogRef.componentInstance.editPatient.subscribe(
+      ((edited: Partial<Patient>) => {
+        if (!this.selectedPatient) return;
+        this.patientsService.updatePatient(this.selectedPatient, edited);
+        this.selectedPatient = undefined;    // clean-up: reset selected patient
+        this.showForm = false;    // hide form if needed
+      }
+    )
+  );
     // subscribe to the deletePatient event emitted from patient-card and use deletPatient() from patient-service
-    dialogRef.componentInstance.deletePatient.subscribe((deleted: Patient) => {
-      this.patientsService.removePatient(deleted.username);
-    });
-  }
+    const subDeleted = dialogRef.componentInstance.deletePatient.subscribe(
+      (deleted) => this.patientsService.removePatient(deleted.username)
+    );
+
+    // make sure subscriptions end after Patient Card is closed to avoid memory leaks
+    dialogRef.afterClosed().subscribe(() => {
+      subEdited.unsubscribe();
+      subDeleted.unsubscribe();
+    }
+    );
+  };
 
   isAdmin(): boolean {
     const roles = this.staffService.staff$()?.roles ?? [];
     return roles.includes('ADMIN');
-  }
+  };
 };

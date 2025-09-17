@@ -31,9 +31,6 @@ export class PatientsTable {
     dateOfBirth: 'none',
   };
 
-  // declare as class property
-  private dialog = inject(MatDialog);
-
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
       // empty array if undefined
@@ -43,17 +40,6 @@ export class PatientsTable {
         this.patientData = []; // fallback to empty array
       };
     };
-  };
-
-  onPatientClicked(patient: Patient): void {
-    console.log("Patient clicked:", patient);
-    this.patientClicked.emit(patient);
-    console.log("PatientTable received data:", this.patientData);
-
-    this.dialog.open(PatientCard, {
-      data: patient,
-      width: '400px'
-    });
   };
 
   sortData(sortKey: keyof Patient): void {
@@ -92,7 +78,7 @@ export class PatientsTable {
 
   // update the table with the sorted data
   this.patientData = sortedData;
-}
+};
 
   sortSign(sortKey: keyof Patient) {
     if (this.sortOrder[sortKey] === 'asc') return '\u2191';
