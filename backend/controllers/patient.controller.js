@@ -19,7 +19,7 @@ exports.findAll = async(req, res) => {
 exports.findOne = async(req, res) => {
     console.log('Find a specific patient.');
     
-    const username = req.params.username;
+    const username = req.params.username;    // find by username
 
     try {
         const result = await patientService.findOne({ username });
@@ -104,6 +104,8 @@ exports.update = async(req, res) => {
     const username = req.params.username;    // username will be retrieved from URL (path params)
 
     console.log("Updating patient data with username: ", username, "...");
+
+    const data = req.body;
 
     try {
         const result = await patientService.update(username, data);
