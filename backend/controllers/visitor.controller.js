@@ -23,10 +23,12 @@ exports.findOne = async(req, res) => {
 
     try {
         const result = await visitorService.findOne({ username });
-        // !!: inverted negation (true => false & false & true)
-        // 400 causes Angular to skip next and go to error
-        // always return 200 so that Angular can properly indicate if username already exists or not
+            if (result) {    // not finding the visitor does not raise an error and go to catch
          res.status(200).json({ exists: !!result });
+         } else {
+            res.status(404).json({ status: false, data: "Patient not found."});
+            logger.error("Error finding patient.");
+         }
     } catch (err) {
         console.log('Error finding visitor.', err);
         res.status(400).json({ status: false, data: err });
@@ -71,7 +73,7 @@ exports.create = async(req, res) => {
 exports.update = async(req, res) => {
     const username = req.params.username;    // username will be retrieved from URL (path params)
 
-    console.log("Update viistor data by username: ", username, ".");
+    console.log("Update visitor data by username: ", username, ".");
 
     const data = req.body;
 
