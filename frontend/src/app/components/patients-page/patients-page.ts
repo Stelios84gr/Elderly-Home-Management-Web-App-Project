@@ -74,8 +74,7 @@ export class PatientsPage {
     dialogRef.afterClosed().subscribe(() => {
       subEdited.unsubscribe();
       subDeleted.unsubscribe();
-    }
-    );
+    });
   };
 
   isAdmin(): boolean {

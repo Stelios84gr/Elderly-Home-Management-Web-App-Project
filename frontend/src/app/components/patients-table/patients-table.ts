@@ -69,7 +69,7 @@ export class PatientsTable {
 
     // toggle sort direction for the column
     this.sortOrder[sortKey] = this.sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
-  }
+  };
 
   // reset all other columns
   for (const key in this.sortOrder) {
