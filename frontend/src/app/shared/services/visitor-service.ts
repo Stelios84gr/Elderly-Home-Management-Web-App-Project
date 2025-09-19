@@ -58,7 +58,7 @@ export class VisitorService {
 
   updateVisitor(visitor: Visitor) {
     this.http
-      .put<Visitor>(`${this.baseUrl}/${visitor.username}`, visitor, this.getAuthHeaders())
+      .patch<Visitor>(`${this.baseUrl}/${visitor.username}`, visitor, this.getAuthHeaders())
       .subscribe({
         next: (updatedVisitor) => {
           //updatevisitor$ signal
