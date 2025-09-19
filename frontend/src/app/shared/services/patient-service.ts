@@ -1,7 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Patient } from '../interfaces/patient';
-import { Visitor } from '../interfaces/visitor';
 
 
 @Injectable({
@@ -96,7 +95,7 @@ export class PatientService {
     console.log('Updating patient with payload:', payload, '...');
 
     this.http
-      .patch<Patient>(`${this.baseUrl}/updateById/${patient._id}`, payload, this.getAuthHeaders())
+      .patch<Patient>(`${this.baseUrl}/${patient.username}`, payload, this.getAuthHeaders())
       .subscribe({
         next: (updatedPatient) => {
           //update patient$ signal
