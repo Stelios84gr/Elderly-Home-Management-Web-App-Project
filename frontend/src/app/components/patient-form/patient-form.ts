@@ -276,7 +276,7 @@ removeVisitor(index: number) {
           phoneNumber: Number(this.patientForm.value.emergencyContactInfo?.phoneNumber ?? 0),
           address: {
             street: this.patientForm.value.emergencyContactInfo?.address?.street ?? '',
-            number: this.patientForm.value.emergencyContactInfo?.address?.number ?? '',
+            number: this.patientForm.value.emergencyContactInfo?.address?.number ?? ''
           },
           kinshipDegree: this.patientForm.value.emergencyContactInfo?.kinshipDegree ?? ''
         },
