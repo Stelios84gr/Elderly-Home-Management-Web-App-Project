@@ -26,8 +26,8 @@ exports.findOne = async(req, res) => {
             if (result) {    // not finding the visitor does not raise an error and go to catch
          res.status(200).json({ exists: !!result });
          } else {
-            res.status(404).json({ status: false, data: "Patient not found."});
-            logger.error("Error finding patient.");
+            res.status(404).json({ status: false, data: "Visitor not found."});
+            logger.error("Error finding visitor.");
          }
     } catch (err) {
         console.log('Error finding visitor.', err);
