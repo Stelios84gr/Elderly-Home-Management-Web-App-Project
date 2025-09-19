@@ -52,7 +52,7 @@ async function googleAuth(code) {
             roles: ["READER", "EDITOR"]
         };
 
-        const token = this.generateAccessToken(user);
+        const token = generateAccessToken(user);
         return token;
 
     } catch (err) {
