@@ -12,7 +12,7 @@ const logger = createLogger({
         printf(({ level, message, label, timestamp}) => {
             return `{
     label: '${label}',
-    message: '${message}'.
+    message: '${message}',
     level: '${level}',
     timestamp: '${timestamp}'
 }`;
