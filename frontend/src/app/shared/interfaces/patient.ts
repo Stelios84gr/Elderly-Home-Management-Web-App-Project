@@ -33,7 +33,7 @@ export interface EmergencyContactInfo {
 
 export interface Address {
     street: string,
-    number: number
+    number: string
 };
 
 export interface Visitor {
