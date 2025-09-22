@@ -22,7 +22,7 @@ frontend/src/
 
 ## 📦 Technology Stack
 
-- **Angular 20**: Modern Angular with Signals
+- **Angular v20**: Modern Angular with Signals
 - **Angular Material v20.x**: UI component library
 - **TailwindCSS v4.x**: Utility-first CSS framework
 - **RxJS v7.x**: Reactive programming

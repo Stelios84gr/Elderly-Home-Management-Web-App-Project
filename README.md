@@ -5,8 +5,8 @@ A full-stack monorepo project for managing patients, staff and visitors in Hyaci
 
 ## 🏗️ Architecture
 
-- **Backend**: Node.js v19.2.0, Express, MongoDB, Mongoose, JWT, Google OAuth2, Winston logger
-- **Frontend**: Angular v20, Angular Material v20.2.1, TailwindCSS v4.1
+- **Backend**: Node.js >=v19.2.0 <20.0.0, Express v5.x, MongoDB, Mongoose v8.x, JWT 4.x, Google OAuth2, Winston logger 3.x
+- **Frontend**: Angular v20.x, Angular Material v20.x, TailwindCSS v4.x
 - **Authentication**: JWT-based with role-based access control (READER, EDITOR, ADMIN)
 
 
