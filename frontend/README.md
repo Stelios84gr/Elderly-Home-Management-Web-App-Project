@@ -4,6 +4,7 @@ Angular web application with Material Design and TailwindCSS for managing elderl
 
 
 ## 🏗️ Architecture Overview
+```text
 frontend/src/
 ├── app/
 │ ├── components/ # Feature components
@@ -16,6 +17,7 @@ frontend/src/
 │ │ └── guards/ # Route protection
 │ └── app.config.ts # Application configuration
 └── assets/ # Static resources
+```
 
 
 ## 📦 Technology Stack
@@ -58,16 +60,24 @@ frontend/src/
 ## 🚀 Development Server
 
 ### Install dependencies
+```bash
 npm install
+```
 
 ### Start development server
+```bash
 ng serve
+```
 
 ### Build for production
+```bash
 ng build
+```
 
 ### Run tests
+```bash
 ng test
+```
 
 The application will be available at http://localhost:4200.
 
@@ -108,29 +118,31 @@ The application will be available at http://localhost:4200.
 
 
 ## 📊 Data Services
-- PatientService
-•  Patient CRUD operations
-•  Visitor-patient association
-•  Real-time data with Signals
 
-- StaffService
-•  Staff management
-•  Authentication logic
-•  Role-based permission checks
+### PatientService
+- Patient CRUD operations
+- Visitor-patient association
+- Real-time data with Signals
 
-- VisitorService
-•  Visitor registration
-•  Patient visit tracking
+### StaffService
+- Staff management
+- Authentication logic
+- Role-based permission checks
+
+### VisitorService
+- Visitor registration
+- Patient visit tracking
 
 
 ## 🛡️ Route Guards
-- AuthGuard
-•  Prevents access to unauthorized users
-•Redirects to login page
 
-- RoleGuard
-•  Restricts access based on user roles
-•  ADMIN-only content protection
+### AuthGuard
+- Prevents access to unauthorized users
+- Redirects to login page
+
+### RoleGuard
+- Restricts access based on user roles
+- ADMIN-only content protection
 
 
 ## 🎨 UI/UX Features
@@ -142,28 +154,36 @@ The application will be available at http://localhost:4200.
 
 
 ## 🌐 API Integration
-- The frontend communicates with the backend REST API:
-•  Base URL: http://localhost:3000/api
-•  JWT authentication via Authorization header
-•  Error handling and response validation
+The frontend communicates with the backend REST API:
+- Base URL: http://localhost:3000/api
+- JWT authentication via Authorization header
+- Error handling and response validation
 
 
 ## 🧪 Testing
 
 # Unit tests
+```bash
 ng test
+```
 
 # End-to-end tests (if configured)
+```bash
 ng e2e
+```
 
 
 ## 📦 Build & Deployment
 
 # Production build
+```bash
 ng build --configuration production
+```
 
 # GitHub Pages deployment
+```bash
 ng deploy
+```
 
 
 ## 🔄 State Management
