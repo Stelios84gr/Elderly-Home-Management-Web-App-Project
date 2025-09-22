@@ -71,6 +71,6 @@ npm test
 📖 Detailed Documentation
 Provided is also documentation for both the back-end and front-end seperately:
 
-https://./backend/README.md
+[Back-end Documentation](https://github.com/Stelios84gr/Elderly-Home-Management-Web-App-Project/blob/main/backend/README.md)
 
-https://./frontend/README.md
+[Front-end Documentation](https://github.com/Stelios84gr/Elderly-Home-Management-Web-App-Project/blob/main/frontend/README.md)
