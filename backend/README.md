@@ -1,6 +1,6 @@
 # Backend API - Hyacinth Elderly Care Facility
 
-RESTful API built with Node.js v19.2.0, Express v5.1.0 and MongoDB for managing elderly home operations.
+RESTful API built with Node.js >=19.2.0 <20.0.0, Express v5.x and MongoDB for managing elderly home operations.
 
 
 ## 🏗️ Architecture Overview
