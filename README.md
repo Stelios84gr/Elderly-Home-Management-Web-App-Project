@@ -36,13 +36,6 @@ elderly-home-web-app-project/
    git clone https://github.com/Stelios84gr/Elderly-Home-Management-Web-App-Project.git
    cd Elderly-Home-Management-Web-App-Project
 
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js >= 18.x
-- MongoDB (local or MongoDB Atlas)
-- Angular CLI (`npm install -g @angular/cli`)
-
 2. **Back-end Setup**
    cd backend
    npm install
@@ -53,7 +46,7 @@ elderly-home-web-app-project/
    npm install
    ng serve
 
-3. **Access the application**
+4. **Access the application**
    Front-end: http://localhost:4200
    Backend API: http://localhost:3000
    API Documentation: http://localhost:3000/api-docs
