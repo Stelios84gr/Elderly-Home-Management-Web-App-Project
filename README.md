@@ -54,9 +54,9 @@ elderly-home-web-app-project/
    ng serve
 
 4. **Access the application**
-   Front-end: http://localhost:4200
-   Backend API: http://localhost:3000
-   API Documentation: http://localhost:3000/api-docs
+- Front-end: http://localhost:4200
+- Backend API: http://localhost:3000
+- API Documentation: http://localhost:3000/api-docs
 
 👥 Default Roles & Permissions
 ADMIN: Full CRUD access to all entities
