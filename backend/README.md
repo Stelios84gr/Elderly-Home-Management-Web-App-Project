@@ -4,6 +4,7 @@ RESTful API built with Node.js v19.2.0, Express v5.1.0 and MongoDB for managing 
 
 
 ## 🏗️ Architecture Overview
+```text
 backend/
 ├── controllers/ # Business logic handlers
 ├── models/ # MongoDB schemas and validation
@@ -12,7 +13,7 @@ backend/
 ├── middlewares/ # Auth, validation, error handling
 ├── logger/ # Winston logging configuration
 └── tests/ # Jest test suites
-
+```
 
 ## 📦 Dependencies
 
@@ -74,8 +75,8 @@ backend/
 
 ## 🗄️ Data Models
 
-```javascript
 Patient Schema
+```javascript
 {
   username: String, // Auto-generated: 1{lastInitial}{firstName}{lastNameLength}
   firstName: String,
@@ -86,7 +87,9 @@ Patient Schema
   emergencyContactInfo: Object,
   visitors: Array
 }
+```
 Staff Schema
+```javascript
 {
   username: String, // Auto-generated: 3{lastInitial}{firstName}{lastNameLength}
   password: String, // Hashed with bcrypt
@@ -94,56 +97,66 @@ Staff Schema
   occupation: String,
   monthlySalary: Number
 }
+```
 Visitor Schema
+```javascript
 {
   username: String, // Auto-generated: 2{lastInitial}{firstName}{lastNameLength}
   patientToVisit: String, // Reference to patient username
   relationship: String,
   isFamily: Boolean
 }
+```
 
 
 ## 🧪 Testing
 
 ### Run all tests
+```bash
    npm test
+```
 
 ### Run tests with coverage
+```bash
    npm test -- --coverage
+```
 
 ### Run specific test file
+```bash
    npm test -- tests/patient.test.js
+```
 
 
 ## 📊 Logging
 
 Winston logger configured with:
-
-Console output
-
-Daily rotating file logs (7-day retention)
-
-MongoDB error logging
-
-Structured JSON format
+- Console output
+- Daily rotating file logs (7-day retention)
+- MongoDB error logging
+- Structured JSON format
 
 
-🔧 Environment Variables
+## 🔧 Environment Variables
 
-Variable	            Description	                    Required
-MONGODB_URI	            MongoDB connection string	    Yes
-TOKEN_SECRET	        JWT signing secret	            Yes
-GOOGLE_CLIENT_ID	    Google OAuth2 client ID	        No
-GOOGLE_CLIENT_SECRET    Google OAuth2 client secret	    No
-REDIRECT_URI	        OAuth2 callback URL	            No
+| Variable              | Description                     | Required |
+|-----------------------|---------------------------------|----------|
+| MONGODB_URI           | MongoDB connection string       | Yes      |
+| TOKEN_SECRET          | JWT signing secret              | Yes      |
+| GOOGLE_CLIENT_ID      | Google OAuth2 client ID         | No       |
+| GOOGLE_CLIENT_SECRET  | Google OAuth2 client secret     | No       |
+| REDIRECT_URI          | OAuth2 callback URL             | No       |
 
 
 ## 🚀 Deployment
 
 ### Production build
+```bash
    npm start
+```
 
 ### Development with auto-reload
+```bash
    npm run dev
+```
    
 The API will be available at http://localhost:3000 with Swagger docs at /api-docs.
