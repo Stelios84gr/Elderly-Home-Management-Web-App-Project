@@ -12,6 +12,7 @@ A full-stack monorepo project for managing patients, staff and visitors in Hyaci
 
 ## 📁 Project Structure
 ```text
+elderly-home-web-app-project/
 ├── backend/ # Node.js + Express REST API
 │   ├── controllers/      # Route handlers
 │   ├── models/           # MongoDB schemas
@@ -23,7 +24,6 @@ A full-stack monorepo project for managing patients, staff and visitors in Hyaci
     ├── src/app/components/   # UI components
     ├── src/app/shared/       # Services, interfaces, guards
     └── src/environments/     # Configuration
-
 
 
 ## 🚀 Quick Start
