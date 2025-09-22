@@ -2,13 +2,16 @@
 
 A full-stack monorepo project for managing patients, staff and visitors in Hyacinth, an elderly care facility. The system provides role-based authentication, comprehensive CRUD operations and Google OAuth2 integration.
 
+
 ## 🏗️ Architecture
 
 - **Backend**: Node.js v19.2.0, Express, MongoDB, Mongoose, JWT, Google OAuth2, Winston logger
 - **Frontend**: Angular v20, Angular Material v20.2.1, TailwindCSS v4.1
 - **Authentication**: JWT-based with role-based access control (READER, EDITOR, ADMIN)
 
+
 ## 📁 Project Structure
+
 elderly-home-web-app-project/
 ├── backend/ # Node.js + Express REST API
 │ ├── controllers/ # Route handlers
