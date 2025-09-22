@@ -5,7 +5,7 @@ Angular web application with Material Design and TailwindCSS for managing elderl
 
 ## 🏗️ Architecture Overview
 ```text
-frontend/src//
+frontend/src/
 ├── app/
 │ ├── components/ # Feature components
 │ │ ├── patients-page/ # Patient management
