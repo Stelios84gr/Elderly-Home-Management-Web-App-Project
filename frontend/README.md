@@ -1,59 +1,172 @@
-# Frontend
+# Frontend - Elderly Home Management
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
+Angular web application with Material Design and TailwindCSS for managing elderly home operations.
 
-## Development server
 
-To start a local development server, run:
+## 🏗️ Architecture Overview
+frontend/src/
+├── app/
+│ ├── components/ # Feature components
+│ │ ├── patients-page/ # Patient management
+│ │ ├── staff-page/ # Staff management
+│ │ └── visitors-page/ # Visitor management
+│ ├── shared/
+│ │ ├── services/ # Data services
+│ │ ├── interfaces/ # TypeScript interfaces
+│ │ └── guards/ # Route protection
+│ └── app.config.ts # Application configuration
+└── assets/ # Static resources
 
-```bash
+
+## 📦 Technology Stack
+
+- **Angular 20**: Modern Angular with Signals
+- **Angular Material v20.2.1**: UI component library
+- **TailwindCSS v4.1**: Utility-first CSS framework
+- **RxJS v7.8**: Reactive programming
+- **JWT Decode v4**: Token parsing
+
+
+## 🎯 Features
+
+### Authentication & Authorization
+- JWT-based login/logout
+- Google OAuth 2.0 integration
+- Role-based UI components (ADMIN, EDITOR, READER)
+- Route guards for protected routes
+
+### Patient Management
+- Complete CRUD operations
+- Dynamic form validation
+- Room/bed assignment with business logic validation
+- Medical ailments management
+- Emergency contact information
+- Visitor association
+
+### Staff Management  
+- Staff member registration and management
+- Role assignment
+- Salary and employment information
+- Secure password handling
+
+### Visitor Management
+- Visitor registration
+- Patient-visitor relationship tracking
+- Family/non-family classification
+
+
+## 🚀 Development Server
+
+### Install dependencies
+npm install
+
+### Start development server
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+### Build for production
 ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+### Run tests
 ng test
-```
 
-## Running end-to-end tests
+The application will be available at http://localhost:4200.
 
-For end-to-end (e2e) testing, run:
 
-```bash
+## 🔧 Project Configuration
+
+### Angular Configuration
+-  Standalone components (no NgModules)
+-  Zoneless change detection
+-  Strict TypeScript mode
+-  Prettier code formatting
+
+### Styling
+-  TailwindCSS for utility classes
+-  Angular Material for components
+-  Custom theme in custom-theme.scss
+
+## 📱 Key Components
+
+### Pages
+- PatientsPage: Main patient management interface
+- StaffPage: Staff member management
+- VisitorsPage: Visitor registration and tracking
+- StaffLogin: Authentication page
+
+### Reusable Components
+- PatientsTable: Sortable patient data table
+- PatientForm: Comprehensive patient form with validation
+- PatientCard: Patient detail modal
+- Navbar: Role-aware navigation
+
+
+## 🔐 Authentication Flow
+- Login: Username/password or Google OAuth2
+- Token Storage: JWT stored in localStorage
+- Role Detection: Token decoding for role-based UI
+- Auto-logout: Token expiration handling
+
+
+## 📊 Data Services
+- PatientService
+•  Patient CRUD operations
+•  Visitor-patient association
+•  Real-time data with Signals
+
+- StaffService
+•  Staff management
+•  Authentication logic
+•  Role-based permission checks
+
+- VisitorService
+•  Visitor registration
+•  Patient visit tracking
+
+
+## 🛡️ Route Guards
+- AuthGuard
+•  Prevents access to unauthorized users
+•Redirects to login page
+
+- RoleGuard
+•  Restricts access based on user roles
+•  ADMIN-only content protection
+
+
+## 🎨 UI/UX Features
+- Responsive Design: Mobile-first approach
+- Accessibility: ARIA labels and keyboard navigation
+- Loading States: Progressive content loading
+- Error Handling: User-friendly error messages
+- Sorting & Filtering: Interactive data tables
+
+
+## 🌐 API Integration
+- The frontend communicates with the backend REST API:
+•  Base URL: http://localhost:3000/api
+•  JWT authentication via Authorization header
+•  Error handling and response validation
+
+
+## 🧪 Testing
+
+# Unit tests
+ng test
+
+# End-to-end tests (if configured)
 ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+## 📦 Build & Deployment
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+# Production build
+ng build --configuration production
+
+# GitHub Pages deployment
+ng deploy
+
+
+## 🔄 State Management
+- Angular Signals: Reactive state primitives
+- Service-based: Centralized data management
+- Component Communication: Input/Output decorators and services
