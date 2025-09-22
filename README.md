@@ -23,6 +23,7 @@ A full-stack monorepo project for managing patients, staff and visitors in Hyaci
     ├── src/app/components/   # UI components
     ├── src/app/shared/       # Services, interfaces, guards
     └── src/environments/     # Configuration
+```text
 
 
 ## 🚀 Quick Start
