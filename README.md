@@ -58,14 +58,12 @@ elderly-home-web-app-project/
 - Backend API: http://localhost:3000
 - API Documentation: http://localhost:3000/api-docs
 
-👥 Default Roles & Permissions
-ADMIN: Full CRUD access to all entities
+## 👥 Default Roles & Permissions
+- ADMIN: Full CRUD access to all entities
+- EDITOR: Read and update permissions
+- EADER: Read-only access
 
-EDITOR: Read and update permissions
-
-READER: Read-only access
-
-📚 API Documentation
+## 📚 API Documentation
 Interactive Swagger documentation available at /api-docs when the backend is running.
 
 🧪 Testing
@@ -76,7 +74,7 @@ npm test
 ```
 
 
-📖 Detailed Documentation
+## 📖 Detailed Documentation
 Provided is also documentation for both the back-end and front-end seperately:
 
 [Back-end Documentation](https://github.com/Stelios84gr/Elderly-Home-Management-Web-App-Project/blob/main/backend/README.md)
