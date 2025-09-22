@@ -24,6 +24,7 @@ elderly-home-web-app-project/
     ├── src/app/components/   # UI components
     ├── src/app/shared/       # Services, interfaces, guards
     └── src/environments/     # Configuration
+```
 
 
 ## 🚀 Quick Start
@@ -36,15 +37,18 @@ elderly-home-web-app-project/
 ### Installation & Setup
 
 1. **Clone the repository**
+    ```bash
    git clone https://github.com/Stelios84gr/Elderly-Home-Management-Web-App-Project.git
    cd Elderly-Home-Management-Web-App-Project
 
 2. **Back-end Setup**
+    ```bash
    cd backend
    npm install
    npm run dev
 
 3. **Front-end Setup**
+    ```bash
    cd frontend
    npm install
    ng serve
@@ -65,10 +69,11 @@ READER: Read-only access
 Interactive Swagger documentation available at /api-docs when the backend is running.
 
 🧪 Testing
-
+```bash
 # Backend tests
 cd backend
 npm test
+```
 
 
 📖 Detailed Documentation
