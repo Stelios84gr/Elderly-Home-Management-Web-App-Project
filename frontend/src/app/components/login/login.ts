@@ -15,7 +15,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -26,8 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    CommonModule,
-    HttpClientModule,
+    CommonModule
   ],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
